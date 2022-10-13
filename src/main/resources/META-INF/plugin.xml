@@ -1,0 +1,21 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>dev.priporov.idea-notes</id>
+    <name>Idea-notes</name>
+    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <description><![CDATA[
+    Enter short description for your plugin here.<br>
+    <em>most HTML tags may be used</em>
+  ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Modified" anchor="left"
+                    factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
+
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.main.MainNoteToolWindow"/>
+
+    </extensions>
+</idea-plugin>
