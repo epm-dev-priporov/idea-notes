@@ -13,9 +13,15 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Modified" anchor="left"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
+        <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
+        <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
 
-        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.main.MainNoteToolWindow"/>
+        <projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
+        <projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.node.RootFileTreeNode"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.StateService"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.common.VirtualFileContainer"/>
 
     </extensions>
 </idea-plugin>

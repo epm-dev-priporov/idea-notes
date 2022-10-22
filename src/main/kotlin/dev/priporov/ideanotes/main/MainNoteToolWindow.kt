@@ -1,18 +1,21 @@
 package dev.priporov.ideanotes.main
 
-import com.intellij.openapi.components.service
-import com.intellij.ui.treeStructure.Tree
+import com.intellij.ui.ToolbarDecorator
 import dev.priporov.ideanotes.tree.NoteTree
 import java.awt.BorderLayout
 import javax.swing.JPanel
 
-class MainNoteToolWindow : JPanel() {
-    private val noteTree: Tree = service<NoteTree>()
+class MainNoteToolWindow(val tree: NoteTree) : JPanel() {
 
     init {
+        val decorator = ToolbarDecorator.createDecorator(tree)
+        val toolbarPanel = decorator.createPanel()
+
         layout = BorderLayout().apply {
-            addLayoutComponent(noteTree, "Center")
+            add(toolbarPanel)
+            addLayoutComponent(tree, "Center")
         }
-        add(noteTree)
+        add(toolbarPanel)
+        add(tree)
     }
 }
