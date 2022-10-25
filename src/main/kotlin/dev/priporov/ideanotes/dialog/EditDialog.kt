@@ -19,7 +19,6 @@ class EditDialog(
     private val panel = JPanel().apply {
         add(edit)
         layout = borderLayout
-        edit.requestFocusInWindow()
     }
 
     init {
@@ -39,4 +38,8 @@ class EditDialog(
         }
     }
 
+    fun requestFocusInWindow(): EditDialog {
+        edit.requestFocusInWindow()
+        return this
+    }
 }

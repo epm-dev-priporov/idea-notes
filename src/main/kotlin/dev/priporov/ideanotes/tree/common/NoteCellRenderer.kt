@@ -25,6 +25,7 @@ class NoteCellRenderer : NodeRenderer() {
                     "yaml" -> setIcon(toIcon(toIconPath("yaml/yaml16.png")))
                     "xml" -> setIcon(toIcon(toIconPath("xml/xml16.png")))
                     "sql" -> setIcon(toIcon(toIconPath("sql/sql16.png")))
+                    "http" -> setIcon(toIcon(toIconPath("http/http16.png")))
                 }
             } else {
                 when (value.extension) {
@@ -33,6 +34,7 @@ class NoteCellRenderer : NodeRenderer() {
                     "yaml" -> setIcon(toIcon(toIconPath("yaml/yaml16.png")))
                     "xml" -> setIcon(toIcon(toIconPath("xml/xml16.png")))
                     "sql" -> setIcon(toIcon(toIconPath("sql/sql16.png")))
+                    "http" -> setIcon(toIcon(toIconPath("http/http16.png")))
                 }
             }
         }

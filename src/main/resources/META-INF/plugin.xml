@@ -1,17 +1,19 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
     <id>dev.priporov.idea-notes</id>
     <name>Idea-notes</name>
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+
+    <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml or sql.
+    <li>The plugin is free and open for any ideas.
+    <li>The plugin page
+    <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a>
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Modified" anchor="left"
+        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="left"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>

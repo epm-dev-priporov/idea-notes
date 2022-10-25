@@ -1,4 +1,4 @@
-package dev.priporov.ideanotes.action.tree
+package dev.priporov.ideanotes.tree.common
 
 class ExtensionFileHelper {
     companion object {
@@ -7,7 +7,8 @@ class ExtensionFileHelper {
             ExtensionData("json", "Json node"),
             ExtensionData("xml", "Xml node"),
             ExtensionData("yaml", "Yaml node"),
-            ExtensionData("sql", "Sql node")
+            ExtensionData("sql", "Sql node"),
+            ExtensionData("http", "Http node")
         )
     }
 
