@@ -13,10 +13,9 @@ import java.awt.Point
 
 class TreePopUpMenuManager {
     companion object {
-        fun createPopUpMenu(tree: NoteTree, point: Point, selectedNodeClicked: Boolean) {
+        fun createPopUpMenu(tree: NoteTree, point: Point, actionGroup: DefaultActionGroup) {
 
             val factory = JBPopupFactory.getInstance()
-            val actionGroup = PopupMenuTreeActionGroup(tree, selectedNodeClicked)
 
             val popupStep: ListPopupStep<Any> = factory.createActionsStep(
                 actionGroup,
@@ -37,7 +36,19 @@ class TreePopUpMenuManager {
 }
 
 
-class PopupMenuTreeActionGroup(tree: NoteTree, selectedNodeClicked: Boolean) : DefaultActionGroup() {
+class ToolbarPopupMenuActionGroup(tree: NoteTree) : DefaultActionGroup() {
+    init {
+        val targetNode = tree.selectionPath?.lastPathComponent as? FileTreeNode
+        if (targetNode == null) {
+            add(NewNodeActionGroup(tree, "New node"))
+        } else {
+            add(NewNodeActionGroup(tree, "New node"))
+            add(AddNodeActionGroup(tree, targetNode, "Add child node"))
+        }
+    }
+}
+
+class MousePopupMenuActionGroup(tree: NoteTree, selectedNodeClicked: Boolean) : DefaultActionGroup() {
     init {
         val targetNode = tree.selectionPath?.lastPathComponent as? FileTreeNode
 
