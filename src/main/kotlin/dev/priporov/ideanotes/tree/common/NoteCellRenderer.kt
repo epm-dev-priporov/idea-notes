@@ -1,6 +1,8 @@
 package dev.priporov.ideanotes.tree.common
 
+import com.intellij.ide.plugins.PluginManager
 import com.intellij.ide.util.treeView.NodeRenderer
+import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import javax.swing.ImageIcon
 import javax.swing.JTree
@@ -16,27 +18,13 @@ class NoteCellRenderer : NodeRenderer() {
         row: Int,
         hasFocus: Boolean
     ) {
-
         if (value is FileTreeNode) {
-            if (leaf) {
-                when (value.extension) {
-                    "txt" -> setIcon(toIcon(toIconPath("icons8-file-16.png")))
-                    "json" -> setIcon(toIcon(toIconPath("json/json16.png")))
-                    "yaml" -> setIcon(toIcon(toIconPath("yaml/yaml16.png")))
-                    "xml" -> setIcon(toIcon(toIconPath("xml/xml16.png")))
-                    "sql" -> setIcon(toIcon(toIconPath("sql/sql16.png")))
-                    "http" -> setIcon(toIcon(toIconPath("http/http16.png")))
-                }
+            val path = if (leaf) {
+                ExtensionFileHelper.EXTENSIONS[value.extension]?.leafIconPath ?: "icons8-file-16.png"
             } else {
-                when (value.extension) {
-                    "txt" -> setIcon(toIcon(toIconPath("icons-files-16.png")))
-                    "json" -> setIcon(toIcon(toIconPath("json/json16.png")))
-                    "yaml" -> setIcon(toIcon(toIconPath("yaml/yaml16.png")))
-                    "xml" -> setIcon(toIcon(toIconPath("xml/xml16.png")))
-                    "sql" -> setIcon(toIcon(toIconPath("sql/sql16.png")))
-                    "http" -> setIcon(toIcon(toIconPath("http/http16.png")))
-                }
+                ExtensionFileHelper.EXTENSIONS[value.extension]?.nodeIconPath ?: "icons-files-16.png"
             }
+            setIcon(toIcon(toIconPath(path)))
         }
 
         super.customizeCellRenderer(tree, value, selected, expanded, leaf, row, hasFocus)

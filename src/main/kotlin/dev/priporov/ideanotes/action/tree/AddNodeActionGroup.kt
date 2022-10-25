@@ -14,7 +14,7 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
     init {
         isPopup = true
         templatePresentation.text = actionName
-        ExtensionFileHelper.EXTENSIONS.forEach {
+        ExtensionFileHelper.EXTENSIONS.values.forEach {
             add(AddChildNodeAction(tree, targetNode, it.definition, it.extension))
         }
     }
