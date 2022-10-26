@@ -7,7 +7,9 @@ import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
+import javax.swing.Icon
 
 
 class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: String) : DefaultActionGroup() {
@@ -15,9 +17,15 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
         isPopup = true
         templatePresentation.text = actionName
         ExtensionFileHelper.EXTENSIONS.values.forEach {
-            add(AddChildNodeAction(tree, targetNode, it.definition, it.extension))
+            add(AddChildNodeAction(tree, targetNode, it.definition, it.extension, it.leafIcon))
         }
     }
+
+    override fun update(event: AnActionEvent) {
+        event.presentation.setIcon(IconUtils.toIcon("menu/addNodeIcon.png"))
+        super.update(event)
+    }
+
 }
 
 
@@ -25,8 +33,9 @@ class AddChildNodeAction(
     private val tree: NoteTree,
     private val targetNode: FileTreeNode,
     definition: String,
-    private val extension: String
-) : AnAction(definition) {
+    private val extension: String,
+    icon: Icon
+) : AnAction(definition, "", icon) {
 
     override fun actionPerformed(e: AnActionEvent) {
         EditDialog("Add node") { value ->

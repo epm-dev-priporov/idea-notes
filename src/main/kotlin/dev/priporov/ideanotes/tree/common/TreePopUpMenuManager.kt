@@ -58,10 +58,11 @@ class MousePopupMenuActionGroup(tree: NoteTree, selectedNodeClicked: Boolean) : 
         } else {
             add(NewNodeActionGroup(tree, "New node"))
             add(AddNodeActionGroup(tree, targetNode, "Add child node"))
-            add(RenameNodeAction(tree, "Rename"))
-            add(DeleteNodeAction(tree, targetNode, "Delete"))
+            add(CutNodeAction(tree, "Cut"))
             add(CopyNodeAction(tree, "Copy"))
             add(PasteNodeAction(tree, "Past"))
+            add(RenameNodeAction(tree, "Rename"))
+            add(DeleteNodeAction(tree, targetNode, "Delete"))
         }
     }
 

@@ -2,6 +2,8 @@ package dev.priporov.ideanotes.tree.common
 
 import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.extensions.PluginId
+import dev.priporov.ideanotes.util.IconUtils
+import javax.swing.Icon
 
 class ExtensionFileHelper {
     companion object {
@@ -27,6 +29,8 @@ class ExtensionFileHelper {
 class ExtensionData(
     val extension: String,
     val definition: String,
-    val leafIconPath: String,
-    val nodeIconPath: String
+    leafIconPath: String,
+    nodeIconPath: String,
+    val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
+    val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
 )

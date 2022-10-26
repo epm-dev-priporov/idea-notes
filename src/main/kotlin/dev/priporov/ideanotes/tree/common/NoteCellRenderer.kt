@@ -1,10 +1,7 @@
 package dev.priporov.ideanotes.tree.common
 
-import com.intellij.ide.plugins.PluginManager
 import com.intellij.ide.util.treeView.NodeRenderer
-import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.tree.node.FileTreeNode
-import javax.swing.ImageIcon
 import javax.swing.JTree
 
 class NoteCellRenderer : NodeRenderer() {
@@ -19,18 +16,12 @@ class NoteCellRenderer : NodeRenderer() {
         hasFocus: Boolean
     ) {
         if (value is FileTreeNode) {
-            val path = if (leaf) {
-                ExtensionFileHelper.EXTENSIONS[value.extension]?.leafIconPath ?: "icons8-file-16.png"
-            } else {
-                ExtensionFileHelper.EXTENSIONS[value.extension]?.nodeIconPath ?: "icons-files-16.png"
-            }
-            setIcon(toIcon(toIconPath(path)))
+            val extensionData = ExtensionFileHelper.EXTENSIONS[value.extension]
+            val icon = if (leaf) extensionData?.leafIcon else extensionData?.nodeIcon
+            setIcon(icon)
         }
 
         super.customizeCellRenderer(tree, value, selected, expanded, leaf, row, hasFocus)
     }
 
-    private fun toIconPath(name: String) = "/icons/${name}"
-
-    private fun toIcon(path: String) = ImageIcon(NoteCellRenderer::class.java.getResource(path))
 }

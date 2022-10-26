@@ -7,6 +7,7 @@ import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeCutData
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.ideanotes.util.WriteActionUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
@@ -14,7 +15,7 @@ import java.awt.datatransfer.Clipboard
 class PasteNodeAction(
     private val tree: NoteTree,
     value: String? = null
-) : AnAction(value) {
+) : AnAction(value, "", IconUtils.toIcon("menu/paste.png")) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard

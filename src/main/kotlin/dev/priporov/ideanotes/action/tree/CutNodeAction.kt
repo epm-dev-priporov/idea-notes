@@ -8,6 +8,7 @@ import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.FileNodeUtils.Companion.readFileContentByteArray
+import dev.priporov.ideanotes.util.IconUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.*
 import java.awt.datatransfer.DataFlavor.stringFlavor
@@ -15,7 +16,7 @@ import java.awt.datatransfer.DataFlavor.stringFlavor
 class CutNodeAction(
     private val tree: NoteTree,
     value: String? = null
-) : AnAction(value) {
+) : AnAction(value, "", IconUtils.toIcon("menu/cut.png")) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val node = tree.lastSelectedPathComponent as? FileTreeNode ?: return
