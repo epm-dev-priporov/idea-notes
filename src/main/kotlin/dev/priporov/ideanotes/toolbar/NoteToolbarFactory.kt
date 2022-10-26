@@ -6,21 +6,26 @@ import com.intellij.ui.ToolbarDecorator
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ToolbarPopupMenuActionGroup
 import dev.priporov.ideanotes.tree.common.TreePopUpMenuManager
+import dev.priporov.noteplugin.component.dialog.OkDialog
 import javax.swing.JPanel
 
 object NoteToolbarFactory {
 
     fun getInstance(tree: NoteTree): JPanel {
-        val decorator = ToolbarDecorator.createDecorator(tree)
-        decorator.setAddAction(NewNoteAnActionButtonRunnable(tree))
+        val decorator: ToolbarDecorator = ToolbarDecorator.createDecorator(tree)
+        decorator.setAddAction(NoteToolbarAction {
+            TreePopUpMenuManager.createPopUpMenu(tree, tree.locationOnScreen, ToolbarPopupMenuActionGroup(tree))
+        })
+
+        decorator.setRemoveAction(NoteToolbarAction {
+            OkDialog("Delete node") { tree.delete(tree.getSelectedNode()!!) }.show()
+        })
 
         return decorator.createPanel()
     }
 
 }
 
-class NewNoteAnActionButtonRunnable(private val tree: NoteTree) : AnActionButtonRunnable {
-    override fun run(t: AnActionButton) {
-        TreePopUpMenuManager.createPopUpMenu(tree, tree.locationOnScreen, ToolbarPopupMenuActionGroup(tree))
-    }
+class NoteToolbarAction(private val function: () -> Unit) : AnActionButtonRunnable {
+    override fun run(t: AnActionButton) = function.invoke()
 }
