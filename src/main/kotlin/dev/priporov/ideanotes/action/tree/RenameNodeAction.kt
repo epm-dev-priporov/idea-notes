@@ -8,7 +8,7 @@ import dev.priporov.noteplugin.component.dialog.EditDialog
 
 class RenameNodeAction(
     private val tree: NoteTree,
-    value: String
+    value: String? = null
 ) : AnAction(value) {
 
     override fun actionPerformed(e: AnActionEvent) {

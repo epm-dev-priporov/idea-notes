@@ -11,10 +11,7 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.ui.treeStructure.Tree
-import dev.priporov.ideanotes.action.tree.CopyNodeAction
-import dev.priporov.ideanotes.action.tree.CutNodeAction
-import dev.priporov.ideanotes.action.tree.RenameNodeAction
-import dev.priporov.ideanotes.action.tree.ShowTreePopUpMenuAction
+import dev.priporov.ideanotes.action.tree.*
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.RootFileTreeNode
@@ -100,13 +97,16 @@ class NoteTree : Tree() {
             ShowTreePopUpMenuAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
         }
         ActionUtil.getShortcutSet("\$Copy").shortcuts.forEach { shortcut ->
-            CopyNodeAction(this, "").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+            CopyNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
         }
         ActionUtil.getShortcutSet("\$Cut").shortcuts.forEach { shortcut ->
-            CutNodeAction(this, "").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+            CutNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        }
+        ActionUtil.getShortcutSet("\$Paste").shortcuts.forEach { shortcut ->
+            PasteNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
         }
         ActionUtil.getShortcutSet("RenameElement").shortcuts.forEach { shortcut ->
-            RenameNodeAction(this,"Rename").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+            RenameNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
         }
     }
 

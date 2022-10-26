@@ -13,8 +13,7 @@ import java.awt.datatransfer.Clipboard
 
 class PasteNodeAction(
     private val tree: NoteTree,
-    private val targetNode: FileTreeNode?,
-    value: String
+    value: String? = null
 ) : AnAction(value) {
 
     override fun actionPerformed(e: AnActionEvent) {
@@ -28,7 +27,7 @@ class PasteNodeAction(
         }
         if (data is NodeCopyData) {
             val creationInfo = NodeCreationInfo(
-                targetNode ?: tree.root,
+                tree.getSelectedNode() ?: tree.root,
                 data.nodeInfo.name,
                 data.nodeInfo.extension
             )
@@ -37,9 +36,8 @@ class PasteNodeAction(
             WriteActionUtils.runWriteAction {
                 copiedNode.getFile()?.setBinaryContent(data.content)
             }
-        }
-        if (data is NodeCutData) {
-            createCutNode(data, targetNode)
+        } else if (data is NodeCutData) {
+            createCutNode(data, tree.getSelectedNode())
         }
     }
 

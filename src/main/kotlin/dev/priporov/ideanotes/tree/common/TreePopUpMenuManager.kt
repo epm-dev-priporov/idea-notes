@@ -54,14 +54,14 @@ class MousePopupMenuActionGroup(tree: NoteTree, selectedNodeClicked: Boolean) : 
 
         if (targetNode == null || !selectedNodeClicked) {
             add(NewNodeActionGroup(tree, "New node"))
-            add(PasteNodeAction(tree, null, "Past"))
+            add(PasteNodeAction(tree, "Past"))
         } else {
             add(NewNodeActionGroup(tree, "New node"))
             add(AddNodeActionGroup(tree, targetNode, "Add child node"))
             add(RenameNodeAction(tree, "Rename"))
             add(DeleteNodeAction(tree, targetNode, "Delete"))
             add(CopyNodeAction(tree, "Copy"))
-            add(PasteNodeAction(tree, targetNode, "Past"))
+            add(PasteNodeAction(tree, "Past"))
         }
     }
 
