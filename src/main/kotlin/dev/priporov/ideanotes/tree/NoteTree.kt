@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.tree
 
 import com.intellij.ide.impl.DataManagerImpl
+import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.CustomShortcutSet
 import com.intellij.openapi.actionSystem.ex.ActionUtil
@@ -11,6 +12,7 @@ import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.ui.treeStructure.Tree
 import dev.priporov.ideanotes.action.tree.CopyNodeAction
+import dev.priporov.ideanotes.action.tree.CutNodeAction
 import dev.priporov.ideanotes.action.tree.RenameNodeAction
 import dev.priporov.ideanotes.action.tree.ShowTreePopUpMenuAction
 import dev.priporov.ideanotes.dto.NodeCreationInfo
@@ -99,6 +101,9 @@ class NoteTree : Tree() {
         }
         ActionUtil.getShortcutSet("\$Copy").shortcuts.forEach { shortcut ->
             CopyNodeAction(this, "").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        }
+        ActionUtil.getShortcutSet("\$Cut").shortcuts.forEach { shortcut ->
+            CutNodeAction(this, "").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
         }
         ActionUtil.getShortcutSet("RenameElement").shortcuts.forEach { shortcut ->
             RenameNodeAction(this,"Rename").registerCustomShortcutSet(CustomShortcutSet(shortcut), this)

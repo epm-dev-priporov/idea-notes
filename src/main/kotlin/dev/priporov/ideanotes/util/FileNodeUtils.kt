@@ -1,8 +1,12 @@
 package dev.priporov.ideanotes.util
 
+import com.intellij.ide.impl.DataManagerImpl
 import com.intellij.ide.util.PropertiesComponent
+import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiManager
+import dev.priporov.ideanotes.tree.NoteTree
 import java.io.File
 import java.util.*
 
@@ -39,6 +43,16 @@ class FileNodeUtils {
             }
 
             return createVirtualFile(file)
+        }
+
+        fun readFileContentByteArray(tree: NoteTree, virtualFile: VirtualFile?): ByteArray {
+            if (virtualFile == null) {
+                return ByteArray(0)
+            }
+            val project = DataManagerImpl.getInstance().getDataContext(tree).getData(CommonDataKeys.PROJECT)!!
+            val file = PsiManager.getInstance(project).findFile(virtualFile)!!
+
+            return file.text.encodeToByteArray()
         }
 
         private fun createVirtualFile(file: File): VirtualFile {
