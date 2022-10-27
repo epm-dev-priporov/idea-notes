@@ -4,10 +4,14 @@
 
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
-    The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml or sql.
-    <li>The plugin is free and open for any ideas.
+    The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml, sql or http.
     <li>The plugin page
-    <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a>
+        <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a>
+    </li>
+    <li>
+        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img.png?raw=true">
+    </li>
+
   ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
