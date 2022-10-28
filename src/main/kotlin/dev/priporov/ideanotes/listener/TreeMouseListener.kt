@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.listener
 
+import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.MousePopupMenuActionGroup
 import dev.priporov.ideanotes.tree.common.TreePopUpMenuManager
@@ -24,7 +25,7 @@ class TreeMouseListener(private val tree: NoteTree) : MouseListener {
 
     private fun isDoubledClickedByNode(e: MouseEvent): Boolean = e.clickCount == 2
 
-    private fun isSelectedNodeClicked(e: MouseEvent) = tree.getPathForLocation(e.x, e.y) == tree.selectionPath
+    private fun isSelectedNodeClicked(e: MouseEvent) = TreeUtil.getPathForLocation(tree, e.x, e.y) == tree.selectionPath
 
     override fun mousePressed(e: MouseEvent?) {}
 

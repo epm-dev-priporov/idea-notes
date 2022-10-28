@@ -1,11 +1,9 @@
 package dev.priporov.ideanotes.tree
 
 import com.intellij.ide.impl.DataManagerImpl
-import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.CustomShortcutSet
 import com.intellij.openapi.actionSystem.ex.ActionUtil
-import com.intellij.openapi.components.StoragePathMacros
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
@@ -27,7 +25,6 @@ class NoteTree : Tree() {
     private var stateService = service<StateService>()
 
     init {
-        StoragePathMacros.WORKSPACE_FILE
         getDefaultTreeModel().setRoot(root)
         setDropMode(DropMode.ON_OR_INSERT)
         dragEnabled = true
