@@ -38,9 +38,7 @@ class NoteTree : Tree() {
     fun insert(info: NodeCreationInfo): FileTreeNode {
         val targetNode = info.targetNode
         val index = targetNode.childCount
-        val fileTreeNode = FileTreeNode(info).also {
-            it.parentId = targetNode.id
-        }
+        val fileTreeNode = FileTreeNode(info)
 
         targetNode.insert(fileTreeNode, index)
 

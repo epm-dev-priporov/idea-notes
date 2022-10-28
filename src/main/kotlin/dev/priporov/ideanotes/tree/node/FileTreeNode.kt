@@ -12,10 +12,9 @@ open class FileTreeNode(
     var name: String? = null,
     var extension: String? = null,
     var id: String? = generateNodeName(name),
-    var parentId: String? = null,
     private var file: VirtualFile? = null,
 ) : DefaultMutableTreeNode() {
-    constructor(node: FileTreeNode) : this(node.name, node.extension, node.id, node.parentId) {
+    constructor(node: FileTreeNode) : this(node.name, node.extension, node.id) {
         file = initFile(id, node.extension)
     }
 
@@ -25,12 +24,10 @@ open class FileTreeNode(
     ) {
         id = generateNodeName(info.name)
         file = initFile(id, info.extension)
-        parentId = (parent as? FileTreeNode)?.id // todo does it work ?
     }
 
     constructor(nodeInfo: NodeInfo) : this(nodeInfo.name, nodeInfo.extension, nodeInfo.id){
         file = initFile(id, nodeInfo.extension)
-        parentId = (parent as? FileTreeNode)?.id // todo does it work ?
     }
 
     init {
