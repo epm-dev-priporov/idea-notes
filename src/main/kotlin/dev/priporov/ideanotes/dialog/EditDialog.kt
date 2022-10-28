@@ -38,8 +38,4 @@ class EditDialog(
         }
     }
 
-    fun requestFocusInWindow(): EditDialog {
-        edit.requestFocusInWindow()
-        return this
-    }
 }

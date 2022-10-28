@@ -22,15 +22,15 @@ class TreeModelProvider {
         lock.unlock()
     }
 
-    private fun initModelOnce() {
-        initModel?.run()
-        initModel = null
-    }
-
     fun getModel() = commonModel
 
     fun setCallBack(function: Runnable) {
         initModel = function
+    }
+
+    private fun initModelOnce() {
+        initModel?.run()
+        initModel = null
     }
 
 }

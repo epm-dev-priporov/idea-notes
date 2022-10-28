@@ -40,9 +40,7 @@ class AddChildNodeAction(
     override fun actionPerformed(e: AnActionEvent) {
         EditDialog("Add node") { value ->
             tree.insert(NodeCreationInfo(targetNode, value, extension))
-        }
-            .requestFocusInWindow()
-            .show()
+        }.show()
     }
 
 }

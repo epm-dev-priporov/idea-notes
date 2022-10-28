@@ -15,9 +15,7 @@ class RenameNodeAction(
         val node = tree.getSelectedNode() ?: return
         EditDialog("Rename note", node.name) { value ->
             tree.renameNode(value, node)
-        }
-            .requestFocusInWindow()
-            .show()
+        }.show()
     }
 
 }

@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>dev.priporov.idea-notes</id>
-    <name>Idea-notes</name>
+    <id>dev.priporov.idea.notes</id>
+    <name>Notes</name>
 
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[

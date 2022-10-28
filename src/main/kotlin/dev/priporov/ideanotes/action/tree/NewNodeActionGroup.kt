@@ -36,9 +36,7 @@ class NewNodeAction(
     override fun actionPerformed(e: AnActionEvent) {
         EditDialog("New node") {
                 value -> insertToRoot(value)
-        }
-            .requestFocusInWindow()
-            .show()
+        }.show()
     }
 
     private fun insertToRoot(value: String) {

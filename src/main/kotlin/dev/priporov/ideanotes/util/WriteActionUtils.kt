@@ -14,13 +14,5 @@ class WriteActionUtils {
             }
         }
 
-        fun runReadAction(@NotNull action: Runnable) {
-            val application = ApplicationManager.getApplication()
-            if (application.isDispatchThread) {
-                application.runReadAction (action)
-            } else {
-                application.invokeLater { application.runWriteAction(action) }
-            }
-        }
     }
 }
