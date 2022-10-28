@@ -9,12 +9,14 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.project.ProjectManager
 import com.intellij.ui.treeStructure.Tree
+import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.RootFileTreeNode
 import dev.priporov.ideanotes.tree.state.StateService
 import dev.priporov.ideanotes.util.WriteActionUtils
+import java.util.*
 import javax.swing.DropMode
 import javax.swing.tree.DefaultTreeModel
 
@@ -41,8 +43,9 @@ class NoteTree : Tree() {
 
         stateService.saveNodeInfo(fileTreeNode)
         stateService.updateOrder(targetNode)
-
+        val expandedNodes = getExpandedNodes(targetNode)
         getDefaultTreeModel().reload(targetNode)
+        expandAllNodes(expandedNodes)
 
         return fileTreeNode
     }
@@ -50,8 +53,6 @@ class NoteTree : Tree() {
     fun updateOrderOf(node: FileTreeNode) {
         stateService.updateOrder(node)
     }
-
-    private fun getDefaultTreeModel() = model as DefaultTreeModel
 
     fun renameNode(newName: String, node: FileTreeNode) {
         val parent = node.parent as FileTreeNode
@@ -61,7 +62,9 @@ class NoteTree : Tree() {
         stateService.saveNodeInfo(node)
         stateService.updateOrder(parent)
 
+        val expandedNodes = getExpandedNodes(parent)
         getDefaultTreeModel().reload(parent)
+        expandAllNodes(expandedNodes)
     }
 
     fun delete(node: FileTreeNode) {
@@ -69,7 +72,9 @@ class NoteTree : Tree() {
         WriteActionUtils.runWriteAction { node.delete() }
         stateService.removeNodeInfo(node)
         stateService.updateOrder(parent as FileTreeNode)
+        val expandedNodes = getExpandedNodes(parent)
         getDefaultTreeModel().reload(parent)
+        expandAllNodes(expandedNodes)
     }
 
     fun openInEditor(node: FileTreeNode?) {
@@ -84,6 +89,10 @@ class NoteTree : Tree() {
 
     fun getSelectedNode(): FileTreeNode? {
         return selectionPath?.lastPathComponent as? FileTreeNode
+    }
+
+    private fun expandAllNodes(expandedNodes: ArrayList<FileTreeNode>) {
+        expandedNodes.forEach { expandPath(TreeUtil.getPath(root, it)) }
     }
 
     private fun initKeys() {
@@ -106,4 +115,21 @@ class NoteTree : Tree() {
     }
 
     private fun getProject() = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)
+
+    private fun getDefaultTreeModel() = model as DefaultTreeModel
+
+    private fun getExpandedNodes(node: FileTreeNode): ArrayList<FileTreeNode> {
+        val list = LinkedList<FileTreeNode>()
+        val expandedNodes = ArrayList<FileTreeNode>()
+
+        list.add(node)
+        while (list.isNotEmpty()) {
+            val treeNode = list.pop()
+            if (isExpanded(TreeUtil.getPath(root, treeNode))) {
+                expandedNodes.add(treeNode)
+            }
+            list.addAll(treeNode.children().asSequence().mapNotNull { it as FileTreeNode })
+        }
+        return expandedNodes
+    }
 }
