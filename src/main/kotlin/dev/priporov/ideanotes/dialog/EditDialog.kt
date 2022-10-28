@@ -31,6 +31,7 @@ class EditDialog(
     }
 
     override fun createCenterPanel(): JComponent = panel
+    override fun getPreferredFocusedComponent(): JComponent = edit
     override fun doOKAction() {
         if (edit.text.isNotBlank()) {
             function.invoke(edit.text)

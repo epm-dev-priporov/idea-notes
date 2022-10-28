@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
-    <name>Notes</name>
-
+    <name>NotesTree</name>
+    <version>0.9.0</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml, sql or http.
@@ -13,7 +13,6 @@
     </li>
 
   ]]></description>
-
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
