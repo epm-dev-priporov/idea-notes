@@ -1,4 +1,4 @@
-# idea-notes
+# NotesTree
 
 The plugin adds ability to write tree structure global notes in such formats as txt, json, xml, yaml, sql or http.
 
