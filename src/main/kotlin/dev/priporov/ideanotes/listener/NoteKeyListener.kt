@@ -7,7 +7,6 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 
 class NoteKeyListener(private val tree: NoteTree) : KeyListener {
-// TODO: 05.10.2022 complete the feature or remove at all
 
     override fun keyTyped(e: KeyEvent?) {}
     override fun keyReleased(e: KeyEvent?) {}

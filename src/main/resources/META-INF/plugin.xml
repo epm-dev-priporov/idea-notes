@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>0.9.0</version>
+    <version>0.9.1</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml, sql or http.
@@ -16,7 +16,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="left"
+        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
