@@ -1,32 +1,35 @@
 <idea-plugin>
-    <id>dev.priporov.idea.notes</id>
-    <name>NotesTree</name>
-    <version>0.9.1</version>
-    <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
-    <description><![CDATA[
-    The plugin adds ability to write tree structure notes in such formats as txt, json, xml, yaml, sql or http.
-    <li>The plugin page
-        <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a>
-    </li>
-    <li>
+	<id>dev.priporov.idea.notes</id>
+	<name>NotesTree</name>
+	<version>0.9.2</version>
+	<vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
+	<description><![CDATA[
+    <p>The plugin adds ability to write tree structure notes in such formats as txt, md, json, xml, yaml, sql or http.
+    It also is supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
+    </p>
+    </p>
+    <p>The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a></p>
+    <p>
         <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img.png?raw=true">
-    </li>
-
+    </p>
+    <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
+    <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
   ]]></description>
-    <depends>com.intellij.modules.platform</depends>
+	<depends>com.intellij.modules.platform</depends>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
-                    factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
-        <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
-        <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
+	<extensions defaultExtensionNs="com.intellij">
+		<toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
+					factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
+		<editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
+		<nonProjectFileWritingAccessExtension
+				implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
 
-        <projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
-        <projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.node.RootFileTreeNode"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.StateService"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.common.VirtualFileContainer"/>
+		<projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
+		<projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
+		<applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
+		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.node.RootFileTreeNode"/>
+		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.StateService"/>
+		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.common.VirtualFileContainer"/>
 
-    </extensions>
+	</extensions>
 </idea-plugin>

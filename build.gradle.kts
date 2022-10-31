@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.priporov"
-version = "0.9.1"
+version = "0.9.2"
 
 repositories {
     mavenCentral()
