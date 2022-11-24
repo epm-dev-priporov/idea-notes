@@ -35,10 +35,11 @@ class NoteTree : Tree() {
     }
 
     fun insert(info: NodeCreationInfo): FileTreeNode {
-        val targetNode = info.targetNode
-        val index = targetNode.childCount
-        val fileTreeNode = FileTreeNode(info)
+        return insert( info.targetNode, FileTreeNode(info))
+    }
 
+    fun insert(targetNode:FileTreeNode ,fileTreeNode: FileTreeNode): FileTreeNode {
+        val index = targetNode.childCount
         targetNode.insert(fileTreeNode, index)
 
         stateService.saveNodeInfo(fileTreeNode)
@@ -61,6 +62,7 @@ class NoteTree : Tree() {
         WriteActionUtils.runWriteAction { node.rename(newName) }
         stateService.saveNodeInfo(node)
         stateService.updateOrder(parent)
+        stateService.updateOrder(node)
 
         val expandedNodes = getExpandedNodes(parent)
         getDefaultTreeModel().reload(parent)
@@ -114,9 +116,9 @@ class NoteTree : Tree() {
         }
     }
 
-    private fun getProject() = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)
+    fun getDefaultTreeModel() = model as DefaultTreeModel
 
-    private fun getDefaultTreeModel() = model as DefaultTreeModel
+    private fun getProject() = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)
 
     private fun getExpandedNodes(node: FileTreeNode): ArrayList<FileTreeNode> {
         val list = LinkedList<FileTreeNode>()

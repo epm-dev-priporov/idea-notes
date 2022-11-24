@@ -6,8 +6,6 @@ import dev.priporov.ideanotes.dto.NodeCopyData
 import dev.priporov.ideanotes.dto.NodeCutData
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
-import dev.priporov.ideanotes.tree.state.NodeInfo
-import dev.priporov.ideanotes.util.FileNodeUtils.Companion.readFileContentByteArray
 import dev.priporov.ideanotes.util.IconUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.*

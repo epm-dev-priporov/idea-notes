@@ -5,6 +5,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.DOCKERFILE
+import dev.priporov.ideanotes.tree.common.DOCKER_COMPOSE
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
@@ -32,15 +34,21 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
 class AddChildNodeAction(
     private val tree: NoteTree,
     private val targetNode: FileTreeNode,
-    definition: String,
+    private val definition: String,
     private val extension: String,
     icon: Icon
 ) : AnAction(definition, "", icon) {
 
     override fun actionPerformed(e: AnActionEvent) {
-        EditDialog("Add node") { value ->
-            tree.insert(NodeCreationInfo(targetNode, value, extension))
-        }.show()
+        when (definition) {
+            DOCKERFILE -> tree.insert(NodeCreationInfo(targetNode, DOCKERFILE, extension))
+            DOCKER_COMPOSE -> tree.insert(NodeCreationInfo(targetNode, "docker_compose", extension))
+            else -> {
+                EditDialog("Add node") { value ->
+                    tree.insert(NodeCreationInfo(targetNode, value, extension))
+                }.show()
+            }
+        }
     }
 
 }

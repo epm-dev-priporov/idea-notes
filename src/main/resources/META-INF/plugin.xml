@@ -1,11 +1,11 @@
 <idea-plugin>
-	<id>dev.priporov.idea.notes</id>
-	<name>NotesTree</name>
-	<version>0.9.2</version>
-	<vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
-	<description><![CDATA[
+    <id>dev.priporov.idea.notes</id>
+    <name>NotesTree</name>
+    <version>1.0.0</version>
+    <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
+    <description><![CDATA[
     <p>The plugin adds ability to write tree structure notes in such formats as txt, md, json, xml, yaml, sql or http.
-    It also is supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
+    It also supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
     </p>
     </p>
     <p>The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a></p>
@@ -15,21 +15,40 @@
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
   ]]></description>
-	<depends>com.intellij.modules.platform</depends>
+    <change-notes>
+        Added capability to import/export all either all notes or particular node
+    </change-notes>
+    <change-notes>
+        Fixed icons yaml, xml bug
+    </change-notes>
+    <change-notes>
+        Fixed notes ordering issue after node rename
+    </change-notes>
+    <change-notes>
+        Multiple selected nodes can be removed now
+    </change-notes>
+    <change-notes>
+        Added Dockerfile and docker_compose.yaml node types
+    </change-notes>
 
-	<extensions defaultExtensionNs="com.intellij">
-		<toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
-					factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
-		<editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
-		<nonProjectFileWritingAccessExtension
-				implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
+    <depends>com.intellij.modules.platform</depends>
 
-		<projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
-		<projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
-		<applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
-		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.node.RootFileTreeNode"/>
-		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.StateService"/>
-		<applicationService serviceImplementation="dev.priporov.ideanotes.tree.common.VirtualFileContainer"/>
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
+                    factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
+        <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
+        <nonProjectFileWritingAccessExtension
+                implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
 
-	</extensions>
+        <projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
+        <projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.node.RootFileTreeNode"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.StateService"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.common.VirtualFileContainer"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeInitializer"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.exporting.ExportService"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.ImportService"/>
+
+    </extensions>
 </idea-plugin>

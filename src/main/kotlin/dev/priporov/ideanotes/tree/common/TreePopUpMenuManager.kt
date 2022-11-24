@@ -62,6 +62,7 @@ class MousePopupMenuActionGroup(tree: NoteTree, selectedNodeClicked: Boolean) : 
             add(CopyNodeAction(tree, "Copy"))
             add(PasteNodeAction(tree, "Past"))
             add(RenameNodeAction(tree, "Rename"))
+            add(ExportNodeAction(tree, "Export"))
             add(DeleteNodeAction(tree, targetNode, "Delete"))
         }
     }

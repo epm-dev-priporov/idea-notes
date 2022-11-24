@@ -5,30 +5,41 @@ import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.util.IconUtils
 import javax.swing.Icon
 
+const val DOCKERFILE = "Dockerfile"
+const val DOCKER_COMPOSE = "Docker compose"
+
 class ExtensionFileHelper {
     companion object {
         val EXTENSIONS: MutableMap<String, ExtensionData> = sequenceOf(
-                ExtensionData("txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-                ExtensionData("json", "Json node", "json/json16.png", "json/json16.png"),
-                ExtensionData("xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
-                ExtensionData("yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
-                ExtensionData("sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
+            ExtensionData("txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
+            ExtensionData("json", "Json node", "json/json16.png", "json/json16.png"),
+            ExtensionData("xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
+            ExtensionData("yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
+            ExtensionData("sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
         ).associateByTo(HashMap()) { it.extension }
 
         init {
             sequenceOf(
-                    PluginDependency(
-                            "org.intellij.plugins.markdown",
-                            ExtensionData("md", "Markdown node", "md/markdown16.png", "md/markdown16.png"),
-                    ),
-                    PluginDependency(
-                            "PlantUML integration",
-                            ExtensionData("puml", "Puml node", "puml/puml16.png", "puml/puml16.png"),
-                    ),
-                    PluginDependency(
-                            "com.jetbrains.restClient",
-                            ExtensionData("http", "Http node", "http/http16.png", "http/http16.png")
-                    ),
+                PluginDependency(
+                    "org.intellij.plugins.markdown",
+                    ExtensionData("md", "Markdown node", "md/markdown16.png", "md/markdown16.png"),
+                ),
+                PluginDependency(
+                    "PlantUML integration",
+                    ExtensionData("puml", "Puml node", "puml/puml16.png", "puml/puml16.png"),
+                ),
+                PluginDependency(
+                    "com.jetbrains.restClient",
+                    ExtensionData("http", "Http node", "http/http16.png", "http/http16.png")
+                ),
+                PluginDependency(
+                    "Docker",
+                    ExtensionData("", DOCKERFILE, "docker/docker.png", "docker/docker.png"),
+                ),
+                PluginDependency(
+                    "Docker",
+                    ExtensionData("yaml", DOCKER_COMPOSE, "docker/dockercompose.png", "docker/dockercompose.png"),
+                ),
             ).forEach { applyExtension(it) }
         }
 
@@ -40,20 +51,22 @@ class ExtensionFileHelper {
             }
         }
 
+        fun containsExtension(extension: String) = EXTENSIONS.keys.contains(extension)
+
     }
 
 }
 
 class PluginDependency(
-        val id: String,
-        val extendionData: ExtensionData
+    val id: String,
+    val extendionData: ExtensionData
 )
 
 class ExtensionData(
-        val extension: String,
-        val definition: String,
-        leafIconPath: String,
-        nodeIconPath: String,
-        val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
-        val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
+    val extension: String,
+    val definition: String,
+    leafIconPath: String,
+    nodeIconPath: String,
+    val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
+    val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
 )
