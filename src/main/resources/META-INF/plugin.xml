@@ -16,19 +16,11 @@
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
   ]]></description>
     <change-notes>
-        Added capability to import/export all either all notes or particular node
-    </change-notes>
-    <change-notes>
-        Fixed icons yaml, xml bug
-    </change-notes>
-    <change-notes>
-        Fixed notes ordering issue after node rename
-    </change-notes>
-    <change-notes>
-        Multiple selected nodes can be removed now
-    </change-notes>
-    <change-notes>
-        Added Dockerfile and docker_compose.yaml node types
+        Added capability to import/export all either all notes or particular node.
+        Fixed icons yaml, xml bug.
+        Fixed notes ordering issue after node rename.
+        Multiple selected nodes can be removed now.
+        Added Dockerfile and docker_compose.yaml node types.
     </change-notes>
 
     <depends>com.intellij.modules.platform</depends>
