@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p>The plugin adds ability to write tree structure notes in such formats as txt, md, json, xml, yaml, sql or http.
@@ -14,13 +14,15 @@
     </p>
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
+    <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
+
   ]]></description>
     <change-notes>
-        Added capability to import/export all either all notes or particular node.
-        Fixed icons yaml, xml bug.
-        Fixed notes ordering issue after node rename.
-        Multiple selected nodes can be removed now.
-        Added Dockerfile and docker_compose.yaml node types.
+        <![CDATA[
+        <ul>
+            <li>Supported IntellijIdea 2022.3</li>
+        </ul>
+        ]]>
     </change-notes>
 
     <depends>com.intellij.modules.platform</depends>

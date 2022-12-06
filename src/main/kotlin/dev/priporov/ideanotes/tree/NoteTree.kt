@@ -99,20 +99,20 @@ class NoteTree : Tree() {
 
     private fun initKeys() {
         // add popup for 'ShowPopupMenu' shortcut, like mouse right click button
-        ActionUtil.getShortcutSet("ShowPopupMenu").shortcuts.forEach { shortcut ->
-            ShowTreePopUpMenuAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        ActionUtil.getShortcutSet("ShowPopupMenu").shortcuts.also{ shortcutSet ->
+            ShowTreePopUpMenuAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Copy").shortcuts.forEach { shortcut ->
-            CopyNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        ActionUtil.getShortcutSet("\$Copy").shortcuts.also{ shortcutSet ->
+            CopyNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Cut").shortcuts.forEach { shortcut ->
-            CutNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        ActionUtil.getShortcutSet("\$Cut").shortcuts.also{ shortcutSet ->
+            CutNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Paste").shortcuts.forEach { shortcut ->
-            PasteNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        ActionUtil.getShortcutSet("\$Paste").shortcuts.also{ shortcutSet ->
+            PasteNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("RenameElement").shortcuts.forEach { shortcut ->
-            RenameNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(shortcut), this)
+        ActionUtil.getShortcutSet("RenameElement").shortcuts.also{ shortcutSet ->
+            RenameNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
     }
 
