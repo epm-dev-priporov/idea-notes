@@ -43,7 +43,13 @@ object FileNodeUtils {
         if (id == null || extension == null) {
             return null
         }
-        val file = File("${baseDir.path}${fileSeparator}${id}.${extension}")
+
+        val filename = "${baseDir.path}${fileSeparator}${id}"
+        val file =  if(extension.isBlank()){
+            File(filename)
+        } else {
+            File("$filename.${extension}")
+        }
 
         if (!file.exists()) {
             file.createNewFile()

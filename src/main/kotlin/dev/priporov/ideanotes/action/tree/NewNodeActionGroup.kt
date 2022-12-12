@@ -16,7 +16,7 @@ class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup(
     init {
         templatePresentation.text = nodeName
         isPopup = true
-        ExtensionFileHelper.EXTENSIONS.values.forEach {
+        ExtensionFileHelper.SORTED_EXTENSIONS.forEach {
             add(NewNodeAction(tree, it.extension, it.definition, it.leafIcon))
         }
     }

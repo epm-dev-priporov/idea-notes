@@ -10,37 +10,45 @@ const val DOCKER_COMPOSE = "Docker compose"
 
 class ExtensionFileHelper {
     companion object {
+
         val EXTENSIONS: MutableMap<String, ExtensionData> = sequenceOf(
-            ExtensionData("txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-            ExtensionData("json", "Json node", "json/json16.png", "json/json16.png"),
-            ExtensionData("xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
-            ExtensionData("yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
-            ExtensionData("sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
+            ExtensionData(0, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
+            ExtensionData(1, "json", "Json node", "json/json16.png", "json/json16.png"),
+            ExtensionData(2, "xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
+            ExtensionData(3, "yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
+            ExtensionData(4, "sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
+            ExtensionData(10, "java", "Java node", "code/java.png", "code/java.png"),
+            ExtensionData(11, "kt", "Kotlin node", "code/kotlin.png", "code/kotlin.png"),
+            ExtensionData(12, "", "Package", "package/package.png", "package/package.png"),
         ).associateByTo(HashMap()) { it.extension }
+
+        val SORTED_EXTENSIONS: List<ExtensionData>
 
         init {
             sequenceOf(
                 PluginDependency(
                     "org.intellij.plugins.markdown",
-                    ExtensionData("md", "Markdown node", "md/markdown16.png", "md/markdown16.png"),
+                    ExtensionData(5, "md", "Markdown node", "md/markdown16.png", "md/markdown16.png"),
                 ),
                 PluginDependency(
                     "PlantUML integration",
-                    ExtensionData("puml", "Puml node", "puml/puml16.png", "puml/puml16.png"),
+                    ExtensionData(6, "puml", "Puml node", "puml/puml16.png", "puml/puml16.png"),
                 ),
                 PluginDependency(
                     "com.jetbrains.restClient",
-                    ExtensionData("http", "Http node", "http/http16.png", "http/http16.png")
+                    ExtensionData(7, "http", "Http node", "http/http16.png", "http/http16.png")
                 ),
                 PluginDependency(
                     "Docker",
-                    ExtensionData("", DOCKERFILE, "docker/docker.png", "docker/docker.png"),
+                    ExtensionData(8, "", DOCKERFILE, "docker/docker.png", "docker/docker.png"),
                 ),
                 PluginDependency(
                     "Docker",
-                    ExtensionData("yaml", DOCKER_COMPOSE, "docker/dockercompose.png", "docker/dockercompose.png"),
+                    ExtensionData(9, "yaml", DOCKER_COMPOSE, "docker/dockercompose.png", "docker/dockercompose.png"),
                 ),
             ).forEach { applyExtension(it) }
+
+            SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.toList()
         }
 
         private fun applyExtension(pluginDependency: PluginDependency) {
@@ -63,6 +71,7 @@ class PluginDependency(
 )
 
 class ExtensionData(
+    val index: Int,
     val extension: String,
     val definition: String,
     leafIconPath: String,

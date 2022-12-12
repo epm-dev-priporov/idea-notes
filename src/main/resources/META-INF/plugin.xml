@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p>The plugin adds ability to write tree structure notes in such formats as txt, md, json, xml, yaml, sql or http.
@@ -20,7 +20,10 @@
     <change-notes>
         <![CDATA[
         <ul>
-            <li>Supported IntellijIdea 2022.3</li>
+            <li>Added open action to drop-down menu</li>
+            <li>Added java and kotlin nodes</li>
+            <li>Added package node</li>
+            <li>Small fixes</li>
         </ul>
         ]]>
     </change-notes>
