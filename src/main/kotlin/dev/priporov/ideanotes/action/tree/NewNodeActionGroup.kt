@@ -12,6 +12,8 @@ import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
 import javax.swing.Icon
 
+private val ADD_ICON = IconUtils.toIcon("menu/addIcon.png")
+
 class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup() {
     init {
         templatePresentation.text = nodeName
@@ -22,7 +24,7 @@ class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup(
     }
 
     override fun update(event: AnActionEvent) {
-        event.presentation.setIcon(IconUtils.toIcon("menu/addIcon.png"))
+        event.presentation.setIcon(ADD_ICON)
         super.update(event)
     }
 

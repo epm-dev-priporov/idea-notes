@@ -55,29 +55,27 @@ class ImportService {
     }
 
     private fun regenerateIds(oldState: TreeState): TreeState {
-        val map = HashMap<String, String>()
+        val mapOfIds = HashMap<String, String>()
         val newState = TreeState()
         for ((oldId, nodeInfo) in oldState.nodes) {
             val node = newNode(nodeInfo)
             newState.saveNode(node)
-            map[oldId] = node.id!!
+            mapOfIds[oldId] = node.id!!
         }
 
         val childIds = oldState.order[ROOT_ID]
-        childIds?.map { map[it] }?.also { list ->
+        childIds?.map { mapOfIds[it] }?.also { list ->
             newState.order[ROOT_ID] = list
         }
 
         for ((oldId, childrenIds) in oldState.order) {
-            val newId = map[oldId]
-            newState.order[newId] = childrenIds.map { map[it] }
+            val newId = mapOfIds[oldId]
+            newState.order[newId] = childrenIds.map { mapOfIds[it] }
         }
         return newState
     }
 
-    private fun newNode(
-        nodeInfo: NodeStateInfo
-    ): FileTreeNode {
+    private fun newNode(nodeInfo: NodeStateInfo): FileTreeNode {
         val node = FileTreeNode(nodeInfo)
         WriteActionUtils.runWriteAction {
             node.generateNewId()

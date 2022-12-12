@@ -12,10 +12,12 @@ import dev.priporov.ideanotes.util.WriteActionUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 
+private val PASTE_ICON = IconUtils.toIcon("menu/paste.png")
+
 class PasteNodeAction(
     private val tree: NoteTree,
     value: String? = null
-) : AnAction(value, "", IconUtils.toIcon("menu/paste.png")) {
+) : AnAction(value, "", PASTE_ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard

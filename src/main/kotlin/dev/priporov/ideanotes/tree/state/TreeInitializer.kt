@@ -16,10 +16,7 @@ class TreeInitializer {
         val model = tree.getDefaultTreeModel()
         val root = model.root as FileTreeNode
 
-        val createdNodes: MutableMap<String?, FileTreeNode> = state.nodes.values
-            .asSequence()
-            .map { FileTreeNode(it) }
-            .associateByTo(HashMap()) { it.id }
+        val createdNodes: MutableMap<String?, FileTreeNode> = createAndGroupNodesById(state)
 
         createdNodes[root.id] = root
         val queue: Queue<String> = LinkedList<String>().apply { add(root.id!!) }
@@ -51,10 +48,7 @@ class TreeInitializer {
         }
         val root = model.root as FileTreeNode
 
-        val createdNodes: MutableMap<String?, FileTreeNode> = state.nodes.values
-            .asSequence()
-            .map { FileTreeNode(it) }
-            .associateByTo(HashMap()) { it.id }
+        val createdNodes: MutableMap<String?, FileTreeNode> = createAndGroupNodesById(state)
 
         createdNodes[root.id] = root
         val queue = LinkedList<String?>().apply { add(root.id) }
@@ -79,6 +73,13 @@ class TreeInitializer {
         }
 
         model.reload()
+    }
+
+    private fun createAndGroupNodesById(state: TreeState): MutableMap<String?, FileTreeNode> {
+        return state.nodes.values
+            .asSequence()
+            .map { FileTreeNode(it) }
+            .associateByTo(HashMap()) { it.id }
     }
 
 }

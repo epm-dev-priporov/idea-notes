@@ -7,6 +7,7 @@ import javax.swing.Icon
 
 const val DOCKERFILE = "Dockerfile"
 const val DOCKER_COMPOSE = "Docker compose"
+val UNKNOWN_FILE_ICON = IconUtils.toIcon("unknown.png")
 
 class ExtensionFileHelper {
     companion object {
@@ -54,7 +55,7 @@ class ExtensionFileHelper {
         private fun applyExtension(pluginDependency: PluginDependency) {
             val pluginId: PluginId? = PluginId.findId(pluginDependency.id)
             if (pluginId != null && PluginManager.getInstance().findEnabledPlugin(pluginId) != null) {
-                val data = pluginDependency.extendionData
+                val data = pluginDependency.extensionData
                 EXTENSIONS[data.extension] = data
             }
         }
@@ -67,7 +68,7 @@ class ExtensionFileHelper {
 
 class PluginDependency(
     val id: String,
-    val extendionData: ExtensionData
+    val extensionData: ExtensionData
 )
 
 class ExtensionData(
@@ -79,3 +80,4 @@ class ExtensionData(
     val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
     val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
 )
+
