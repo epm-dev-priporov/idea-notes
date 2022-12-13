@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.tree.common
 
 import com.intellij.ide.plugins.PluginManager
+import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.util.IconUtils
 import javax.swing.Icon
@@ -18,14 +19,38 @@ class ExtensionFileHelper {
             ExtensionData(2, "xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
             ExtensionData(3, "yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
             ExtensionData(4, "sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
-            ExtensionData(10, "java", "Java node", "code/java.png", "code/java.png"),
-            ExtensionData(11, "kt", "Kotlin node", "code/kotlin.png", "code/kotlin.png"),
-            ExtensionData(12, "", "Package", "package/package.png", "package/package.png"),
+            ExtensionData(13, "", "Package", "package/package.png", "package/package.png"),
         ).associateByTo(HashMap()) { it.extension }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
 
         init {
+            val fullApplicationName = ApplicationInfo.getInstance().fullApplicationName
+            when {
+                isIntellijIdea(fullApplicationName) -> {
+                    sequenceOf(
+                        ExtensionData(10, "java", "Java node", "code/java.png", "code/java.png"),
+                        ExtensionData(11, "kt", "Kotlin node", "code/kotlin.png", "code/kotlin.png"),
+                        ExtensionData(12, "py", "Python node", "code/python.png", "code/python.png"),
+                    ).forEach { EXTENSIONS[it.extension] = it }
+                }
+                isPyCharm(fullApplicationName) -> {
+                    ExtensionData(12, "py", "Python node", "code/python.png", "code/python.png").also {
+                        EXTENSIONS[it.extension] = it
+                    }
+                }
+            }
+
+            initPluginDependendFiles()
+
+            SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.toList()
+        }
+
+        private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
+
+        private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
+
+        private fun initPluginDependendFiles() {
             sequenceOf(
                 PluginDependency(
                     "org.intellij.plugins.markdown",
@@ -48,8 +73,6 @@ class ExtensionFileHelper {
                     ExtensionData(9, "yaml", DOCKER_COMPOSE, "docker/dockercompose.png", "docker/dockercompose.png"),
                 ),
             ).forEach { applyExtension(it) }
-
-            SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.toList()
         }
 
         private fun applyExtension(pluginDependency: PluginDependency) {
