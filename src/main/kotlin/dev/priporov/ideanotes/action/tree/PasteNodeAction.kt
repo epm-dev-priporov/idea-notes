@@ -32,7 +32,8 @@ class PasteNodeAction(
             val creationInfo = NodeCreationInfo(
                 tree.getSelectedNode() ?: tree.root,
                 data.nodeInfo.name,
-                data.nodeInfo.extension
+                data.nodeInfo.extension,
+                data.nodeInfo.type
             )
             val copiedNode = tree.insert(creationInfo)
 
@@ -48,7 +49,8 @@ class PasteNodeAction(
         val creationInfo = NodeCreationInfo(
             targetNode ?: tree.root,
             data.nodeInfo.name,
-            data.nodeInfo.extension
+            data.nodeInfo.extension,
+            data.nodeInfo.type
         )
         val copiedNode = tree.insert(creationInfo)
         WriteActionUtils.runWriteAction {

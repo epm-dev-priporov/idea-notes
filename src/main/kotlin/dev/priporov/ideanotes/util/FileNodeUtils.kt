@@ -45,11 +45,7 @@ object FileNodeUtils {
         }
 
         val filename = "${baseDir.path}${fileSeparator}${id}"
-        val file =  if(extension == "_"){
-            File(filename)
-        } else {
-            File("$filename.${extension}")
-        }
+        val file = File("$filename.${extension}")
 
         if (!file.exists()) {
             file.createNewFile()

@@ -6,6 +6,7 @@ import com.intellij.openapi.fileChooser.FileChooserFactory.getInstance
 import com.intellij.openapi.fileChooser.FileSaverDescriptor
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.ROOT_ID
 import dev.priporov.ideanotes.tree.state.StateService
@@ -57,12 +58,13 @@ class ExportService {
         Files.walkFileTree(
             sourceFolderPath,
             FileVisitor(
+                stateService,
                 zos,
                 newState,
                 map,
                 sourceFolderPath,
                 filesToRemove,
-                getFilter(node, getAllIds(node))
+                getFilter(getAllIds(node))
             )
         )
 
@@ -81,10 +83,8 @@ class ExportService {
         return zipPath.toFile()
     }
 
-    private fun getFilter(node: FileTreeNode, allIds:Set<String>) = if (node.id != ROOT_ID) { path: Path ->
+    private fun getFilter(allIds: Set<String>) = { path: Path ->
         allIds.contains(path.nameWithoutExtension)
-    } else { _ ->
-        true
     }
 
     private fun getAllIds(node: FileTreeNode): HashSet<String> {
@@ -140,6 +140,7 @@ class ExportService {
 }
 
 class FileVisitor(
+    private val stateService: StateService,
     private val zos: ZipOutputStream,
     private val newState: TreeState,
     private val map: HashMap<String, String>,
@@ -152,7 +153,8 @@ class FileVisitor(
         if (!filter.invoke(path)) {
             return FileVisitResult.CONTINUE
         }
-        val copiedNodeWithNewId = newNodeFromFile(path)
+        val info = stateService.state.nodes[path.nameWithoutExtension]
+        val copiedNodeWithNewId = newNodeFromFile(path, info!!.type)
 
         newState.saveNode(copiedNodeWithNewId)
         map[path.nameWithoutExtension] = copiedNodeWithNewId.id!!
@@ -167,11 +169,11 @@ class FileVisitor(
         return FileVisitResult.CONTINUE
     }
 
-    private fun newNodeFromFile(file: Path): FileTreeNode {
+    private fun newNodeFromFile(file: Path, type: NodeType?): FileTreeNode {
         val name = file.nodeId()
         val extension = file.extension
 
-        return FileTreeNode(name, extension).apply {
+        return FileTreeNode(name, extension, type = type).apply {
             initFile()
             WriteActionUtils.runWriteAction { getFile()?.setBinaryContent(file.readBytes()) }
         }

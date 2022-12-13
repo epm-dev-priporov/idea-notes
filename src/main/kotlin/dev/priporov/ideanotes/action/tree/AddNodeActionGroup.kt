@@ -6,8 +6,9 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.DOCKERFILE
-import dev.priporov.ideanotes.tree.common.DOCKER_COMPOSE
+import dev.priporov.ideanotes.tree.common.ExtensionData
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
@@ -20,7 +21,7 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
         isPopup = true
         templatePresentation.text = actionName
         ExtensionFileHelper.SORTED_EXTENSIONS.forEach {
-            add(AddChildNodeAction(tree, targetNode, it.definition, it.extension, it.leafIcon))
+            add(AddChildNodeAction(tree, targetNode, it))
         }
     }
 
@@ -35,18 +36,18 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
 class AddChildNodeAction(
     private val tree: NoteTree,
     private val targetNode: FileTreeNode,
-    private val definition: String,
-    private val extension: String,
-    icon: Icon
-) : AnAction(definition, "", icon) {
+    private val extensionData: ExtensionData
+) : AnAction(extensionData.definition, "", extensionData.leafIcon) {
 
     override fun actionPerformed(e: AnActionEvent) {
-        when (definition) {
-            DOCKERFILE -> tree.insert(NodeCreationInfo(targetNode, DOCKERFILE, extension))
-            DOCKER_COMPOSE -> tree.insert(NodeCreationInfo(targetNode, "docker_compose", extension))
+        val extension = extensionData.extension
+
+        when (extensionData.type) {
+            NodeType.DOCKERFILE -> tree.insert(NodeCreationInfo(targetNode, DOCKERFILE, extension, NodeType.DOCKERFILE))
+            NodeType.DOCKER_COMPOSE -> tree.insert(NodeCreationInfo(targetNode, "docker_compose", extension, NodeType.DOCKER_COMPOSE))
             else -> {
                 EditDialog("Add node") { value ->
-                    tree.insert(NodeCreationInfo(targetNode, value, extension))
+                    tree.insert(NodeCreationInfo(targetNode, value, extension, extensionData.type))
                 }.show()
             }
         }

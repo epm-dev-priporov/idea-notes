@@ -38,12 +38,14 @@ class ImportService {
         }
     }
 
-    private fun importFile(file: File, tree: NoteTree){
+    private fun importFile(file: File, tree: NoteTree) {
         val extension = file.extension
         val name = file.nameWithoutExtension
-
-        val node = tree.insert(NodeCreationInfo(tree.root, name, extension))
-        FileNodeUtils.copyToNode(file, node)
+        val type = ExtensionFileHelper.SORTED_EXTENSIONS.find { it.extension == extension }?.type
+        if (type != null) {
+            val node = tree.insert(NodeCreationInfo(tree.root, name, extension, type))
+            FileNodeUtils.copyToNode(file, node)
+        }
     }
 
     private fun importFromZipFile(file: File, tree: NoteTree) {

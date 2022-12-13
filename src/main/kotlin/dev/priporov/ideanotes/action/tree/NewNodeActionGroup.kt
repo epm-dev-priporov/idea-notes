@@ -6,11 +6,11 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.DOCKERFILE
-import dev.priporov.ideanotes.tree.common.DOCKER_COMPOSE
+import dev.priporov.ideanotes.tree.common.ExtensionData
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
-import javax.swing.Icon
 
 private val ADD_ICON = IconUtils.toIcon("menu/addIcon.png")
 
@@ -19,7 +19,7 @@ class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup(
         templatePresentation.text = nodeName
         isPopup = true
         ExtensionFileHelper.SORTED_EXTENSIONS.forEach {
-            add(NewNodeAction(tree, it.extension, it.definition, it.leafIcon))
+            add(NewNodeAction(tree, it))
         }
     }
 
@@ -32,25 +32,23 @@ class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup(
 
 class NewNodeAction(
     private val tree: NoteTree,
-    private val extension: String = "txt",
-    private val definition: String,
-    icon: Icon
-) : AnAction(definition, "", icon) {
+    private val extensionData: ExtensionData
+) : AnAction(extensionData.definition, "", extensionData.leafIcon) {
 
     override fun actionPerformed(e: AnActionEvent) {
-        when (definition) {
-            DOCKERFILE -> insertToRoot(DOCKERFILE)
-            DOCKER_COMPOSE -> insertToRoot("docker_compose")
+        when (extensionData.type) {
+            NodeType.DOCKERFILE -> insertToRoot(DOCKERFILE, extensionData)
+            NodeType.DOCKER_COMPOSE -> insertToRoot("docker_compose", extensionData)
             else -> {
                 EditDialog("New node") { value ->
-                    insertToRoot(value)
+                    insertToRoot(value, extensionData)
                 }.show()
             }
         }
     }
 
-    private fun insertToRoot(value: String) {
-        tree.insert(NodeCreationInfo(tree.root, value, extension))
+    private fun insertToRoot(value: String, extensionData: ExtensionData) {
+        tree.insert(NodeCreationInfo(tree.root, value, extensionData.extension, extensionData.type))
     }
 
 }
