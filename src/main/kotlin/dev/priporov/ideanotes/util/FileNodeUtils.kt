@@ -45,7 +45,7 @@ object FileNodeUtils {
         }
 
         val filename = "${baseDir.path}${fileSeparator}${id}"
-        val file =  if(extension.isBlank()){
+        val file =  if(extension == "_"){
             File(filename)
         } else {
             File("$filename.${extension}")

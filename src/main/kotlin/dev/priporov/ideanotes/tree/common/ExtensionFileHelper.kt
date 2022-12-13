@@ -19,7 +19,7 @@ class ExtensionFileHelper {
             ExtensionData(2, "xml", "Xml node", "yaml/yaml16.png", "yaml/yaml16.png"),
             ExtensionData(3, "yaml", "Yaml node", "xml/xml16.png", "xml/xml16.png"),
             ExtensionData(4, "sql", "Sql node", "sql/sql16.png", "sql/sql16.png"),
-            ExtensionData(13, "", "Package", "package/package.png", "package/package.png"),
+            ExtensionData(13, "_", "Package", "package/package.png", "package/package.png"),
         ).associateByTo(HashMap()) { it.extension }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
