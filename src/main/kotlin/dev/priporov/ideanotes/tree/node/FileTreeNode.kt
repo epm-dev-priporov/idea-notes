@@ -4,6 +4,7 @@ package dev.priporov.ideanotes.tree.node
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeStateInfo
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.FileNodeUtils
 import dev.priporov.ideanotes.util.FileNodeUtils.generateNodeName
@@ -14,12 +15,13 @@ open class FileTreeNode(
     var extension: String? = null,
     var id: String? = generateNodeName(name),
     private var file: VirtualFile? = null,
+    var type: NodeType?
 ) : DefaultMutableTreeNode() {
-    constructor(node: FileTreeNode) : this(node.name, node.extension, node.id) {
+    constructor(node: FileTreeNode) : this(node.name, node.extension, node.id, type = node.type) {
         file = FileNodeUtils.initFile(id, node.extension)
     }
 
-    constructor(node: NodeStateInfo) : this(node.name, node.extension, node.id) {
+    constructor(node: NodeStateInfo) : this(node.name, node.extension, node.id, type = node.type) {
         file = FileNodeUtils.initFile(id, node.extension)
     }
 
@@ -29,13 +31,14 @@ open class FileTreeNode(
 
     constructor(info: NodeCreationInfo) : this(
         name = info.name,
-        extension = info.extension
+        extension = info.extension,
+        type = info.type
     ) {
         id = generateNodeName(info.name)
         file = FileNodeUtils.initFile(id, info.extension)
     }
 
-    constructor(nodeInfo: NodeInfo) : this(nodeInfo.name, nodeInfo.extension, nodeInfo.id) {
+    constructor(nodeInfo: NodeInfo) : this(nodeInfo.name, nodeInfo.extension, nodeInfo.id, type = nodeInfo.type) {
         file = FileNodeUtils.initFile(id, nodeInfo.extension)
     }
 

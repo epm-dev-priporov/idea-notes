@@ -16,7 +16,7 @@ class NoteCellRenderer : NodeRenderer() {
         hasFocus: Boolean
     ) {
         if (value is FileTreeNode) {
-            val extensionData = ExtensionFileHelper.EXTENSIONS[value.extension]
+            val extensionData = ExtensionFileHelper.EXTENSIONS[value.type]
             val icon = if (leaf) extensionData?.leafIcon else extensionData?.nodeIcon
             if (icon == null) {
                 setIcon(UNKNOWN_FILE_ICON)
