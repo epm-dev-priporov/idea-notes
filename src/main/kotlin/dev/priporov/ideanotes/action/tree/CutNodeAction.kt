@@ -10,11 +10,11 @@ import dev.priporov.ideanotes.util.IconUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.*
 import java.awt.datatransfer.DataFlavor.stringFlavor
-
+private val CUT_ICON = IconUtils.toIcon("menu/cut.png")
 class CutNodeAction(
     private val tree: NoteTree,
     value: String? = null
-) : AnAction(value, "", IconUtils.toIcon("menu/cut.png")) {
+) : AnAction(value, "", CUT_ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val node = tree.lastSelectedPathComponent as? FileTreeNode ?: return

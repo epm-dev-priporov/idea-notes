@@ -15,10 +15,12 @@ import java.awt.Toolkit
 import java.awt.datatransfer.*
 import java.awt.datatransfer.DataFlavor.stringFlavor
 
+private val COPY_ICON = IconUtils.toIcon("menu/copy.png")
+
 class CopyNodeAction(
     private val tree: NoteTree,
     value: String? = null
-) : AnAction(value, "", IconUtils.toIcon("menu/copy.png")) {
+) : AnAction(value, "", COPY_ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val node = tree.lastSelectedPathComponent as? FileTreeNode ?: return
