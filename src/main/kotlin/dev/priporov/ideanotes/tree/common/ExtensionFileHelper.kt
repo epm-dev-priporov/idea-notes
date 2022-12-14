@@ -27,7 +27,7 @@ class ExtensionFileHelper {
         init {
             val fullApplicationName = ApplicationInfo.getInstance().fullApplicationName
             when {
-                isIntellijIdea(fullApplicationName) -> {
+                isIntellijIdea(fullApplicationName) || isAndroidStudio(fullApplicationName) -> {
                     sequenceOf(
                         ExtensionData(10, NodeType.JAVA, "java", "Java node", "code/java.png", "code/java.png"),
                         ExtensionData(11, NodeType.KOTLIN, "kt", "Kotlin node", "code/kotlin.png", "code/kotlin.png"),
@@ -49,6 +49,7 @@ class ExtensionFileHelper {
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
 
         private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
+        private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
 
         private fun initPluginDependendFiles() {
             sequenceOf(
