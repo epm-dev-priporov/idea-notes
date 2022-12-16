@@ -104,7 +104,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
     }
 
     override fun getSourceActions(c: JComponent): Int {
-        return COPY_OR_MOVE
+        return MOVE
     }
 
     override fun importData(support: TransferSupport): Boolean {
