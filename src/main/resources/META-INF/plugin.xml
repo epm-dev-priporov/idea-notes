@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p>The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql or http.
@@ -28,6 +28,8 @@
             <li>Added java, python and kotlin nodes</li>
             <li>Added package node</li>
             <li>Missed java, kotlin files for Android Studio fix</li>
+            <li>Drag and drop copy issue fix</li>
+            <li>Added ability to copy a file into project view via clipboard</li>
             <li>General bugfixing</li>
         </ul>
         ]]>
