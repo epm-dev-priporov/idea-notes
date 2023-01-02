@@ -13,7 +13,9 @@ import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.IconUtils
 import java.awt.Toolkit
 import java.awt.datatransfer.*
+import java.awt.datatransfer.DataFlavor.javaFileListFlavor
 import java.awt.datatransfer.DataFlavor.stringFlavor
+import java.io.File
 
 private val COPY_ICON = IconUtils.toIcon("menu/copy.png")
 
@@ -52,12 +54,12 @@ class NodeCopyTransferable(private val data: NodeCopyData) : Transferable, Clipb
         val dataFlavor = DataFlavor(NodeCopyData::class.java, NodeCopyData::class.java.simpleName)
     }
 
-    private val dataFlavors = arrayOf(dataFlavor, stringFlavor)
+    private val dataFlavors = arrayOf(dataFlavor, stringFlavor, javaFileListFlavor)
 
     override fun getTransferDataFlavors(): Array<DataFlavor> = dataFlavors
 
     override fun isDataFlavorSupported(flavor: DataFlavor?) =
-        dataFlavor.mimeType == flavor?.mimeType || flavor == stringFlavor
+        dataFlavor.mimeType == flavor?.mimeType || flavor == stringFlavor || flavor == javaFileListFlavor
 
     override fun getTransferData(flavor: DataFlavor): Any {
         if (!isDataFlavorSupported(flavor)) {
@@ -65,6 +67,11 @@ class NodeCopyTransferable(private val data: NodeCopyData) : Transferable, Clipb
         }
         if (stringFlavor == flavor) {
             return data.nodeInfo.name
+        }
+        if (javaFileListFlavor == flavor) {
+            return listOf(
+                File("${data.nodeInfo.name}.${data.nodeInfo.extension}").also { it.writeBytes(data.content) }
+            )
         }
         return data
     }
