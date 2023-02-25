@@ -37,7 +37,7 @@ class AddChildNodeAction(
     private val tree: NoteTree,
     private val targetNode: FileTreeNode,
     private val extensionData: ExtensionData
-) : AnAction(extensionData.definition, "", extensionData.leafIcon) {
+) : AnAction(extensionData.definition, "", extensionData.getRequiredLeafIcon()) {
 
     override fun actionPerformed(e: AnActionEvent) {
         val extension = extensionData.extension

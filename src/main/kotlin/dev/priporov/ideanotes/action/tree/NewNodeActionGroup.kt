@@ -33,7 +33,7 @@ class NewNodeActionGroup(tree: NoteTree, nodeName: String) : DefaultActionGroup(
 class NewNodeAction(
     private val tree: NoteTree,
     private val extensionData: ExtensionData
-) : AnAction(extensionData.definition, "", extensionData.leafIcon) {
+) : AnAction(extensionData.definition, "", extensionData.getRequiredLeafIcon()) {
 
     override fun actionPerformed(e: AnActionEvent) {
         when (extensionData.type) {
