@@ -148,11 +148,3 @@ enum class NodeType {
     KOTLIN,
     MARK_DOWN
 }
-
- private fun loadIcon(path: String, cacheKey: Int = Random().nextInt(), flags: Int = 2) =
-    IconManager.getInstance().loadRasterizedIcon(
-        path,
-        AllIcons::class.java.classLoader,
-        cacheKey,
-        flags
-    );

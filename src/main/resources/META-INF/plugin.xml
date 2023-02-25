@@ -1,10 +1,10 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
-    <p>The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql or http.
+    <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty convenient way.The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql or http.
     The plugin brings you the way to keep Dockerfile or docker_compose templates, java, python or kotlin files, and
     it also supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
     <p> Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
@@ -24,6 +24,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>New UI support</li>
             <li>Added open action to drop-down menu</li>
             <li>Added java, python and kotlin nodes</li>
             <li>Added package node</li>
