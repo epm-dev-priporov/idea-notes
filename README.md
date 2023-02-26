@@ -1,5 +1,5 @@
 # NotesTree
-
+If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty convenient way.
 The plugin adds ability to write tree structure global notes in such formats as `txt`, `md`, `json`, `xml`, `yaml`, `sql` or `http`.
 The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates, `java`, `python` or `kotlin` files, 
 and it also supports [plum](https://plantuml.com/en/) and [mermaid](https://mermaid-js.github.io/mermaid/#/)

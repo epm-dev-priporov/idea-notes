@@ -20,7 +20,7 @@ class NotesMainWindowFactory : ToolWindowFactory {
     private val treeModelProvider = service<TreeModelProvider>()
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val contentFactory = ContentFactory.SERVICE.getInstance()
+        val contentFactory = ContentFactory.getInstance()
         val tree = project.getService(NoteTree::class.java).apply {
             transferHandler = DragAndDropTransferHandler()
             setCellRenderer(NoteCellRenderer())
