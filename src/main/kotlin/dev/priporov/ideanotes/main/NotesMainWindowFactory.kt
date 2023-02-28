@@ -4,9 +4,6 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
-import com.intellij.ui.ScrollPaneFactory
-import com.intellij.ui.SideBorder
-import com.intellij.ui.TreeSpeedSearch
 import com.intellij.ui.content.ContentFactory
 import dev.priporov.ideanotes.listener.NoteKeyListener
 import dev.priporov.ideanotes.listener.TreeMouseListener
@@ -20,7 +17,7 @@ class NotesMainWindowFactory : ToolWindowFactory {
     private val treeModelProvider = service<TreeModelProvider>()
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val contentFactory = ContentFactory.getInstance()
+        val contentFactory = ContentFactory.SERVICE.getInstance()
         val tree = project.getService(NoteTree::class.java).apply {
             transferHandler = DragAndDropTransferHandler()
             setCellRenderer(NoteCellRenderer())
