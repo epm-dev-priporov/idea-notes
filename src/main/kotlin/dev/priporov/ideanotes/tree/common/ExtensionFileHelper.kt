@@ -14,7 +14,7 @@ import javax.swing.Icon
 const val DOCKERFILE = "Dockerfile"
 const val DOCKER_COMPOSE = "Docker compose"
 
-object Icons {
+object Icons{
     val UNKNOWN_FILE_ICON = IconLoader.getIcon("/icons/unknown.png", javaClass)
     val NEW_ILE_ICON = IconLoader.getIcon("/icons/newUnknown.png", javaClass)
 }
@@ -24,14 +24,7 @@ class ExtensionFileHelper {
 
         val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-            ExtensionData(
-                2,
-                NodeType.JSON,
-                "json",
-                "Json node",
-                "json/json16.png",
-                newLeafIcon = AllIcons.FileTypes.Json
-            ),
+            ExtensionData(2, NodeType.JSON, "json", "Json node", "json/json16.png",  newLeafIcon = AllIcons.FileTypes.Json),
             ExtensionData(3, NodeType.XML, "xml", "Xml node", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
             ExtensionData(
                 4,
@@ -202,30 +195,27 @@ class ExtensionData(
     }
 }
 
-enum class NodeType(private val etension:String) {
+enum class NodeType(private val extension:String?) {
     TXT("txt"),
     YAML("yaml"),
     XML("xml"),
     JSON("json"),
     PUML("puml"),
-    DOCKER_COMPOSE("dockerCompose"),
-    DOCKERFILE("dockerfile"),
+    DOCKER_COMPOSE("yaml"),
+    DOCKERFILE(null),
     HTTP("http"),
     SQL("sql"),
-    PACKAGE("package"),
+    PACKAGE(null),
     PYTHON("py"),
     JAVA("java"),
-    KOTLIN("kotlin"),
-    MARK_DOWN("markDown");
+    KOTLIN("kr"),
+    MARK_DOWN("md"),
+    UNKNOWN(null);
 
-    fun fromExtension(value: String) =
+    companion object{
+        private val map = values().associateBy { it.extension }
+        fun fromExtension(value: String) = map.getOrDefault(value, UNKNOWN)
+    }
 
 }
 
-private fun loadIcon(path: String, cacheKey: Int = Random().nextInt(), flags: Int = 2) =
-    IconManager.getInstance().loadRasterizedIcon(
-        path,
-        AllIcons::class.java.classLoader,
-        cacheKey,
-        flags
-    );

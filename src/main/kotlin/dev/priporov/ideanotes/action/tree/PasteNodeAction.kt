@@ -6,6 +6,7 @@ import dev.priporov.ideanotes.dto.NodeCopyData
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeCutData
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.IconUtils
@@ -37,8 +38,12 @@ class PasteNodeAction(
                             return
                         }
                         val file= copiedFiles[0]!!
-                        NodeInfo(file.name, file.extension, type = )
-                        NodeCopyData()
+                        val type = NodeType.fromExtension(file.extension)
+                        if(type == NodeType.UNKNOWN){
+                            return
+                        }
+                        val nodeInfo = NodeInfo(file.name, file.extension, type = type)
+                        createCopyNode(NodeCopyData(nodeInfo, file.readBytes()))
                     }
                 }
             }
