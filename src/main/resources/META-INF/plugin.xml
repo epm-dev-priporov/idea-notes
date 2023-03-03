@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
@@ -17,14 +17,19 @@
     <p>
         <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img.png?raw=true">
     </p>
+    <p>
+        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img_1.png?raw=true">
+    </p>
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
     <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
-
+    <p><b>png, jpg</b> images can be insterted from clipboard</p>
   ]]></description>
     <change-notes>
         <![CDATA[
         <ul>
+            <li>Support for png, jpg images</li>
+            <li>Copy/paste files from system clipboard</li>
             <li>New UI support</li>
             <li>Added open action to drop-down menu</li>
             <li>Added java, python and kotlin nodes</li>

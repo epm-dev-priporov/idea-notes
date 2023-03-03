@@ -6,15 +6,13 @@ import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.registry.Registry
-import com.intellij.ui.IconManager
 import dev.priporov.ideanotes.util.IconUtils
-import java.util.*
 import javax.swing.Icon
 
 const val DOCKERFILE = "Dockerfile"
 const val DOCKER_COMPOSE = "Docker compose"
 
-object Icons{
+object Icons {
     val UNKNOWN_FILE_ICON = IconLoader.getIcon("/icons/unknown.png", javaClass)
     val NEW_ILE_ICON = IconLoader.getIcon("/icons/newUnknown.png", javaClass)
 }
@@ -24,7 +22,7 @@ class ExtensionFileHelper {
 
         val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-            ExtensionData(2, NodeType.JSON, "json", "Json node", "json/json16.png",  newLeafIcon = AllIcons.FileTypes.Json),
+            ExtensionData(2, NodeType.JSON, "json", "Json node", "json/json16.png", newLeafIcon = AllIcons.FileTypes.Json),
             ExtensionData(3, NodeType.XML, "xml", "Xml node", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
             ExtensionData(
                 4,
@@ -50,6 +48,33 @@ class ExtensionFileHelper {
                 "package/package.png",
                 newLeafIcon = AllIcons.Nodes.Folder
             ),
+            ExtensionData(
+                0,
+                NodeType.IMAGE_PNG,
+                "png",
+                "PNG image",
+                "image/img_old.png",
+                newLeafIcon = IconLoader.getIcon("/icons/image/img.png", javaClass),
+                ignore = true
+            ),
+            ExtensionData(
+                0,
+                NodeType.IMAGE_JPG,
+                "jpg",
+                "JPG image",
+                "image/img_old.png",
+                newLeafIcon = IconLoader.getIcon("/icons/image/img.png", javaClass),
+                ignore = true
+            ),
+            // TODO: implement opening via browser
+            //        ExtensionData(
+//                0,
+//                NodeType.PDF,
+//                "pdf",
+//                "pdf document",
+//                "unknown.png",
+//                ignore = true
+//            ),
         ).associateByTo(HashMap()) { it.type }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
@@ -102,7 +127,7 @@ class ExtensionFileHelper {
 
             initPluginDependendFiles()
 
-            SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.toList()
+            SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
         }
 
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
@@ -185,7 +210,8 @@ class ExtensionData(
     val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
     val newLeafIcon: Icon = leafIcon,
     val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
-    val newNodeIcon: Icon = newLeafIcon
+    val newNodeIcon: Icon = newLeafIcon,
+    val ignore: Boolean = false,
 ) {
     fun getRequiredLeafIcon() = if (isNewUi()) newLeafIcon else leafIcon
     fun getRequiredNodeIcon() = if (isNewUi()) newNodeIcon else nodeIcon
@@ -195,7 +221,7 @@ class ExtensionData(
     }
 }
 
-enum class NodeType(private val extension:String?) {
+enum class NodeType(private val extension: String?) {
     TXT("txt"),
     YAML("yaml"),
     XML("xml"),
@@ -210,9 +236,12 @@ enum class NodeType(private val extension:String?) {
     JAVA("java"),
     KOTLIN("kr"),
     MARK_DOWN("md"),
+    IMAGE_PNG("png"),
+    IMAGE_JPG("jpg"),
+    PDF("pdf"),
     UNKNOWN(null);
 
-    companion object{
+    companion object {
         private val map = values().associateBy { it.extension }
         fun fromExtension(value: String) = map.getOrDefault(value, UNKNOWN)
     }

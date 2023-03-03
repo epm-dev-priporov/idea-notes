@@ -18,3 +18,9 @@ For correct work the following points should be done:
 * plum files require [plum integration plugin](https://plugins.jetbrains.com/plugin/7017-plantuml-integration)
 * http files require [HTTP client plugin](https://plugins.jetbrains.com/plugin/13121-http-client)
 * Dockerfile, docker_compose.yaml require [Docker plugin](https://www.jetbrains.com/help/idea/docker.html)
+* png, jpg images can be inserted from system clipboard
+
+
+
+#### Feedback
+I would really appreciate any feedback from users. Also please don't hesitate and share any ideas
