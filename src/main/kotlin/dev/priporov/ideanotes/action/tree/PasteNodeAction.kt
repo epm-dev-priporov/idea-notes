@@ -11,12 +11,10 @@ import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.ideanotes.util.WriteActionUtils
-import io.ktor.util.reflect.*
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.DataFlavor
 import java.io.File
-import java.nio.file.Files
 
 private val PASTE_ICON = IconUtils.toIcon("menu/paste.png")
 
@@ -32,7 +30,7 @@ class PasteNodeAction(
             if(isCopiedSystemFile(clipboard)){
                 if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
                     val files = clipboard.getData(DataFlavor.javaFileListFlavor)
-                    if (null != files && files.instanceOf(ArrayList::class)) {
+                    if (null != files && files is ArrayList<*>) {
                         val copiedFiles = files as ArrayList<File?>
                         if(copiedFiles.isEmpty()){
                             return
