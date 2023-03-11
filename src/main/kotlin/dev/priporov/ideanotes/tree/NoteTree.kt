@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.tree
 
+import com.intellij.ide.browsers.BrowserLauncher
 import com.intellij.ide.impl.DataManagerImpl
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.CustomShortcutSet
@@ -12,6 +13,7 @@ import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
 import dev.priporov.ideanotes.dto.NodeCreationInfo
+import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.RootFileTreeNode
 import dev.priporov.ideanotes.tree.state.StateService
@@ -82,11 +84,14 @@ class NoteTree : Tree() {
     fun openInEditor(node: FileTreeNode?) {
         val file = node?.getFile() ?: return
         val project = getProject() ?: ProjectManager.getInstance().openProjects[0]
-
-        FileEditorManager.getInstance(project).openTextEditor(
-            OpenFileDescriptor(project, file, 0, 0, false),
-            true
-        )
+        if(file.extension == NodeType.PDF.extension){
+            BrowserLauncher.instance.browse(file.url)
+        } else{
+            FileEditorManager.getInstance(project).openTextEditor(
+                OpenFileDescriptor(project, file, 0, 0, false),
+                true
+            )
+        }
     }
 
     fun getSelectedNode(): FileTreeNode? {

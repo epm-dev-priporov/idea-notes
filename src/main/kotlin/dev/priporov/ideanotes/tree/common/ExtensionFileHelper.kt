@@ -66,15 +66,14 @@ class ExtensionFileHelper {
                 newLeafIcon = IconLoader.getIcon("/icons/image/img.png", javaClass),
                 ignore = true
             ),
-            // TODO: implement opening via browser
-            //        ExtensionData(
-//                0,
-//                NodeType.PDF,
-//                "pdf",
-//                "pdf document",
-//                "unknown.png",
-//                ignore = true
-//            ),
+            ExtensionData(
+                0,
+                NodeType.PDF,
+                "pdf",
+                "pdf document",
+                "pdf/pdf.png",
+                ignore = true
+            ),
         ).associateByTo(HashMap()) { it.type }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
@@ -221,7 +220,7 @@ class ExtensionData(
     }
 }
 
-enum class NodeType(private val extension: String?) {
+enum class NodeType(val extension: String?) {
     TXT("txt"),
     YAML("yaml"),
     XML("xml"),
