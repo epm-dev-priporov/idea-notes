@@ -1,12 +1,12 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
     convenient way. The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql or http.
-    The plugin brings you the way to keep Dockerfile or docker_compose templates, java, python or kotlin files, and
+    The plugin brings you the way to keep Dockerfile or docker_compose templates, images(png, jpg), pdf, java, python or kotlin files, and
     it also supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
     <p> Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
     sql scripts or docker_compose templates, it is really convenient and  useful during development.
@@ -23,21 +23,22 @@
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
     <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
-    <p><b>png, jpg</b> images can be insterted from clipboard</p>
+    <p><b>png, jpg</b> images and <b>pdf</> files can be inserted from clipboard</p>
   ]]></description>
     <change-notes>
         <![CDATA[
         <ul>
-            <li>Support for png, jpg images</li>
-            <li>Copy/paste files from system clipboard</li>
-            <li>New UI support</li>
-            <li>Added open action to drop-down menu</li>
-            <li>Added java, python and kotlin nodes</li>
-            <li>Added package node</li>
-            <li>Missed java, kotlin files for Android Studio fix</li>
-            <li>Drag and drop copy issue fix</li>
-            <li>Added ability to copy a file into project view via clipboard</li>
-            <li>General bugfixing</li>
+            <li>1.2.5: Support for pdf files</li>
+            <li>1.2.4: Support for png, jpg images</li>
+            <li>1.2.4: Copy/paste files from system clipboard</li>
+            <li>1.2.3: New UI support</li>
+            <li>1.2.2: Added open action to drop-down menu</li>
+            <li>1.2.2: Added java, python and kotlin nodes</li>
+            <li>1.2.2: Added package node</li>
+            <li>1.2.2: Missed java, kotlin files for Android Studio fix</li>
+            <li>1.2.1: Drag and drop copy issue fix</li>
+            <li>1.2.1: Added ability to copy a file into project view via clipboard</li>
+            <li>1.2.1: General bugfixing</li>
         </ul>
         ]]>
     </change-notes>
