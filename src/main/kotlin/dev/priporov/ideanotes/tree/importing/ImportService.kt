@@ -41,7 +41,7 @@ class ImportService {
     private fun importFile(file: File, tree: NoteTree) {
         val extension = file.extension
         val name = file.nameWithoutExtension
-        val type = ExtensionFileHelper.SORTED_EXTENSIONS.find { it.extension == extension }?.type
+        val type = ExtensionFileHelper.EXTENSIONS.values.find { it.extension == extension }?.type
         if (type != null) {
             val node = tree.insert(NodeCreationInfo(tree.root, name, extension, type))
             FileNodeUtils.copyToNode(file, node)
