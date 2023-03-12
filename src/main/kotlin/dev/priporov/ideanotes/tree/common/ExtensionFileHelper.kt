@@ -188,7 +188,7 @@ class ExtensionFileHelper {
             }
         }
 
-        fun containsExtension(extension: String) = SORTED_EXTENSIONS.find { it.extension == extension } != null
+        fun containsExtension(extension: String) = EXTENSIONS.values.find { it.extension == extension } != null
 
     }
 
