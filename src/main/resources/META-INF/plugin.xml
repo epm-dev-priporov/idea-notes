@@ -61,6 +61,7 @@
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeInitializer"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.exporting.ExportService"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.ImportService"/>
+        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.SoftLinkService"/>
 
     </extensions>
 </idea-plugin>

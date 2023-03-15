@@ -74,6 +74,13 @@ class ExtensionFileHelper {
                 "pdf/pdf.png",
                 ignore = true
             ),
+            ExtensionData(
+                0,
+                NodeType.SOFT_LINK,
+                "",
+                "soft link",
+                "unknown.png"
+            ),
         ).associateByTo(HashMap()) { it.type }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
@@ -238,6 +245,7 @@ enum class NodeType(val extension: String?) {
     IMAGE_PNG("png"),
     IMAGE_JPG("jpg"),
     PDF("pdf"),
+    SOFT_LINK(""),
     UNKNOWN(null);
 
     companion object {
