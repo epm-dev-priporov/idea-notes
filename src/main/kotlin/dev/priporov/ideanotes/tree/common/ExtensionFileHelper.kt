@@ -81,6 +81,13 @@ class ExtensionFileHelper {
                 "soft link",
                 "unknown.png"
             ),
+            ExtensionData(
+                14,
+                NodeType.SH,
+                "sh",
+                "sh script",
+                "sh/sh.png"
+            ),
         ).associateByTo(HashMap()) { it.type }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
@@ -131,7 +138,7 @@ class ExtensionFileHelper {
                 }
             }
 
-            initPluginDependendFiles()
+            initPluginDependedFiles()
 
             SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
         }
@@ -141,7 +148,7 @@ class ExtensionFileHelper {
         private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
         private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
 
-        private fun initPluginDependendFiles() {
+        private fun initPluginDependedFiles() {
             sequenceOf(
                 PluginDependency(
                     "org.intellij.plugins.markdown",
@@ -182,6 +189,15 @@ class ExtensionFileHelper {
                         DOCKER_COMPOSE,
                         "docker/dockercompose.png",
                         "docker/dockercompose.png"
+                    ),
+                ),PluginDependency(
+                    "net.seesharpsoft.intellij.plugins.csv",
+                    ExtensionData(
+                        15,
+                        NodeType.CSV,
+                        "csv",
+                        "csv table",
+                        "csv/csv.png"
                     ),
                 ),
             ).forEach { applyExtension(it) }
@@ -246,6 +262,8 @@ enum class NodeType(val extension: String?) {
     IMAGE_JPG("jpg"),
     PDF("pdf"),
     SOFT_LINK(""),
+    SH("sh"),
+    CSV("csv"),
     UNKNOWN(null);
 
     companion object {
