@@ -41,7 +41,7 @@ class NewNodeAction(
 
     override fun actionPerformed(e: AnActionEvent) {
         when (extensionData.type) {
-            NodeType.SOFT_LINK -> softLinkService.makeSoftLink()
+            NodeType.SOFT_LINK -> softLinkService.makeSoftLink(tree.root, tree)
             NodeType.DOCKERFILE -> insertToRoot(DOCKERFILE, extensionData)
             NodeType.DOCKER_COMPOSE -> insertToRoot("docker_compose", extensionData)
             else -> {

@@ -14,7 +14,6 @@ import dev.priporov.ideanotes.tree.importing.SoftLinkService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
-import javax.swing.Icon
 
 private val ADD_NODE_ICON = IconUtils.toIcon("menu/addNodeIcon.png")
 
@@ -47,7 +46,7 @@ class AddChildNodeAction(
         val extension = extensionData.extension
 
         when (extensionData.type) {
-            NodeType.SOFT_LINK -> softLinkService.makeSoftLink()
+            NodeType.SOFT_LINK -> softLinkService.makeSoftLink(targetNode, tree)
             NodeType.DOCKERFILE -> tree.insert(NodeCreationInfo(targetNode, DOCKERFILE, extension, NodeType.DOCKERFILE))
             NodeType.DOCKER_COMPOSE -> tree.insert(NodeCreationInfo(targetNode, "docker_compose", extension, NodeType.DOCKER_COMPOSE))
             else -> {

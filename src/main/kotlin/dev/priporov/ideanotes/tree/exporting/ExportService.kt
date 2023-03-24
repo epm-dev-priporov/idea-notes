@@ -90,7 +90,9 @@ class ExportService {
     private fun getAllIds(node: FileTreeNode): HashSet<String> {
         val order = stateService.state.order
         val queue: Queue<String> = LinkedList<String>().apply {
-            add(node.id!!)
+            if(node.type != NodeType.SOFT_LINK){
+                add(node.id!!)
+            }
         }
         val ids = HashSet<String>()
         while (queue.isNotEmpty()) {
@@ -120,6 +122,8 @@ class ExportService {
         map: HashMap<String, String>,
         sourceId: String?
     ): TreeState {
+        val softLinkKeys = oldState.nodes.filterValues { it.type == NodeType.SOFT_LINK }.keys
+
         if (sourceId != ROOT_ID) {
             newState.order[ROOT_ID] = listOf(map[sourceId])
         }
@@ -129,10 +133,17 @@ class ExportService {
                 ROOT_ID
             else map[id]
                 ?: continue
+            if (softLinkKeys.contains(id)) {
+                continue
+            }
 
             newState.order.putIfAbsent(
                 newId,
-                list.mapNotNull { map[it] }
+                list.asSequence()
+                    .filterNotNull()
+                    .filterNot { softLinkKeys.contains(it) }
+                    .mapNotNull { map[it] }
+                    .toList()
             )
         }
         return newState
@@ -154,6 +165,9 @@ class FileVisitor(
             return FileVisitResult.CONTINUE
         }
         val info = stateService.state.nodes[path.nameWithoutExtension]
+        if (info?.type == NodeType.SOFT_LINK) {
+            return FileVisitResult.CONTINUE
+        }
         val copiedNodeWithNewId = newNodeFromFile(path, info!!.type)
 
         newState.saveNode(copiedNodeWithNewId)

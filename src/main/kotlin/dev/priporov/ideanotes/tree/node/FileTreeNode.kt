@@ -3,6 +3,7 @@ package dev.priporov.ideanotes.tree.node
 
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.dto.NodeCreationInfo
+import dev.priporov.ideanotes.dto.NodeSoftLinkCreationInfo
 import dev.priporov.ideanotes.dto.NodeStateInfo
 import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.state.NodeInfo
@@ -36,6 +37,15 @@ open class FileTreeNode(
     ) {
         id = generateNodeName(info.name)
         file = FileNodeUtils.initFile(id, info.extension)
+    }
+
+    constructor(info: NodeSoftLinkCreationInfo) : this(
+        name = info.targetFile.name,
+        extension = info.targetFile.extension,
+        type = info.type
+    ) {
+        id = generateNodeName(info.targetFile.name)
+        file = FileNodeUtils.initSoftLink(id, info.targetFile.extension, info.targetFile)
     }
 
     constructor(nodeInfo: NodeInfo) : this(nodeInfo.name, nodeInfo.extension, nodeInfo.id, type = nodeInfo.type) {

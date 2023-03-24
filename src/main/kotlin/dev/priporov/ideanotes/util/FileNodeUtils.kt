@@ -6,10 +6,14 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
+import com.intellij.util.io.exists
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Path
 import java.util.*
+import kotlin.math.log
 
 object FileNodeUtils {
 
@@ -52,6 +56,21 @@ object FileNodeUtils {
         }
 
         return createVirtualFile(file)
+    }
+
+    fun initSoftLink(id: String?, extension: String?, targetFile:File): VirtualFile? {
+        if (id == null || extension == null) {
+            return null
+        }
+
+        val filename = "${baseDir.path}${fileSeparator}${id}"
+
+        val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath());
+        if (!symbolicLink.exists()) {
+            println("symbolic link $filename is not created")
+        }
+
+        return createVirtualFile(symbolicLink.toFile())
     }
 
     fun readFileContentByteArray(tree: NoteTree, virtualFile: VirtualFile?): ByteArray {
