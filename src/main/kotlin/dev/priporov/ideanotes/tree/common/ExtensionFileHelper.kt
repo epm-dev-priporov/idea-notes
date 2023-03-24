@@ -79,7 +79,7 @@ class ExtensionFileHelper {
                 NodeType.SOFT_LINK,
                 "",
                 "soft link",
-                "unknown.png"
+                "link/sybolicLink.png"
             ),
             ExtensionData(
                 14,
