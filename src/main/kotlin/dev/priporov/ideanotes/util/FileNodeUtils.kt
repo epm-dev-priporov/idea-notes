@@ -3,6 +3,7 @@ package dev.priporov.ideanotes.util
 import com.intellij.ide.impl.DataManagerImpl
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
@@ -18,6 +19,9 @@ import kotlin.math.log
 object FileNodeUtils {
 
     private const val PLUGIN_ID = "dev.priporov.idea-notes"
+
+    private val logger = Logger.getInstance(FileNodeUtils::class.java);
+
     val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
 
     val baseDir = PropertiesComponent.getInstance().getValue(
@@ -64,13 +68,15 @@ object FileNodeUtils {
         }
 
         val filename = "${baseDir.path}${fileSeparator}${id}"
+        try{
+            val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath());
 
-        val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath());
-        if (!symbolicLink.exists()) {
-            println("symbolic link $filename is not created")
+            return createVirtualFile(symbolicLink.toFile())
+        } catch (e:Exception){
+            logger.error(e.message)
+            logger.error("In Windows OS there is a permission issue: https://github.com/epm-dev-priporov/idea-notes/issues/6")
+            return null
         }
-
-        return createVirtualFile(symbolicLink.toFile())
     }
 
     fun readFileContentByteArray(tree: NoteTree, virtualFile: VirtualFile?): ByteArray {
