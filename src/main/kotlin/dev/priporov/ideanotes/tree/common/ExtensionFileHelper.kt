@@ -75,7 +75,7 @@ class ExtensionFileHelper {
                 ignore = true
             ),
             ExtensionData(
-                0,
+                16,
                 NodeType.SOFT_LINK,
                 "",
                 "soft link",
@@ -86,7 +86,8 @@ class ExtensionFileHelper {
                 NodeType.SH,
                 "sh",
                 "sh script",
-                "sh/sh.png"
+                "sh/sh.png",
+                newLeafIcon = IconLoader.getIcon("/icons/sh/shNew.png", javaClass),
             ),
         ).associateByTo(HashMap()) { it.type }
 
@@ -197,8 +198,9 @@ class ExtensionFileHelper {
                         NodeType.CSV,
                         "csv",
                         "csv table",
-                        "csv/csv.png"
-                    ),
+                        "csv/csv.png",
+                        newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
+                        ),
                 ),
             ).forEach { applyExtension(it) }
         }
