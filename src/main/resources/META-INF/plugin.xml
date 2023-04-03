@@ -22,7 +22,8 @@
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
     <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
-    <p><b>png, jpg</b> images and <b>pdf</> files can be inserted from clipboard</p>
+    <p><b>png, jpg</b> images and <b>pdf</> files can be inserted from clipboard.</p>
+    <p><b>csv</b> files require <a href="https://plugins.jetbrains.com/plugin/10037-csv-editor">CSV Editor plugin</a>.</p>
 
     <p>Supported formats</p>
     <ul>

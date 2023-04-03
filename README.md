@@ -19,6 +19,7 @@ For correct work the following points should be done:
 * http files require [HTTP client plugin](https://plugins.jetbrains.com/plugin/13121-http-client)
 * Dockerfile, docker_compose.yaml require [Docker plugin](https://www.jetbrains.com/help/idea/docker.html)
 * pdf files and png, jpg images can be inserted from system clipboard
+* csv files require [CSV Editor plugin](https://plugins.jetbrains.com/plugin/10037-csv-editor)
 
 Supported formats:
 * txt
