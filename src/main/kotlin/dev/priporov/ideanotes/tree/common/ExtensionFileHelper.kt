@@ -7,6 +7,7 @@ import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.registry.Registry
 import dev.priporov.ideanotes.util.IconUtils
+import java.util.*
 import javax.swing.Icon
 
 const val DOCKERFILE = "Dockerfile"
@@ -22,7 +23,14 @@ class ExtensionFileHelper {
 
         val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-            ExtensionData(2, NodeType.JSON, "json", "Json node", "json/json16.png", newLeafIcon = AllIcons.FileTypes.Json),
+            ExtensionData(
+                2,
+                NodeType.JSON,
+                "json",
+                "Json node",
+                "json/json16.png",
+                newLeafIcon = AllIcons.FileTypes.Json
+            ),
             ExtensionData(3, NodeType.XML, "xml", "Xml node", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
             ExtensionData(
                 4,
@@ -73,13 +81,6 @@ class ExtensionFileHelper {
                 "pdf document",
                 "pdf/pdf.png",
                 ignore = true
-            ),
-            ExtensionData(
-                16,
-                NodeType.SOFT_LINK,
-                "",
-                "Symbolic link",
-                "link/sybolicLink.png"
             ),
             ExtensionData(
                 14,
@@ -141,7 +142,24 @@ class ExtensionFileHelper {
 
             initPluginDependedFiles()
 
+            if (isMacOrLinux()) {
+                ExtensionData(
+                    16,
+                    NodeType.SOFT_LINK,
+                    "",
+                    "Symbolic link",
+                    "link/sybolicLink.png"
+                ).also {
+                    EXTENSIONS[it.type] = it
+                }
+            }
+
             SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
+        }
+
+        private fun isMacOrLinux(): Boolean {
+            val osType = System.getProperty("os.name").lowercase(Locale.ENGLISH)
+            return osType.contains("mac") or (osType == "linux")
         }
 
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
@@ -191,7 +209,8 @@ class ExtensionFileHelper {
                         "docker/dockercompose.png",
                         "docker/dockercompose.png"
                     ),
-                ),PluginDependency(
+                ),
+                PluginDependency(
                     "net.seesharpsoft.intellij.plugins.csv",
                     ExtensionData(
                         15,
@@ -200,7 +219,7 @@ class ExtensionFileHelper {
                         "Csv table",
                         "csv/csv.png",
                         newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
-                        ),
+                    ),
                 ),
             ).forEach { applyExtension(it) }
         }

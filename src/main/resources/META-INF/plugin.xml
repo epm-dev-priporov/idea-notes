@@ -6,7 +6,7 @@
     <description><![CDATA[
     <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
     convenient way. The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql, csv, sh or http.
-    The plugin brings you the way to keep Dockerfile or docker_compose templates, images(png, jpg), pdf, java, python or kotlin files and create symbolic links.
+    The plugin brings you the way to keep Dockerfile or docker_compose templates, images(png, jpg), pdf, java, python or kotlin files and create symbolic links(MacOS, Linux).
     It also supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
     <p> Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
     sql scripts or docker_compose templates, it is really convenient and  useful during development.
@@ -48,7 +48,7 @@
     <change-notes>
         <![CDATA[
         <ul>
-            <li>1.2.6: Support for csv, sh and symbolic links</li>
+            <li>1.2.6: Support for csv, sh and symbolic links(MacOS, Linux)</li>
             <li>1.2.5: Support for pdf files</li>
             <li>1.2.4: Support for png, jpg images</li>
             <li>1.2.4: Copy/paste files from system clipboard</li>
