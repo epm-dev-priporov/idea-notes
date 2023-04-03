@@ -13,6 +13,7 @@ import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
 import dev.priporov.ideanotes.dto.NodeCreationInfo
+import dev.priporov.ideanotes.dto.NodeSoftLinkCreationInfo
 import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.RootFileTreeNode
@@ -38,6 +39,19 @@ class NoteTree : Tree() {
 
     fun insert(info: NodeCreationInfo): FileTreeNode {
         return insert( info.targetNode, FileTreeNode(info))
+    }
+
+    fun insert(nodeCreationInfo: NodeSoftLinkCreationInfo) {
+        val targetNode = nodeCreationInfo.targetNode
+        val index = targetNode.childCount
+        val fileTreeNode = FileTreeNode(nodeCreationInfo)
+        targetNode.insert(fileTreeNode, index)
+
+        stateService.saveNodeInfo(fileTreeNode)
+        stateService.updateOrder(targetNode)
+        val expandedNodes = getExpandedNodes(targetNode)
+        getDefaultTreeModel().reload(targetNode)
+        expandAllNodes(expandedNodes)
     }
 
     fun insert(targetNode:FileTreeNode ,fileTreeNode: FileTreeNode): FileTreeNode {
@@ -139,4 +153,5 @@ class NoteTree : Tree() {
         }
         return expandedNodes
     }
+
 }

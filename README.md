@@ -1,8 +1,8 @@
 # NotesTree
 If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty convenient way.
-The plugin adds ability to write tree structure global notes in such formats as `txt`, `md`, `json`, `xml`, `yaml`, `sql` or `http`.
-The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates , images(`png`, `jpg`), `pdf`, `java`, `python` or `kotlin` files, 
-and it also supports [plum](https://plantuml.com/en/) and [mermaid](https://mermaid-js.github.io/mermaid/#/)
+The plugin adds ability to write tree structure global notes in such formats as `txt`, `md`, `json`, `xml`, `yaml`, `sql`, `csv`, `sh` or `http`.
+The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates , images(`png`, `jpg`), `pdf`, `java`, `python` or `kotlin` files and create symbolic links(MacOS, Linux).
+It also supports [plum](https://plantuml.com/en/) and [mermaid](https://mermaid-js.github.io/mermaid/#/)
  diagrams.
 
 Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
@@ -20,7 +20,23 @@ For correct work the following points should be done:
 * Dockerfile, docker_compose.yaml require [Docker plugin](https://www.jetbrains.com/help/idea/docker.html)
 * pdf files and png, jpg images can be inserted from system clipboard
 
-
+Supported formats:
+* txt
+* md
+* json
+* xml
+* yaml
+* sql
+* sh
+* csv
+* http
+* pdf
+* jpg
+* png
+* plump
+* kt
+* java
+* py
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas

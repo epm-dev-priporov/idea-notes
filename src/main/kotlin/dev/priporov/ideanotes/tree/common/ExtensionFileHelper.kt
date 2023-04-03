@@ -7,6 +7,7 @@ import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.registry.Registry
 import dev.priporov.ideanotes.util.IconUtils
+import java.util.*
 import javax.swing.Icon
 
 const val DOCKERFILE = "Dockerfile"
@@ -22,7 +23,14 @@ class ExtensionFileHelper {
 
         val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
-            ExtensionData(2, NodeType.JSON, "json", "Json node", "json/json16.png", newLeafIcon = AllIcons.FileTypes.Json),
+            ExtensionData(
+                2,
+                NodeType.JSON,
+                "json",
+                "Json node",
+                "json/json16.png",
+                newLeafIcon = AllIcons.FileTypes.Json
+            ),
             ExtensionData(3, NodeType.XML, "xml", "Xml node", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
             ExtensionData(
                 4,
@@ -74,6 +82,14 @@ class ExtensionFileHelper {
                 "pdf/pdf.png",
                 ignore = true
             ),
+            ExtensionData(
+                14,
+                NodeType.SH,
+                "sh",
+                "Sh script",
+                "sh/sh.png",
+                newLeafIcon = IconLoader.getIcon("/icons/sh/shNew.png", javaClass),
+            ),
         ).associateByTo(HashMap()) { it.type }
 
         val SORTED_EXTENSIONS: List<ExtensionData>
@@ -124,9 +140,26 @@ class ExtensionFileHelper {
                 }
             }
 
-            initPluginDependendFiles()
+            initPluginDependedFiles()
+
+            if (isMacOrLinux()) {
+                ExtensionData(
+                    16,
+                    NodeType.SOFT_LINK,
+                    "",
+                    "Symbolic link",
+                    "link/sybolicLink.png"
+                ).also {
+                    EXTENSIONS[it.type] = it
+                }
+            }
 
             SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
+        }
+
+        private fun isMacOrLinux(): Boolean {
+            val osType = System.getProperty("os.name").lowercase(Locale.ENGLISH)
+            return osType.contains("mac") or (osType == "linux")
         }
 
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
@@ -134,7 +167,7 @@ class ExtensionFileHelper {
         private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
         private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
 
-        private fun initPluginDependendFiles() {
+        private fun initPluginDependedFiles() {
             sequenceOf(
                 PluginDependency(
                     "org.intellij.plugins.markdown",
@@ -175,6 +208,17 @@ class ExtensionFileHelper {
                         DOCKER_COMPOSE,
                         "docker/dockercompose.png",
                         "docker/dockercompose.png"
+                    ),
+                ),
+                PluginDependency(
+                    "net.seesharpsoft.intellij.plugins.csv",
+                    ExtensionData(
+                        15,
+                        NodeType.CSV,
+                        "csv",
+                        "Csv table",
+                        "csv/csv.png",
+                        newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
                     ),
                 ),
             ).forEach { applyExtension(it) }
@@ -238,6 +282,9 @@ enum class NodeType(val extension: String?) {
     IMAGE_PNG("png"),
     IMAGE_JPG("jpg"),
     PDF("pdf"),
+    SOFT_LINK(""),
+    SH("sh"),
+    CSV("csv"),
     UNKNOWN(null);
 
     companion object {

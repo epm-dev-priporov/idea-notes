@@ -3,16 +3,17 @@ package dev.priporov.ideanotes.action.tree
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DefaultActionGroup
+import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.DOCKERFILE
 import dev.priporov.ideanotes.tree.common.ExtensionData
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.common.NodeType
+import dev.priporov.ideanotes.tree.importing.SoftLinkService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.noteplugin.component.dialog.EditDialog
-import javax.swing.Icon
 
 private val ADD_NODE_ICON = IconUtils.toIcon("menu/addNodeIcon.png")
 
@@ -39,10 +40,13 @@ class AddChildNodeAction(
     private val extensionData: ExtensionData
 ) : AnAction(extensionData.definition, "", extensionData.getRequiredLeafIcon()) {
 
+    private val softLinkService = service<SoftLinkService>()
+
     override fun actionPerformed(e: AnActionEvent) {
         val extension = extensionData.extension
 
         when (extensionData.type) {
+            NodeType.SOFT_LINK -> softLinkService.makeSoftLink(targetNode, tree)
             NodeType.DOCKERFILE -> tree.insert(NodeCreationInfo(targetNode, DOCKERFILE, extension, NodeType.DOCKERFILE))
             NodeType.DOCKER_COMPOSE -> tree.insert(NodeCreationInfo(targetNode, "docker_compose", extension, NodeType.DOCKER_COMPOSE))
             else -> {
