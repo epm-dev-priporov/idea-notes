@@ -4,13 +4,15 @@ import com.intellij.openapi.vfs.VirtualFile
 
 class VirtualFileContainer {
 
-    private val files:MutableSet<VirtualFile> = HashSet()
+    private val files: MutableSet<VirtualFile> = HashSet()
 
-    fun addFile(file: VirtualFile ){
+    fun getFiles(): Set<VirtualFile> = files
+
+    fun addFile(file: VirtualFile) {
         files.add(file)
     }
 
-    fun removeFile(file: VirtualFile ){
+    fun removeFile(file: VirtualFile) {
         files.remove(file)
     }
 

@@ -68,6 +68,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <searchScopesProvider implementation="dev.priporov.ideanotes.extension.NoteSearchScopeProvider"/>
         <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
