@@ -49,6 +49,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.2.7: Implemented text search by files in Scope -> NotesTree</li>
             <li>1.2.6: Support for csv, sh and symbolic links(MacOS, Linux)</li>
             <li>1.2.5: Support for pdf files</li>
             <li>1.2.4: Support for png, jpg images</li>
