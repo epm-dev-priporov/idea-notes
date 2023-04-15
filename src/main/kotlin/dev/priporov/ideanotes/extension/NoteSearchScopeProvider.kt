@@ -16,18 +16,11 @@ class NoteSearchScopeProvider : SearchScopeProvider {
     private val virtualFileContainer = service<VirtualFileContainer>()
 
     override fun getDisplayName() = "NotesTree"
-    override fun getGeneralSearchScopes(project: Project, dataContext: DataContext): MutableList<SearchScope> {
-        val scope = GlobalSearchScope.filesScope(project, virtualFileContainer.getFiles(), "NotesTree notes")
-        if (scope == GlobalSearchScope.EMPTY_SCOPE) {
-            return mutableListOf(EmptyScope("NotesTree notes"))
-        }
-        return mutableListOf(scope)
-    }
 
     override fun getSearchScopes(project: Project, dataContext: DataContext): MutableList<SearchScope> {
         val scope = GlobalSearchScope.filesScope(project, virtualFileContainer.getFiles(), "notes")
         if (scope == GlobalSearchScope.EMPTY_SCOPE) {
-            return mutableListOf(EmptyScope("notes"))
+            return mutableListOf(EmptyScope("Notes"))
         }
         return mutableListOf(scope)
     }
