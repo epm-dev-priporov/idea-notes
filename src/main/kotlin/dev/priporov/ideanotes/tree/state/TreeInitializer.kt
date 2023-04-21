@@ -72,7 +72,7 @@ class TreeInitializer {
                 val newNode = createdNodes[childId]
                 if (newNode != null) {
                     parent?.insert(newNode, parent.childCount)
-                    newNode?.also { node ->
+                    newNode.also { node ->
                         virtualFileContainer.addNode(node)
                         virtualFileContainer.init(node.getFile())
                     }

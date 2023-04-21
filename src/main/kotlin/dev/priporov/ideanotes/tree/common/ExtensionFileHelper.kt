@@ -250,10 +250,10 @@ class ExtensionData(
     val definition: String,
     leafIconPath: String,
     nodeIconPath: String = leafIconPath,
-    val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
+    private val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
     val newLeafIcon: Icon = leafIcon,
-    val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
-    val newNodeIcon: Icon = newLeafIcon,
+    private val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
+    private val newNodeIcon: Icon = newLeafIcon,
     val ignore: Boolean = false,
 ) {
     fun getRequiredLeafIcon() = if (isNewUi()) newLeafIcon else leafIcon

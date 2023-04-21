@@ -10,7 +10,7 @@ import dev.priporov.ideanotes.listener.TreeMouseListener
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.NoteCellRenderer
 import dev.priporov.ideanotes.util.TreeModelProvider
-import dev.priporov.noteplugin.component.tree.handler.DragAndDropTransferHandler
+import dev.priporov.ideanotes.handler.DragAndDropTransferHandler
 
 
 class NotesMainWindowFactory : ToolWindowFactory {

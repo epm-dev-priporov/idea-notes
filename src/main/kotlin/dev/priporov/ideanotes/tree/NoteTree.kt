@@ -136,8 +136,6 @@ class NoteTree : Tree() {
 
     fun getDefaultTreeModel() = model as DefaultTreeModel
 
-    private fun getProject() = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)
-
     private fun getExpandedNodes(node: FileTreeNode): ArrayList<FileTreeNode> {
         val list = LinkedList<FileTreeNode>()
         val expandedNodes = ArrayList<FileTreeNode>()

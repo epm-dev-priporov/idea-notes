@@ -18,7 +18,7 @@ object FileNodeUtils {
 
     private const val PLUGIN_ID = "dev.priporov.idea-notes"
 
-    private val logger = Logger.getInstance(FileNodeUtils::class.java);
+    private val logger = Logger.getInstance(FileNodeUtils::class.java)
 
     val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
 
@@ -69,7 +69,7 @@ object FileNodeUtils {
 
         val filename = "${baseDir.path}${fileSeparator}${id}"
         try {
-            val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath());
+            val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath())
 
             return createVirtualFile(symbolicLink.toFile())
         } catch (e: Exception) {

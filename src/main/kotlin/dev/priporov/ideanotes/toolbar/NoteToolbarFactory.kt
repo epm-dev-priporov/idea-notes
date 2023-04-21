@@ -12,7 +12,7 @@ import dev.priporov.ideanotes.tree.common.TreePopUpMenuManager
 import dev.priporov.ideanotes.tree.exporting.ExportService
 import dev.priporov.ideanotes.tree.importing.ImportService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
-import dev.priporov.noteplugin.component.dialog.OkDialog
+import dev.priporov.ideanotes.dialog.OkDialog
 import javax.swing.Icon
 import javax.swing.JPanel
 
@@ -21,7 +21,7 @@ object NoteToolbarFactory {
     private val exportService = service<ExportService>()
     private val importService = service<ImportService>()
 
-    private var settingsIcon: Icon = IconLoader.getIcon("/icons/menu/settings.png", javaClass)
+//    private var settingsIcon: Icon = IconLoader.getIcon("/icons/menu/settings.png", javaClass)
 
     private var importIcon: Icon = IconLoader.getIcon("/icons/menu/import.png", javaClass)
 
@@ -59,10 +59,6 @@ class NoteToolbarActionButton(
     icon: Icon
 ) : AnActionButton(name, null, icon) {
     override fun actionPerformed(e: AnActionEvent) = function.invoke()
-
-    override fun updateButton(e: AnActionEvent) {
-        super.updateButton(e)
-    }
 
 }
 

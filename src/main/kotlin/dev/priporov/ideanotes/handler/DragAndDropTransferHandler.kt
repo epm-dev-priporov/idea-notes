@@ -1,4 +1,4 @@
-package dev.priporov.noteplugin.component.tree.handler
+package dev.priporov.ideanotes.handler
 
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
@@ -11,7 +11,7 @@ import javax.swing.*
 import javax.swing.tree.*
 
 
-internal class DragAndDropTransferHandler() : TransferHandler() {
+internal class DragAndDropTransferHandler : TransferHandler() {
     private val mimeType = "${DataFlavor.javaJVMLocalObjectMimeType};class=\"${Array<DefaultMutableTreeNode>::class.java.name}\""
     private var nodesFlavor: DataFlavor = DataFlavor(mimeType)
     private var flavors = arrayOf(nodesFlavor)
@@ -148,7 +148,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         return javaClass.name
     }
 
-    inner class NodesTransferable(var nodes: Array<DefaultMutableTreeNode>) : Transferable {
+    inner class NodesTransferable(private var nodes: Array<DefaultMutableTreeNode>) : Transferable {
         @Throws(UnsupportedFlavorException::class)
         override fun getTransferData(flavor: DataFlavor): Any {
             if (!isDataFlavorSupported(flavor)) {
@@ -162,7 +162,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         }
 
         override fun isDataFlavorSupported(flavor: DataFlavor): Boolean {
-            return nodesFlavor!!.equals(flavor)
+            return nodesFlavor.equals(flavor)
         }
     }
 }
