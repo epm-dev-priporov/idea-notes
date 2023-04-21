@@ -7,14 +7,12 @@ import com.intellij.openapi.diagnostic.Logger
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
-import com.intellij.util.io.exists
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.*
-import kotlin.math.log
 
 object FileNodeUtils {
 
@@ -33,6 +31,8 @@ object FileNodeUtils {
             baseDir.mkdir()
         }
     }
+
+    fun isInBaseDir(file: VirtualFile?) = file?.path?.startsWith(baseDir.path, false) ?: false
 
     fun generateNodeName(name: String?): String? {
         if (name == null) {
@@ -62,17 +62,17 @@ object FileNodeUtils {
         return createVirtualFile(file)
     }
 
-    fun initSoftLink(id: String?, extension: String?, targetFile:File): VirtualFile? {
+    fun initSoftLink(id: String?, extension: String?, targetFile: File): VirtualFile? {
         if (id == null || extension == null) {
             return null
         }
 
         val filename = "${baseDir.path}${fileSeparator}${id}"
-        try{
+        try {
             val symbolicLink = Files.createSymbolicLink(Path.of("$filename.${extension}"), targetFile.toPath());
 
             return createVirtualFile(symbolicLink.toFile())
-        } catch (e:Exception){
+        } catch (e: Exception) {
             logger.error(e.message)
             logger.error("In Windows OS there is a permission issue: https://github.com/epm-dev-priporov/idea-notes/issues/6")
             return null

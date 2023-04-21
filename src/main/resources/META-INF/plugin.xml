@@ -69,6 +69,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
+        <textEditorCustomizer implementation="dev.priporov.ideanotes.action.tree.UnnamedConfigurableCustom"/>
         <searchScopesProvider implementation="dev.priporov.ideanotes.extension.NoteSearchScopeProvider"/>
         <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>

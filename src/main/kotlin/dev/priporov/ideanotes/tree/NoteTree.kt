@@ -8,7 +8,6 @@ import com.intellij.openapi.actionSystem.ex.ActionUtil
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
-import com.intellij.openapi.project.ProjectManager
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
@@ -38,7 +37,7 @@ class NoteTree : Tree() {
     }
 
     fun insert(info: NodeCreationInfo): FileTreeNode {
-        return insert( info.targetNode, FileTreeNode(info))
+        return insert(info.targetNode, FileTreeNode(info))
     }
 
     fun insert(nodeCreationInfo: NodeSoftLinkCreationInfo) {
@@ -54,7 +53,7 @@ class NoteTree : Tree() {
         expandAllNodes(expandedNodes)
     }
 
-    fun insert(targetNode:FileTreeNode ,fileTreeNode: FileTreeNode): FileTreeNode {
+    fun insert(targetNode: FileTreeNode, fileTreeNode: FileTreeNode): FileTreeNode {
         val index = targetNode.childCount
         targetNode.insert(fileTreeNode, index)
 
@@ -97,7 +96,7 @@ class NoteTree : Tree() {
 
     fun openInEditor(node: FileTreeNode?) {
         val file = node?.getFile() ?: return
-        val project = getProject() ?: ProjectManager.getInstance().openProjects[0]
+        val project = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)!!
         if(file.extension == NodeType.PDF.extension){
             BrowserLauncher.instance.browse(file.url)
         } else{
@@ -118,19 +117,19 @@ class NoteTree : Tree() {
 
     private fun initKeys() {
         // add popup for 'ShowPopupMenu' shortcut, like mouse right click button
-        ActionUtil.getShortcutSet("ShowPopupMenu").shortcuts.also{ shortcutSet ->
+        ActionUtil.getShortcutSet("ShowPopupMenu").shortcuts.also { shortcutSet ->
             ShowTreePopUpMenuAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Copy").shortcuts.also{ shortcutSet ->
+        ActionUtil.getShortcutSet("\$Copy").shortcuts.also { shortcutSet ->
             CopyNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Cut").shortcuts.also{ shortcutSet ->
+        ActionUtil.getShortcutSet("\$Cut").shortcuts.also { shortcutSet ->
             CutNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("\$Paste").shortcuts.also{ shortcutSet ->
+        ActionUtil.getShortcutSet("\$Paste").shortcuts.also { shortcutSet ->
             PasteNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
-        ActionUtil.getShortcutSet("RenameElement").shortcuts.also{ shortcutSet ->
+        ActionUtil.getShortcutSet("RenameElement").shortcuts.also { shortcutSet ->
             RenameNodeAction(this).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), this)
         }
     }

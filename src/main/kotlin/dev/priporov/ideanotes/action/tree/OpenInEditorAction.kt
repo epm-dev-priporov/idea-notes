@@ -1,7 +1,13 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.ide.impl.DataManagerImpl
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.actionSystem.CustomShortcutSet
+import com.intellij.openapi.actionSystem.ex.ActionUtil
+import com.intellij.openapi.components.service
+import com.intellij.openapi.project.ProjectManager
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.noteplugin.component.dialog.EditDialog
 
