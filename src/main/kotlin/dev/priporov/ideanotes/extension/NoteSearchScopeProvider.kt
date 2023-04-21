@@ -18,7 +18,7 @@ class NoteSearchScopeProvider : SearchScopeProvider {
     override fun getDisplayName() = "NotesTree"
 
     override fun getSearchScopes(project: Project, dataContext: DataContext): MutableList<SearchScope> {
-        val scope = GlobalSearchScope.filesScope(project, virtualFileContainer.getFiles(), "notes")
+        val scope = GlobalSearchScope.filesScope(project, virtualFileContainer.getFiles(), "Notes")
         if (scope == GlobalSearchScope.EMPTY_SCOPE) {
             return mutableListOf(EmptyScope("Notes"))
         }
