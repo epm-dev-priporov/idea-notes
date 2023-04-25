@@ -15,6 +15,7 @@ class NoteEditorTabTitleProvider : EditorTabTitleProvider {
         if (virtualFileContainer.isNote(file)) {
             return file.presentableName.substringBeforeLast("_")
         }
+
         return null
     }
 }

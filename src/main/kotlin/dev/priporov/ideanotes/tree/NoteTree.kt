@@ -97,9 +97,9 @@ class NoteTree : Tree() {
     fun openInEditor(node: FileTreeNode?) {
         val file = node?.getFile() ?: return
         val project = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)!!
-        if(file.extension == NodeType.PDF.extension){
+        if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
-        } else{
+        } else {
             FileEditorManager.getInstance(project).openTextEditor(
                 OpenFileDescriptor(project, file, 0, 0, false),
                 true
@@ -149,6 +149,24 @@ class NoteTree : Tree() {
             list.addAll(treeNode.children().asSequence().mapNotNull { it as FileTreeNode })
         }
         return expandedNodes
+    }
+
+    fun expandAll() {
+        val list = LinkedList<FileTreeNode>()
+        list.add(root)
+        while (list.isNotEmpty()) {
+            val treeNode = list.pop()
+            if (isCollapsed(TreeUtil.getPath(root, treeNode))) {
+                expandPath(TreeUtil.getPath(root, treeNode))
+            }
+            list.addAll(treeNode.children().asSequence().mapNotNull { it as FileTreeNode })
+        }
+    }
+
+    fun collapseAll() {
+        getExpandedNodes(root).asSequence().filter { it != root }.forEach {
+            collapsePath(TreeUtil.getPath(it.parent, it))
+        }
     }
 
 }
