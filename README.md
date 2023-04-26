@@ -37,6 +37,7 @@ Supported formats:
 * kt
 * java
 * py
+* svg
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas
