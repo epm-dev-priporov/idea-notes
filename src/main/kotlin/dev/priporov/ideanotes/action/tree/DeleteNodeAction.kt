@@ -6,7 +6,9 @@ import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.ideanotes.dialog.OkDialog
+
 private val DELETE_ICON =  IconUtils.toIcon("menu/deleteIcon.png")
+
 class DeleteNodeAction(
     private val tree: NoteTree,
     private val node: FileTreeNode,

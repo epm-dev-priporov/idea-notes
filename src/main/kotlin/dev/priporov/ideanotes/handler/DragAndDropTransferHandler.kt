@@ -1,6 +1,9 @@
 package dev.priporov.ideanotes.handler
 
+import com.intellij.openapi.components.service
+import dev.priporov.ideanotes.extension.UnnamedConfigurableCustom
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.VirtualFileContainer
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.Transferable
@@ -85,6 +88,7 @@ internal class DragAndDropTransferHandler : TransferHandler() {
         }
         val row = tree.getRowForPath(TreePath(copy.path))
         tree.expandRow(row)
+
         return copy
     }
 
@@ -137,6 +141,10 @@ internal class DragAndDropTransferHandler : TransferHandler() {
         for (i in nodes!!.indices) {
             val treeNode = nodes[i]
             model.insertNodeInto(treeNode, parent, index)
+            service<VirtualFileContainer>().addNode(treeNode as FileTreeNode)
+            treeNode.textEditor?.also { textEditor ->
+                UnnamedConfigurableCustom.applyAction(textEditor, service<VirtualFileContainer>())
+            }
             tree.updateOrderOf(parent as FileTreeNode)
 
             index++
