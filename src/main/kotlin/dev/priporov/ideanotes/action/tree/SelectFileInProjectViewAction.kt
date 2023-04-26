@@ -9,15 +9,14 @@ import dev.priporov.ideanotes.tree.common.VirtualFileContainer
 
 class SelectFileInProjectViewAction(
     private val textEditor: TextEditor,
-    private val virtualFileContainerService: VirtualFileContainer,
-    private val tree: NoteTree?
+    private val virtualFileContainerService: VirtualFileContainer
 ) : AnAction() {
 
     override fun actionPerformed(e: AnActionEvent) {
         val node = virtualFileContainerService.getNode(textEditor.file)
+        val tree: NoteTree? = e.project?.getService(NoteTree::class.java)
         if (node != null && tree != null) {
             TreeUtil.selectInTree(node, true, tree)
         }
     }
 }
-

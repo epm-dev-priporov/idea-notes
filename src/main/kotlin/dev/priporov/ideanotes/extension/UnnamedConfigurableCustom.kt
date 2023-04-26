@@ -26,13 +26,10 @@ class UnnamedConfigurableCustom : TextEditorCustomizer {
         textEditor: TextEditor,
         virtualFileContainerService: VirtualFileContainer
     ) {
-        val service = service<TreeModelProvider>()
-
         ActionUtil.getShortcutSet("SelectInProjectView").shortcuts.also { shortcutSet ->
             SelectFileInProjectViewAction(
                 textEditor,
-                virtualFileContainerService,
-                service.tree
+                virtualFileContainerService
             ).registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), textEditor.component)
         }
     }
