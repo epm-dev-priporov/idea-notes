@@ -14,11 +14,9 @@
     </p>
     <p>The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a></p>
     <p>
-        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img.png?raw=true">
+        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img1.2.8.png?raw=true">
     </p>
-    <p>
-        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img_1.png?raw=true">
-    </p>
+
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
     <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
