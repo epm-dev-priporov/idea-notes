@@ -76,6 +76,15 @@ class ExtensionFileHelper {
             ),
             ExtensionData(
                 0,
+                NodeType.SVG_JPG,
+                "svg",
+                "SVG",
+                "image/img_old.png",
+                newLeafIcon = IconLoader.getIcon("/icons/image/img.png", javaClass),
+                ignore = true
+            ),
+            ExtensionData(
+                0,
                 NodeType.PDF,
                 "pdf",
                 "pdf document",
@@ -250,10 +259,10 @@ class ExtensionData(
     val definition: String,
     leafIconPath: String,
     nodeIconPath: String = leafIconPath,
-    val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
+    private val leafIcon: Icon = IconUtils.toIcon(leafIconPath),
     val newLeafIcon: Icon = leafIcon,
-    val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
-    val newNodeIcon: Icon = newLeafIcon,
+    private val nodeIcon: Icon = IconUtils.toIcon(nodeIconPath),
+    private val newNodeIcon: Icon = newLeafIcon,
     val ignore: Boolean = false,
 ) {
     fun getRequiredLeafIcon() = if (isNewUi()) newLeafIcon else leafIcon
@@ -281,6 +290,7 @@ enum class NodeType(val extension: String?) {
     MARK_DOWN("md"),
     IMAGE_PNG("png"),
     IMAGE_JPG("jpg"),
+    SVG_JPG("svg"),
     PDF("pdf"),
     SOFT_LINK(""),
     SH("sh"),

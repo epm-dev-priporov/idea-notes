@@ -2,7 +2,7 @@ package dev.priporov.ideanotes.listener
 
 import com.intellij.openapi.keymap.KeymapUtil
 import dev.priporov.ideanotes.tree.NoteTree
-import dev.priporov.noteplugin.component.dialog.OkDialog
+import dev.priporov.ideanotes.dialog.OkDialog
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 

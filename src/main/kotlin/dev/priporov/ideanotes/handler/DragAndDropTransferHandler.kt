@@ -1,6 +1,9 @@
-package dev.priporov.noteplugin.component.tree.handler
+package dev.priporov.ideanotes.handler
 
+import com.intellij.openapi.components.service
+import dev.priporov.ideanotes.extension.UnnamedConfigurableCustom
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.VirtualFileContainer
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.awt.datatransfer.DataFlavor
 import java.awt.datatransfer.Transferable
@@ -11,7 +14,7 @@ import javax.swing.*
 import javax.swing.tree.*
 
 
-internal class DragAndDropTransferHandler() : TransferHandler() {
+internal class DragAndDropTransferHandler : TransferHandler() {
     private val mimeType = "${DataFlavor.javaJVMLocalObjectMimeType};class=\"${Array<DefaultMutableTreeNode>::class.java.name}\""
     private var nodesFlavor: DataFlavor = DataFlavor(mimeType)
     private var flavors = arrayOf(nodesFlavor)
@@ -85,6 +88,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         }
         val row = tree.getRowForPath(TreePath(copy.path))
         tree.expandRow(row)
+
         return copy
     }
 
@@ -137,6 +141,10 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         for (i in nodes!!.indices) {
             val treeNode = nodes[i]
             model.insertNodeInto(treeNode, parent, index)
+            service<VirtualFileContainer>().addNode(treeNode as FileTreeNode)
+            treeNode.textEditor?.also { textEditor ->
+                UnnamedConfigurableCustom.applyAction(textEditor, service<VirtualFileContainer>())
+            }
             tree.updateOrderOf(parent as FileTreeNode)
 
             index++
@@ -148,7 +156,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         return javaClass.name
     }
 
-    inner class NodesTransferable(var nodes: Array<DefaultMutableTreeNode>) : Transferable {
+    inner class NodesTransferable(private var nodes: Array<DefaultMutableTreeNode>) : Transferable {
         @Throws(UnsupportedFlavorException::class)
         override fun getTransferData(flavor: DataFlavor): Any {
             if (!isDataFlavorSupported(flavor)) {
@@ -162,7 +170,7 @@ internal class DragAndDropTransferHandler() : TransferHandler() {
         }
 
         override fun isDataFlavorSupported(flavor: DataFlavor): Boolean {
-            return nodesFlavor!!.equals(flavor)
+            return nodesFlavor.equals(flavor)
         }
     }
 }

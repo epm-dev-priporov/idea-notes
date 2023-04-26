@@ -12,7 +12,7 @@ import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.importing.SoftLinkService
 import dev.priporov.ideanotes.util.IconUtils
-import dev.priporov.noteplugin.component.dialog.EditDialog
+import dev.priporov.ideanotes.dialog.EditDialog
 
 private val ADD_ICON = IconUtils.toIcon("menu/addIcon.png")
 

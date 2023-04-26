@@ -13,7 +13,7 @@ import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.importing.SoftLinkService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.IconUtils
-import dev.priporov.noteplugin.component.dialog.EditDialog
+import dev.priporov.ideanotes.dialog.EditDialog
 
 private val ADD_NODE_ICON = IconUtils.toIcon("menu/addNodeIcon.png")
 

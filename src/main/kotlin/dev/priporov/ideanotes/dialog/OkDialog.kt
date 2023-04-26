@@ -1,4 +1,4 @@
-package dev.priporov.noteplugin.component.dialog
+package dev.priporov.ideanotes.dialog
 
 import com.intellij.openapi.ui.DialogWrapper
 import java.awt.BorderLayout

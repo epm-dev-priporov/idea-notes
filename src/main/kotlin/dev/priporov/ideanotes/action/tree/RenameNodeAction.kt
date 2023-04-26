@@ -3,7 +3,7 @@ package dev.priporov.ideanotes.action.tree
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.tree.NoteTree
-import dev.priporov.noteplugin.component.dialog.EditDialog
+import dev.priporov.ideanotes.dialog.EditDialog
 
 
 class RenameNodeAction(

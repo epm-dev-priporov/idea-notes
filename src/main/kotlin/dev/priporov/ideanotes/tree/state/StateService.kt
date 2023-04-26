@@ -22,7 +22,7 @@ class StateService : PersistentStateComponent<TreeState> {
 
     fun saveNodeInfo(node: FileTreeNode) {
         state.saveNode(node)
-        node.getFile()?.also { file -> virtualFileContainer.addFile(file) }
+        virtualFileContainer.addNode(node)
     }
 
     fun removeNodeInfo(node: FileTreeNode) {

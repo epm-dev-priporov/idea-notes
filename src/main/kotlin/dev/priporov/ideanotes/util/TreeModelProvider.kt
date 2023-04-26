@@ -9,9 +9,11 @@ class TreeModelProvider {
     private var commonModel: DefaultTreeModel? = null
     private var lock = ReentrantLock()
     private var initModel: Runnable? = null
+    var tree: NoteTree? = null
 
     fun setCommonModel(tree: NoteTree) {
         lock.lock()
+        this.tree = tree
         if (commonModel == null) {
             commonModel = tree.model as DefaultTreeModel
         } else {

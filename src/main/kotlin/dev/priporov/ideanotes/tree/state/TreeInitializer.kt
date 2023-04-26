@@ -24,7 +24,9 @@ class TreeInitializer {
         while (queue.isNotEmpty()) {
             val parentId = queue.poll()
             val parent = createdNodes[parentId] ?: continue
-            parent.getFile()?.also { file -> virtualFileContainer.addFile(file) }
+            virtualFileContainer.addNode(parent)
+            virtualFileContainer.init(parent.getFile())
+
             state.order[parentId]?.also { list ->
                 queue.addAll(list)
                 for (id in list) {
@@ -34,7 +36,8 @@ class TreeInitializer {
                     val newNode = createdNodes[id] ?: continue
                     tree.insert(parent, newNode)
 
-                    newNode.getFile()?.also { file -> virtualFileContainer.addFile(file) }
+                    virtualFileContainer.addNode(newNode)
+                    virtualFileContainer.init(newNode.getFile())
                 }
             }
         }
@@ -62,12 +65,17 @@ class TreeInitializer {
             queue.addAll(elements)
 
             val parent = createdNodes[id]
-            parent?.getFile()?.also { file -> virtualFileContainer.addFile(file) }
+            parent?.also { node -> virtualFileContainer.addNode(node)
+                virtualFileContainer.init(node.getFile())
+            }
             for (childId in elements) {
                 val newNode = createdNodes[childId]
                 if (newNode != null) {
                     parent?.insert(newNode, parent.childCount)
-                    newNode.getFile()?.also { file -> virtualFileContainer.addFile(file) }
+                    newNode.also { node ->
+                        virtualFileContainer.addNode(node)
+                        virtualFileContainer.init(node.getFile())
+                    }
                 }
             }
         }
