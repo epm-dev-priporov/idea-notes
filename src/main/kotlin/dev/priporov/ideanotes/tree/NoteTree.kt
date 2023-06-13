@@ -8,6 +8,7 @@ import com.intellij.openapi.actionSystem.ex.ActionUtil
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
+import com.intellij.openapi.fileTypes.NativeFileType
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
@@ -97,7 +98,9 @@ class NoteTree : Tree() {
     fun openInEditor(node: FileTreeNode?) {
         val file = node?.getFile() ?: return
         val project = DataManagerImpl.getInstance().getDataContext(this).getData(CommonDataKeys.PROJECT)!!
-        if (file.extension == NodeType.PDF.extension) {
+        if (file.extension == NodeType.DOC.extension || file.extension == NodeType.DOCX.extension) {
+            NativeFileType.openAssociatedApplication(file)
+        } else if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
         } else {
             FileEditorManager.getInstance(project).openTextEditor(

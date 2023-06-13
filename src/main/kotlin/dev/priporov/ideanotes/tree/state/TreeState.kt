@@ -2,11 +2,12 @@ package dev.priporov.ideanotes.tree.state
 
 import dev.priporov.ideanotes.dto.NodeStateInfo
 import dev.priporov.ideanotes.tree.node.FileTreeNode
+import java.util.concurrent.ConcurrentHashMap
 
 class TreeState {
 
-    var order = HashMap<String?, List<String?>>()
-    var nodes = HashMap<String, NodeStateInfo>()
+    var order = ConcurrentHashMap<String?, List<String?>>()
+    var nodes = ConcurrentHashMap<String, NodeStateInfo>()
 
     fun saveOrder(parent: FileTreeNode) {
         order[parent.id] = parent.children()

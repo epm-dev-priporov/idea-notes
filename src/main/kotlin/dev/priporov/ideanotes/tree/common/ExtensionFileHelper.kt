@@ -92,6 +92,31 @@ class ExtensionFileHelper {
                 ignore = true
             ),
             ExtensionData(
+                0,
+                NodeType.YML,
+                "yml",
+                "yml document",
+                "yaml/yaml16.png",
+                newLeafIcon = AllIcons.FileTypes.Yaml,
+                ignore = true
+            ),
+            ExtensionData(
+                0,
+                NodeType.DOC,
+                "doc",
+                "doc document",
+                "doc/doc.png",
+                ignore = true
+            ),
+            ExtensionData(
+                0,
+                NodeType.DOCX,
+                "docx",
+                "docx document",
+                "doc/doc.png",
+                ignore = true
+            ),
+            ExtensionData(
                 14,
                 NodeType.SH,
                 "sh",
@@ -230,6 +255,16 @@ class ExtensionFileHelper {
                         newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
                     ),
                 ),
+                PluginDependency(
+                    "dev.meanmail.plugin.nginx-intellij-plugin",
+                    ExtensionData(
+                        16,
+                        NodeType.CONF,
+                        "conf",
+                        "nginx config",
+                        "nginx/nginx.png",
+                    ),
+                ),
             ).forEach { applyExtension(it) }
         }
 
@@ -295,6 +330,10 @@ enum class NodeType(val extension: String?) {
     SOFT_LINK(""),
     SH("sh"),
     CSV("csv"),
+    YML("yml"),
+    DOC("icons/doc"),
+    DOCX("docx"),
+    CONF("conf"),
     UNKNOWN(null);
 
     companion object {

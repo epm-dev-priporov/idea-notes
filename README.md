@@ -1,7 +1,7 @@
 # NotesTree
 If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty convenient way.
 The plugin adds ability to write tree structure global notes in such formats as `txt`, `md`, `json`, `xml`, `yaml`, `sql`, `csv`, `sh` or `http`.
-The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates , images(`png`, `jpg`), `pdf`, `java`, `python` or `kotlin` files and create symbolic links(MacOS, Linux).
+The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates , images(`png`, `jpg`), `pdf`, `doc`, `docx`, `java`, `python` or `kotlin` files and create symbolic links(MacOS, Linux).
 It also supports [plum](https://plantuml.com/en/) and [mermaid](https://mermaid-js.github.io/mermaid/#/)
  diagrams.
 
@@ -19,6 +19,7 @@ For correct work the following points should be done:
 * Dockerfile, docker_compose.yaml require [Docker plugin](https://www.jetbrains.com/help/idea/docker.html)
 * pdf files and png, jpg images can be inserted from system clipboard
 * csv files require [CSV Editor plugin](https://plugins.jetbrains.com/plugin/10037-csv-editor)
+* conf files require [Nginx Configuration plugin](https://plugins.jetbrains.com/plugin/15461-nginx-configuration)
 
 Supported formats:
 * txt
@@ -38,6 +39,8 @@ Supported formats:
 * java
 * py
 * svg
+* conf
+* doc, docx
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas
