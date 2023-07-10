@@ -72,7 +72,9 @@ class ImportService {
 
         for ((oldId, childrenIds) in oldState.order) {
             val newId = mapOfIds[oldId]
-            newState.order[newId] = childrenIds.map { mapOfIds[it] }
+            if(oldId != ROOT_ID) {
+                newState.order[newId] = childrenIds.map { mapOfIds[it] }
+            }
         }
         return newState
     }
