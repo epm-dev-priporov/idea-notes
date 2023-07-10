@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.8</version>
+    <version>1.2.10</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
@@ -50,6 +50,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.2.10: Fixed NPE bug during importing notes</li>
             <li>1.2.9: Support for .conf nginx configuration files</li>
             <li>1.2.9: yml extension bugfix</li>
             <li>1.2.9: Support for doc, docx documents</li>
