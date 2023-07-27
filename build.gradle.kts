@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.priporov"
-version = "1.2.10"
+version = "1.2.11"
 
 repositories {
     mavenCentral()
@@ -13,7 +13,7 @@ repositories {
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
-    version.set("2022.1.4")
+    version.set("2023.2")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf(/* Plugin Dependencies */))
@@ -26,12 +26,12 @@ tasks {
         targetCompatibility = "17"
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
 
     patchPluginXml {
         sinceBuild.set("212")
-        untilBuild.set("231.*")
+        untilBuild.set("232.*")
     }
 
     signPlugin {

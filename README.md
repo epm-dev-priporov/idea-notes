@@ -44,3 +44,9 @@ Supported formats:
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas
+
+## IDE version Update
+
+For a some reason IntellijIdea does not import configuration file of the plugin to a new version IDE, so if you lost your 
+notes after update, you need to move ideanotes.xml config file from
+`~/.config/JetBrains/IdeaIC<OldVersion>/options/ideanotes.xml` to `~/.config/JetBrains/IdeaIC<NewVersion>/options/ideanotes.xml`. 
