@@ -117,6 +117,14 @@ class ExtensionFileHelper {
                 ignore = true
             ),
             ExtensionData(
+                0,
+                NodeType.EXCEL,
+                "elsx",
+                "Excel table",
+                "excel/excel.png",
+                ignore = true
+            ),
+            ExtensionData(
                 14,
                 NodeType.SH,
                 "sh",
@@ -334,6 +342,7 @@ enum class NodeType(val extension: String?) {
     DOC("icons/doc"),
     DOCX("docx"),
     CONF("conf"),
+    EXCEL("xlsx"),
     UNKNOWN(null);
 
     companion object {

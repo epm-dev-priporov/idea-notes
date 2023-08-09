@@ -102,6 +102,8 @@ class NoteTree : Tree() {
             NativeFileType.openAssociatedApplication(file)
         } else if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
+        } else if (file.extension == NodeType.EXCEL.extension) {
+            NativeFileType.openAssociatedApplication(file)
         } else {
             FileEditorManager.getInstance(project).openTextEditor(
                 OpenFileDescriptor(project, file, 0, 0, false),
