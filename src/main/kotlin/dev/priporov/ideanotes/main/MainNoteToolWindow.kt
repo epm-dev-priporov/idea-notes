@@ -2,7 +2,7 @@ package dev.priporov.ideanotes.main
 
 import com.intellij.ui.ScrollPaneFactory
 import com.intellij.ui.SideBorder
-import com.intellij.ui.TreeSpeedSearch
+import com.intellij.ui.TreeUIHelper
 import dev.priporov.ideanotes.toolbar.NoteToolbarFactory
 import dev.priporov.ideanotes.tree.NoteTree
 import java.awt.BorderLayout
@@ -12,8 +12,11 @@ class MainNoteToolWindow(val tree: NoteTree) : JPanel() {
 
     init {
         val toolbarPanel = NoteToolbarFactory.getInstance(tree)
+
+        TreeUIHelper.getInstance().installTreeSpeedSearch(tree)
+
         val createScrollPane = ScrollPaneFactory.createScrollPane(
-            TreeSpeedSearch(tree).component,
+            tree,
             SideBorder.TOP
         )
 
