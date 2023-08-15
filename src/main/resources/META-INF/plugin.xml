@@ -83,7 +83,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <textEditorCustomizer implementation="dev.priporov.ideanotes.extension.UnnamedConfigurableCustom"/>
         <searchScopesProvider implementation="dev.priporov.ideanotes.extension.NoteSearchScopeProvider"/>
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
+        <toolWindow id="Notes" secondary="true" icon="/icons/pluginIcon.png" anchor="right"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension
