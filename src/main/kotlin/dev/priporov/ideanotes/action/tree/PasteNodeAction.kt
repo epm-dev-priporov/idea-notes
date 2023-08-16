@@ -1,7 +1,10 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.ide.impl.DataManagerImpl
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.psi.PsiManager
 import dev.priporov.ideanotes.dto.NodeCopyData
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeCutData
@@ -11,6 +14,7 @@ import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.IconUtils
 import dev.priporov.ideanotes.util.WriteActionUtils
+import dev.priporov.ideanotes.util.createVirtualFile
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.DataFlavor
@@ -27,21 +31,30 @@ class PasteNodeAction(
         val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
 
         if (!isCopyOrCut(clipboard)) {
-            if(isCopiedSystemFile(clipboard)){
+            if (isCopiedSystemFile(clipboard)) {
                 if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
                     val files = clipboard.getData(DataFlavor.javaFileListFlavor)
                     if (null != files && files is ArrayList<*>) {
                         val copiedFiles = files as ArrayList<File?>
-                        if(copiedFiles.isEmpty()){
+                        if (copiedFiles.isEmpty()) {
                             return
                         }
-                        val file= copiedFiles[0]!!
+                        val file = copiedFiles[0]!!
                         val type = NodeType.fromExtension(file.extension)
-                        if(type == NodeType.UNKNOWN){
+                        if (type == NodeType.UNKNOWN) {
                             return
                         }
                         val nodeInfo = NodeInfo(file.name, file.extension, type = type)
-                        createCopyNode(NodeCopyData(nodeInfo, file.readBytes()))
+
+                        val project = DataManagerImpl.getInstance().getDataContext(tree).getData(CommonDataKeys.PROJECT)
+                        val virtualFile = createVirtualFile(file)
+                        val content = if (project != null) {
+                            PsiManager.getInstance(project).findFile(virtualFile)?.text?.encodeToByteArray()
+                                ?: file.readBytes()
+                        } else file.readBytes()
+
+
+                        createCopyNode(NodeCopyData(nodeInfo, content))
                     }
                 }
             }
@@ -90,12 +103,14 @@ class PasteNodeAction(
         }
     }
 
-    private fun isCopyOrCut(clipboard: Clipboard):Boolean {
+    private fun isCopyOrCut(clipboard: Clipboard): Boolean {
         val availableDataFlavors = clipboard.availableDataFlavors
-        return availableDataFlavors.contains(NodeCutTransferable.dataFlavor) || availableDataFlavors.contains(NodeCopyTransferable.dataFlavor)
+        return availableDataFlavors.contains(NodeCutTransferable.dataFlavor) || availableDataFlavors.contains(
+            NodeCopyTransferable.dataFlavor
+        )
     }
 
-    private fun isCopiedSystemFile(clipboard: Clipboard):Boolean {
+    private fun isCopiedSystemFile(clipboard: Clipboard): Boolean {
         return clipboard.availableDataFlavors.contains(DataFlavor.javaFileListFlavor)
     }
 }

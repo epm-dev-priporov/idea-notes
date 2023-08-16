@@ -89,14 +89,15 @@ object FileNodeUtils {
         return file.text.encodeToByteArray()
     }
 
-    private fun createVirtualFile(file: File): VirtualFile {
-        val localFileSystem = LocalFileSystem
-            .getInstance()
-        val path = file.toPath()
+}
 
-        return localFileSystem.refreshAndFindFileByNioFile(path)
-            ?: localFileSystem.refreshAndFindFileByIoFile(file)
-            ?: localFileSystem.refreshAndFindFileByPath(path.toString())!!
-    }
+fun createVirtualFile(file: File): VirtualFile {
+    val localFileSystem = LocalFileSystem
+        .getInstance()
+    val path = file.toPath()
+
+    return localFileSystem.refreshAndFindFileByNioFile(path)
+        ?: localFileSystem.refreshAndFindFileByIoFile(file)
+        ?: localFileSystem.refreshAndFindFileByPath(path.toString())!!
 }
 

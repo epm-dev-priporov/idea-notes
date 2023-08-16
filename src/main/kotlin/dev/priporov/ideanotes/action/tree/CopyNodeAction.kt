@@ -30,14 +30,14 @@ class CopyNodeAction(
         val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
         val clipboardOwner = ClipboardOwner { _, _ -> }
 
-        val copyData = NodeCopyData(NodeInfo(node), readFileContentBYteArray(node.getFile()))
+        val copyData = NodeCopyData(NodeInfo(node), readFileContentByteArray(node.getFile()))
 
         val transferable = NodeCopyTransferable(copyData)
 
         clipboard.setContents(transferable, clipboardOwner)
     }
 
-    private fun readFileContentBYteArray(virtualFile: VirtualFile?): ByteArray {
+    private fun readFileContentByteArray(virtualFile: VirtualFile?): ByteArray {
         if (virtualFile == null) {
             return ByteArray(0)
         }

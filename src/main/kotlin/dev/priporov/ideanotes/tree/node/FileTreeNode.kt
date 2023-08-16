@@ -10,6 +10,7 @@ import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.state.NodeInfo
 import dev.priporov.ideanotes.util.FileNodeUtils
 import dev.priporov.ideanotes.util.FileNodeUtils.generateNodeName
+import dev.priporov.ideanotes.util.WriteActionUtils
 import javax.swing.tree.DefaultMutableTreeNode
 
 open class FileTreeNode(
@@ -20,7 +21,7 @@ open class FileTreeNode(
     var type: NodeType?
 ) : DefaultMutableTreeNode() {
 
-    var textEditor:TextEditor? = null
+    var textEditor: TextEditor? = null
 
     constructor(node: FileTreeNode) : this(node.name, node.extension, node.id, type = node.type) {
         file = FileNodeUtils.initFile(id, node.extension)
@@ -87,4 +88,9 @@ open class FileTreeNode(
 
     fun getFile() = file
 
+    fun setData(content: ByteArray) {
+        WriteActionUtils.runWriteAction {
+            getFile()?.setBinaryContent(content)
+        }
+    }
 }

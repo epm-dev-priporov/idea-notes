@@ -7,5 +7,5 @@ class NodeCreationInfo(
     val targetNode: FileTreeNode,
     val name: String,
     val extension: String,
-    val type: NodeType
+    val type: NodeType = NodeType.fromExtension(extension)
 )

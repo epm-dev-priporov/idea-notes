@@ -102,7 +102,7 @@ class NoteTree : Tree() {
             NativeFileType.openAssociatedApplication(file)
         } else if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
-        } else if (file.extension == NodeType.EXCEL.extension) {
+        } else if (file.extension == NodeType.EXCEL.extension || file.extension == NodeType.CSV.extension) {
             NativeFileType.openAssociatedApplication(file)
         } else {
             FileEditorManager.getInstance(project).openTextEditor(
