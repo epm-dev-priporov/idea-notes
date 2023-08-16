@@ -45,6 +45,7 @@
             <li>conf</li>
             <li>doc, docx</li>
             <li>xlsx</li>
+            <li>log</li>
         </ul>
     </p>
   ]]></description>
@@ -56,6 +57,7 @@
             <li>1.2.13: Copy/paste bugfix</li>
             <li>1.2.13: Csv files opened by native OS application</li>
             <li>1.2.13: Updated icons, logo</li>
+            <li>1.2.13: Support for .log</li>
             <li>1.2.12: Support for xlsx</li>
             <li>1.2.11: Support for IntellijIdea 2023.2</li>
             <li>1.2.10: Fixed NPE bug during importing notes</li>
