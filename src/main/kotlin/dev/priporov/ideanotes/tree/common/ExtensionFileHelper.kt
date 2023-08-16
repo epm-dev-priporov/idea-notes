@@ -132,6 +132,14 @@ class ExtensionFileHelper {
                 "excel/excel.png",
                 ignore = true
             ),
+            ExtensionData(0,
+                NodeType.LOG,
+                "log",
+                "Log node",
+                "icons8-file-16.png",
+                "icons-files-16.png",
+                ignore = true
+            ),
             ExtensionData(
                 14,
                 NodeType.SH,
@@ -351,6 +359,7 @@ enum class NodeType(val extension: String?) {
     DOCX("docx"),
     CONF("conf"),
     EXCEL("xlsx"),
+    LOG("log"),
     UNKNOWN(null);
 
     companion object {
