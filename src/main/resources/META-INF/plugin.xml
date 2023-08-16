@@ -51,6 +51,9 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.2.13: Copy/paste image issue fix</li>
+            <li>1.2.13: Added 'Copy to Notes' option in Project View Structure menu</li>
+            <li>1.2.13: Copy/paste bugfix</li>
             <li>1.2.13: Csv files opened by native OS application</li>
             <li>1.2.13: Updated icons, logo</li>
             <li>1.2.12: Support for xlsx</li>

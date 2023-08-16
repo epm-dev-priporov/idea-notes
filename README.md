@@ -41,6 +41,7 @@ Supported formats:
 * conf
 * doc, docx
 * xlsx
+* log
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas

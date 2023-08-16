@@ -49,10 +49,13 @@ class PasteNodeAction(
                         val project = DataManagerImpl.getInstance().getDataContext(tree).getData(CommonDataKeys.PROJECT)
                         val virtualFile = createVirtualFile(file)
                         val content = if (project != null) {
-                            PsiManager.getInstance(project).findFile(virtualFile)?.text?.encodeToByteArray()
-                                ?: file.readBytes()
+                            val psiFile = PsiManager.getInstance(project).findFile(virtualFile) ?: return
+                            if (psiFile.fileType.name == "Image") {
+                                virtualFile.contentsToByteArray()
+                            } else {
+                                psiFile.text.encodeToByteArray()
+                            }
                         } else file.readBytes()
-
 
                         createCopyNode(NodeCopyData(nodeInfo, content))
                     }

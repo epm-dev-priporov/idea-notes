@@ -3,9 +3,7 @@ package dev.priporov.ideanotes.action.common
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.actionSystem.PlatformCoreDataKeys.SELECTED_ITEMS
-import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import dev.priporov.ideanotes.dto.NodeCreationInfo
@@ -26,9 +24,14 @@ class CopyFromIdeProjectStructureAction : AnAction("Copy to Notes") {
             .toList()
 
         files.forEach { virtualFile ->
-            tree.insert(NodeCreationInfo(tree.root, virtualFile.name, virtualFile.extension!!)).apply {
+            tree.insert(NodeCreationInfo(tree.root, virtualFile.nameWithoutExtension, virtualFile.extension!!)).apply {
                 val file = PsiManager.getInstance(event.project!!).findFile(virtualFile)!!
-                var content = file.text.encodeToByteArray()
+                var content = if (file.fileType.name == "Image") {
+                    virtualFile.contentsToByteArray()
+                } else {
+                    file.text.encodeToByteArray()
+                }
+
                 setData(content)
             }
         }
