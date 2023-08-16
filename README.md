@@ -17,8 +17,7 @@ For correct work the following points should be done:
 * plum files require [plum integration plugin](https://plugins.jetbrains.com/plugin/7017-plantuml-integration)
 * http files require [HTTP client plugin](https://plugins.jetbrains.com/plugin/13121-http-client)
 * Dockerfile, docker_compose.yaml require [Docker plugin](https://www.jetbrains.com/help/idea/docker.html)
-* pdf files and png, jpg images can be inserted from system clipboard
-* csv files require [CSV Editor plugin](https://plugins.jetbrains.com/plugin/10037-csv-editor)
+* pdf, csv, xlsx, doc, docx files and png, jpg images can be inserted from system clipboard
 * conf files require [Nginx Configuration plugin](https://plugins.jetbrains.com/plugin/15461-nginx-configuration)
 
 Supported formats:
@@ -42,6 +41,7 @@ Supported formats:
 * conf
 * doc, docx
 * xlsx
+* log
 
 #### Feedback
 I would really appreciate any feedback from users. Also please don't hesitate and share any ideas

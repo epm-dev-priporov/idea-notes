@@ -110,6 +110,14 @@ class ExtensionFileHelper {
             ),
             ExtensionData(
                 0,
+                NodeType.CSV,
+                "csv",
+                "Csv table",
+                "csv/csv.png",
+                newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
+            ),
+            ExtensionData(
+                0,
                 NodeType.DOCX,
                 "docx",
                 "docx document",
@@ -122,6 +130,14 @@ class ExtensionFileHelper {
                 "elsx",
                 "Excel table",
                 "excel/excel.png",
+                ignore = true
+            ),
+            ExtensionData(0,
+                NodeType.LOG,
+                "log",
+                "Log node",
+                "icons8-file-16.png",
+                "icons-files-16.png",
                 ignore = true
             ),
             ExtensionData(
@@ -252,17 +268,17 @@ class ExtensionFileHelper {
                         "docker/dockercompose.png"
                     ),
                 ),
-                PluginDependency(
-                    "net.seesharpsoft.intellij.plugins.csv",
-                    ExtensionData(
-                        15,
-                        NodeType.CSV,
-                        "csv",
-                        "Csv table",
-                        "csv/csv.png",
-                        newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
-                    ),
-                ),
+//                PluginDependency(
+//                    "net.seesharpsoft.intellij.plugins.csv",
+//                    ExtensionData(
+//                        15,
+//                        NodeType.CSV,
+//                        "csv",
+//                        "Csv table",
+//                        "csv/csv.png",
+//                        newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
+//                    ),
+//                ),
                 PluginDependency(
                     "dev.meanmail.plugin.nginx-intellij-plugin",
                     ExtensionData(
@@ -284,7 +300,7 @@ class ExtensionFileHelper {
             }
         }
 
-        fun containsExtension(extension: String) = EXTENSIONS.values.find { it.extension == extension } != null
+        fun containsExtension(extension: String?) = EXTENSIONS.values.find { it.extension == extension } != null
 
     }
 
@@ -343,6 +359,7 @@ enum class NodeType(val extension: String?) {
     DOCX("docx"),
     CONF("conf"),
     EXCEL("xlsx"),
+    LOG("log"),
     UNKNOWN(null);
 
     companion object {

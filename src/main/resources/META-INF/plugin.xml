@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.priporov.idea.notes</id>
     <name>NotesTree</name>
-    <version>1.2.12</version>
+    <version>1.2.13</version>
     <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
     <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
@@ -20,8 +20,8 @@
     <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
     <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
     <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
-    <p><b>png, jpg</b> images and <b>pdf</> files can be inserted from clipboard.</p>
-    <p><b>csv</b> files require <a href="https://plugins.jetbrains.com/plugin/10037-csv-editor">CSV Editor plugin</a>.</p>
+    <p><b>png, jpg</b> images, <b>pdf, csv, doc ,docx, xlsx</> files can be inserted from clipboard.</p>
+    <p><b>conf</b> files require <a href=https://plugins.jetbrains.com/plugin/15461-nginx-configuration>Nginx Configuration plugin</a></p>
 
     <p>Supported formats</p>
     <ul>
@@ -51,6 +51,11 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.2.13: Copy/paste image issue fix</li>
+            <li>1.2.13: Added 'Copy to Notes' option in Project View Structure menu</li>
+            <li>1.2.13: Copy/paste bugfix</li>
+            <li>1.2.13: Csv files opened by native OS application</li>
+            <li>1.2.13: Updated icons, logo</li>
             <li>1.2.12: Support for xlsx</li>
             <li>1.2.11: Support for IntellijIdea 2023.2</li>
             <li>1.2.10: Fixed NPE bug during importing notes</li>
@@ -80,10 +85,17 @@
 
     <depends>com.intellij.modules.platform</depends>
 
+    <actions>
+        <group id="analyze">
+            <action class="dev.priporov.ideanotes.action.common.CopyFromIdeProjectStructureAction"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </group>
+    </actions>
+
     <extensions defaultExtensionNs="com.intellij">
         <textEditorCustomizer implementation="dev.priporov.ideanotes.extension.UnnamedConfigurableCustom"/>
         <searchScopesProvider implementation="dev.priporov.ideanotes.extension.NoteSearchScopeProvider"/>
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Note" anchor="right"
+        <toolWindow id="Notes" secondary="true" icon="/icons/pluginIcon.png" anchor="right"
                     factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension
