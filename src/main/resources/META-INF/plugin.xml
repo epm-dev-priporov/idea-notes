@@ -90,7 +90,7 @@
     <depends>com.intellij.modules.platform</depends>
 
     <actions>
-        <group id="analyze">
+        <group id="dev.priporov.ideanotes.action.common.copyFromIdeProjectStructureAction">
             <action class="dev.priporov.ideanotes.action.common.CopyFromIdeProjectStructureAction"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </group>
