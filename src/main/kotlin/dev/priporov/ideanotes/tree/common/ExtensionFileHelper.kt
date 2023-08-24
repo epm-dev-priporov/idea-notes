@@ -76,6 +76,15 @@ class ExtensionFileHelper {
             ),
             ExtensionData(
                 0,
+                NodeType.IMAGE_JPEG,
+                "jpeg",
+                "JPEG image",
+                "image/img_old.png",
+                newLeafIcon = IconLoader.getIcon("/icons/image/img.png", javaClass),
+                ignore = true
+            ),
+            ExtensionData(
+                0,
                 NodeType.SVG_JPG,
                 "svg",
                 "SVG",
@@ -349,6 +358,7 @@ enum class NodeType(val extension: String?) {
     MARK_DOWN("md"),
     IMAGE_PNG("png"),
     IMAGE_JPG("jpg"),
+    IMAGE_JPEG("jpeg"),
     SVG_JPG("svg"),
     PDF("pdf"),
     SOFT_LINK(""),
