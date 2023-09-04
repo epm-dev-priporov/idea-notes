@@ -52,8 +52,10 @@ class PasteNodeAction(
                             val psiFile = PsiManager.getInstance(project).findFile(virtualFile) ?: return
                             if (psiFile.fileType.name == "Image") {
                                 virtualFile.contentsToByteArray()
-                            } else {
+                            } else if (psiFile.fileType.name != "Native") {
                                 psiFile.text.encodeToByteArray()
+                            } else {
+                                file.readBytes()
                             }
                         } else file.readBytes()
 

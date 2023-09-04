@@ -32,6 +32,7 @@ Supported formats:
 * http
 * pdf
 * jpg
+* jpeg
 * png
 * plump
 * kt
