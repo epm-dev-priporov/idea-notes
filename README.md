@@ -8,7 +8,7 @@ It also supports [plum](https://plantuml.com/en/) and [mermaid](https://mermaid-
 Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
 sql scripts or docker_compose templates, it is really convenient and useful during development.
 
-![img](https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img1.2.8.png?raw=true)
+![img](https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img1.3.1.png?raw=true)
 
 ### Requirements
 
