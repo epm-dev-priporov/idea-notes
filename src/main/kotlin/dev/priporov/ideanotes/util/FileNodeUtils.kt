@@ -22,7 +22,7 @@ object FileNodeUtils {
 
     val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
 
-    val baseDir = PropertiesComponent.getInstance().getValue(
+    var baseDir = PropertiesComponent.getInstance().getValue(
         PLUGIN_ID, "${System.getProperty("user.home")}${fileSeparator}.ideanotes"
     ).run { File(this) }
 
