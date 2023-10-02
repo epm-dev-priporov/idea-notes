@@ -107,7 +107,7 @@
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension
                 implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
-
+<!--        <settings implementation=""-->
         <projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
         <projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
@@ -118,6 +118,7 @@
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.exporting.ExportService"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.ImportService"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.SoftLinkService"/>
-
+        <applicationConfigurable displayName="Notes Tree"
+                                 instance="dev.priporov.ideanotes.configuration.NotesTreeConfigurable"/>
     </extensions>
 </idea-plugin>
