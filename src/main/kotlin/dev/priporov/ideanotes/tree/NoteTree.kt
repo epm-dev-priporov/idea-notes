@@ -103,7 +103,15 @@ class NoteTree : Tree() {
         } else if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
         } else if (file.extension == NodeType.EXCEL.extension || file.extension == NodeType.CSV.extension) {
-            NativeFileType.openAssociatedApplication(file)
+            val readerType = service<StateService>().state.getReaderType(NodeType.CSV)
+            if(readerType == null || readerType.equals("native")){
+                NativeFileType.openAssociatedApplication(file)
+            } else {
+                FileEditorManager.getInstance(project).openTextEditor(
+                    OpenFileDescriptor(project, file, 0, 0, false),
+                    true
+                )
+            }
         } else {
             FileEditorManager.getInstance(project).openTextEditor(
                 OpenFileDescriptor(project, file, 0, 0, false),

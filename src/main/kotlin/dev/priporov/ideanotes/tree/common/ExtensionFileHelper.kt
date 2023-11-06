@@ -20,7 +20,71 @@ object Icons {
 
 class ExtensionFileHelper {
     companion object {
-
+        val dependencyPlugins = sequenceOf(
+            PluginDependency(
+                "org.intellij.plugins.markdown",
+                ExtensionData(
+                    1,
+                    NodeType.MARK_DOWN,
+                    "md",
+                    "Markdown node",
+                    "md/markdown16.png",
+                    newLeafIcon = IconLoader.getIcon("/icons/md/newMd.png", javaClass)
+                ),
+            ),
+            PluginDependency(
+                "PlantUML integration",
+                ExtensionData(6, NodeType.PUML, "puml", "Puml node", "puml/puml16.png"),
+            ),
+            PluginDependency(
+                "com.jetbrains.restClient",
+                ExtensionData(7, NodeType.HTTP, "http", "Http node", "http/http16.png")
+            ),
+            PluginDependency(
+                "Docker",
+                ExtensionData(
+                    8,
+                    NodeType.DOCKERFILE,
+                    "",
+                    DOCKERFILE,
+                    "docker/docker.png",
+                    newLeafIcon = IconUtils.toIcon("docker/newDocker.png")
+                ),
+            ),
+            PluginDependency(
+                "Docker",
+                ExtensionData(
+                    9,
+                    NodeType.DOCKER_COMPOSE,
+                    "yaml",
+                    DOCKER_COMPOSE,
+                    "docker/dockercompose.png",
+                    "docker/dockercompose.png"
+                ),
+            ),
+            PluginDependency(
+                "net.seesharpsoft.intellij.plugins.csv",
+                ExtensionData(
+                    15,
+                    NodeType.CSV,
+                    "csv",
+                    "Csv table",
+                    "csv/csv.png",
+                    newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
+                    ignore = true
+                ),
+            ),
+            PluginDependency(
+                "dev.meanmail.plugin.nginx-intellij-plugin",
+                ExtensionData(
+                    16,
+                    NodeType.CONF,
+                    "conf",
+                    "nginx config",
+                    "nginx/nginx.png",
+                ),
+            ),
+        )
         val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
             ExtensionData(
@@ -117,14 +181,14 @@ class ExtensionFileHelper {
                 "doc/doc.png",
                 ignore = true
             ),
-            ExtensionData(
-                0,
-                NodeType.CSV,
-                "csv",
-                "Csv table",
-                "csv/csv.png",
-                newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
-            ),
+//            ExtensionData(
+//                0,
+//                NodeType.CSV,
+//                "csv",
+//                "Csv table",
+//                "csv/csv.png",
+//                newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
+//            ),
             ExtensionData(
                 0,
                 NodeType.DOCX,
@@ -235,70 +299,7 @@ class ExtensionFileHelper {
         private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
 
         private fun initPluginDependedFiles() {
-            sequenceOf(
-                PluginDependency(
-                    "org.intellij.plugins.markdown",
-                    ExtensionData(
-                        1,
-                        NodeType.MARK_DOWN,
-                        "md",
-                        "Markdown node",
-                        "md/markdown16.png",
-                        newLeafIcon = IconLoader.getIcon("/icons/md/newMd.png", javaClass)
-                    ),
-                ),
-                PluginDependency(
-                    "PlantUML integration",
-                    ExtensionData(6, NodeType.PUML, "puml", "Puml node", "puml/puml16.png"),
-                ),
-                PluginDependency(
-                    "com.jetbrains.restClient",
-                    ExtensionData(7, NodeType.HTTP, "http", "Http node", "http/http16.png")
-                ),
-                PluginDependency(
-                    "Docker",
-                    ExtensionData(
-                        8,
-                        NodeType.DOCKERFILE,
-                        "",
-                        DOCKERFILE,
-                        "docker/docker.png",
-                        newLeafIcon = IconUtils.toIcon("docker/newDocker.png")
-                    ),
-                ),
-                PluginDependency(
-                    "Docker",
-                    ExtensionData(
-                        9,
-                        NodeType.DOCKER_COMPOSE,
-                        "yaml",
-                        DOCKER_COMPOSE,
-                        "docker/dockercompose.png",
-                        "docker/dockercompose.png"
-                    ),
-                ),
-//                PluginDependency(
-//                    "net.seesharpsoft.intellij.plugins.csv",
-//                    ExtensionData(
-//                        15,
-//                        NodeType.CSV,
-//                        "csv",
-//                        "Csv table",
-//                        "csv/csv.png",
-//                        newLeafIcon = IconLoader.getIcon("/icons/csv/csvNew.png", javaClass),
-//                    ),
-//                ),
-                PluginDependency(
-                    "dev.meanmail.plugin.nginx-intellij-plugin",
-                    ExtensionData(
-                        16,
-                        NodeType.CONF,
-                        "conf",
-                        "nginx config",
-                        "nginx/nginx.png",
-                    ),
-                ),
-            ).forEach { applyExtension(it) }
+            dependencyPlugins.forEach { applyExtension(it) }
         }
 
         private fun applyExtension(pluginDependency: PluginDependency) {
