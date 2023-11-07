@@ -9,6 +9,10 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.fileTypes.NativeFileType
+import com.intellij.openapi.vcs.changes.ui.HoverChangesTree.Companion.getTransparentScrollbarWidth
+import com.intellij.profile.codeInspection.ui.addScrollPaneIfNecessary
+import com.intellij.ui.components.JBScrollBar
+import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
@@ -21,6 +25,8 @@ import dev.priporov.ideanotes.tree.state.StateService
 import dev.priporov.ideanotes.util.WriteActionUtils
 import java.util.*
 import javax.swing.DropMode
+import javax.swing.JScrollPane
+import javax.swing.ScrollPaneConstants
 import javax.swing.tree.DefaultTreeModel
 
 

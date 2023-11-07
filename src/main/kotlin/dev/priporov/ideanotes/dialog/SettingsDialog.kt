@@ -23,13 +23,17 @@ class SettingsDialog(
     init {
         formattedTextField.apply {
             text = FileNodeUtils.baseDir.path
+            isVisible = false
+        }
+        button.apply {
+            isVisible = false
         }
         val dependenciesGroupedByType: Map<NodeType, PluginDependency> = ExtensionFileHelper.dependencyPlugins
             .associateBy { it.extensionData.type }
 
         csvComboBox.apply {
             val pluginDependency = dependenciesGroupedByType[NodeType.CSV]
-            addItem("native")
+            addItem("Native")
 
             if (hasPlugin(pluginDependency)) {
                 val id = pluginDependency!!.id
@@ -40,7 +44,7 @@ class SettingsDialog(
             if (readerType != null && PluginId.findId(readerType) != null) {
                 setSelectedItem("Plugin: ${readerType}")
             } else {
-                service<StateService>().state.setReader(NodeType.CSV, "native")
+                service<StateService>().state.setReader(NodeType.CSV, "Native")
             }
         }
     }
