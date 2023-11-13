@@ -200,7 +200,7 @@ class ExtensionFileHelper {
             ExtensionData(
                 0,
                 NodeType.EXCEL,
-                "elsx",
+                "xlsx",
                 "Excel table",
                 "excel/excel.png",
                 ignore = true

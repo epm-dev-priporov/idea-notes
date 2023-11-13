@@ -2,6 +2,7 @@ package dev.priporov.ideanotes.dialog
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.extensions.PluginId
+import dev.priporov.ideanotes.configuration.NotesTreeConfigurable
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.common.PluginDependency
@@ -14,11 +15,14 @@ import javax.swing.JComboBox
 import javax.swing.JFormattedTextField
 import javax.swing.JPanel
 
+const val NATIVE = "Native"
+
 class SettingsDialog(
+    private val configurable: NotesTreeConfigurable,
     var root: JPanel = JPanel(),
-    var button: JButton = JButton(),
-    var formattedTextField: JFormattedTextField = JFormattedTextField(),
-    var csvComboBox: JComboBox<String> = JComboBox()
+    private var button: JButton = JButton(),
+    private var formattedTextField: JFormattedTextField = JFormattedTextField(),
+    private var csvComboBox: JComboBox<String> = JComboBox()
 ) {
     init {
         formattedTextField.apply {
@@ -28,24 +32,28 @@ class SettingsDialog(
         button.apply {
             isVisible = false
         }
-        val dependenciesGroupedByType: Map<NodeType, PluginDependency> = ExtensionFileHelper.dependencyPlugins
+        val dependenciesGroupedByType: Map<NodeType, PluginDependency> = ExtensionFileHelper
+            .dependencyPlugins
             .associateBy { it.extensionData.type }
 
         csvComboBox.apply {
-            val pluginDependency = dependenciesGroupedByType[NodeType.CSV]
-            addItem("Native")
+            initComboBox(dependenciesGroupedByType[NodeType.CSV], NodeType.CSV)
+        }
+    }
 
-            if (hasPlugin(pluginDependency)) {
-                val id = pluginDependency!!.id
-                addItem("Plugin: $id")
-            }
-            addItemListener(TestActionListener(NodeType.CSV, this))
-            val readerType = service<StateService>().state.getReaderType(NodeType.CSV)
-            if (readerType != null && PluginId.findId(readerType) != null) {
-                setSelectedItem("Plugin: ${readerType}")
-            } else {
-                service<StateService>().state.setReader(NodeType.CSV, "Native")
-            }
+    private fun JComboBox<String>.initComboBox(pluginDependency: PluginDependency?, type: NodeType) {
+        addItem(NATIVE)
+        if (hasPlugin(pluginDependency)) {
+            val id = pluginDependency!!.id
+            addItem("Plugin: $id")
+        }
+
+        addItemListener(TestActionListener(configurable, type, this))
+        val readerType = service<StateService>().state.getReaderType(type)
+        if (readerType != null && PluginId.findId(readerType) != null) {
+            setSelectedItem("Plugin: ${readerType}")
+        } else {
+            service<StateService>().state.setReader(type, NATIVE)
         }
     }
 
@@ -55,21 +63,21 @@ class SettingsDialog(
 }
 
 class TestActionListener(
+    private val configurable: NotesTreeConfigurable,
     private val type: NodeType,
     private val jComboBox: JComboBox<String>
 ) : ItemListener {
 
     override fun itemStateChanged(e: ItemEvent?) {
-        val service = service<StateService>()
         val selectedItem: String = jComboBox.selectedItem as String
-        val reader = toId(selectedItem)
-
-        service.state.setReader(type, reader)
+        configurable.modified(toId(selectedItem), type)
     }
+
+    private fun toId(selectedItem: String) = if (selectedItem.startsWith("Plugin: ")) {
+        selectedItem.substringAfter("Plugin: ")
+    } else {
+        selectedItem
+    }
+
 }
 
-private fun toId(selectedItem: String) = if (selectedItem.startsWith("Plugin: ")) {
-    selectedItem.substringAfter("Plugin: ")
-} else {
-    selectedItem
-}
