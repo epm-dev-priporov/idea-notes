@@ -53,6 +53,9 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.3.2: Added settings panel to change default editor for csv files(native software or CSV Editor plugin)</li>
+            <li>1.3.2: Added scrollbar to tree view</li>
+            <li>1.3.2: Xslx copy issue fix</li>
             <li>1.3.1: Copy native files issue fix</li>
             <li>1.3.1: Added jpeg</li>
             <li>1.3.0: Stop to support IDEA 212.*,213.*,221.* versions due to deprecated API</li>
@@ -107,7 +110,7 @@
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension
                 implementation="dev.priporov.ideanotes.extension.NoteIgnoredFileWritingAccessExtension"/>
-
+<!--        <settings implementation=""-->
         <projectService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
         <projectService serviceImplementation="dev.priporov.ideanotes.tree.state.TreeState"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.util.TreeModelProvider"/>
@@ -118,6 +121,7 @@
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.exporting.ExportService"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.ImportService"/>
         <applicationService serviceImplementation="dev.priporov.ideanotes.tree.importing.SoftLinkService"/>
-
+        <applicationConfigurable displayName="Notes Tree"
+                                 instance="dev.priporov.ideanotes.configuration.NotesTreeConfigurable"/>
     </extensions>
 </idea-plugin>

@@ -9,9 +9,12 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.fileTypes.NativeFileType
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
+import dev.priporov.ideanotes.dialog.NATIVE
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeSoftLinkCreationInfo
 import dev.priporov.ideanotes.tree.common.NodeType
@@ -102,7 +105,21 @@ class NoteTree : Tree() {
             NativeFileType.openAssociatedApplication(file)
         } else if (file.extension == NodeType.PDF.extension) {
             BrowserLauncher.instance.browse(file.url)
-        } else if (file.extension == NodeType.EXCEL.extension || file.extension == NodeType.CSV.extension) {
+        } else if (file.extension == NodeType.CSV.extension) {
+            openFile(file, project, NodeType.CSV)
+        } else if (file.extension == NodeType.EXCEL.extension) {
+            openFile(file, project, NodeType.EXCEL)
+        } else {
+            FileEditorManager.getInstance(project).openTextEditor(
+                OpenFileDescriptor(project, file, 0, 0, false),
+                true
+            )
+        }
+    }
+
+    private fun openFile(file: VirtualFile, project: Project, type: NodeType) {
+        val readerType = service<StateService>().state.getReaderType(type)
+        if (readerType == null || readerType.equals(NATIVE)) {
             NativeFileType.openAssociatedApplication(file)
         } else {
             FileEditorManager.getInstance(project).openTextEditor(

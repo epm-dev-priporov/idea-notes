@@ -23,7 +23,7 @@ object NoteToolbarFactory {
 
     var exportIcon: Icon = IconLoader.getIcon("/icons/menu/export.png", javaClass)
 
-    //    private var settingsIcon: Icon = IconLoader.getIcon("/icons/menu/settings.png", javaClass)
+    private var settingsIcon: Icon = IconLoader.getIcon("/icons/menu/settings.png", javaClass)
     private var importIcon: Icon = IconLoader.getIcon("/icons/menu/import.png", javaClass)
     private var collapseIcon: Icon = IconLoader.getIcon("/icons/collapse_expand/collapseComponent.png", javaClass)
     private var expandIcon: Icon = IconLoader.getIcon("/icons/collapse_expand/expandComponent.png", javaClass)
@@ -51,9 +51,9 @@ object NoteToolbarFactory {
         decorator.addExtraAction(
             NoteToolbarActionButton({ exportService.exportNotesToFile(tree).invoke() }, "Export All", exportIcon)
         )
-//        decorator.addExtraAction(
-//                NoteToolbarActionButton({}, "Settings", settingsIcon)
-//        )
+        decorator.addExtraAction(
+                NoteToolbarActionButton({}, "Settings", settingsIcon)
+        )
 
         return decorator.createPanel()
     }
