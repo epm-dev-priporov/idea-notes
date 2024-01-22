@@ -39,9 +39,16 @@ class ImportService {
     }
 
     fun importFromJsonState(tree: NoteTree) {
-        val bytes = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME").readBytes()
-        var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
-        treeInitializer.initTreeModelFromState(state, tree)
+        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
+        if (!file.exists()) {
+            file.createNewFile()
+        } else {
+            val bytes = file.readBytes()
+            if(bytes.size != 0){
+                var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
+                treeInitializer.initTreeModelFromState(state, tree)
+            }
+        }
     }
 
     private fun importZippedFromJsonState(tree: NoteTree) {
