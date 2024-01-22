@@ -68,7 +68,7 @@ class ExportService {
             )
         )
 
-        fillOrder(newState, stateService.state, map, node.id)
+        fillOrder(newState, stateService.getTreeState(), map, node.id)
         val stateFile = saveStateToJsonFile(newState)
 
         zos.putNextEntry(ZipEntry(sourceFolderPath.relativize(stateFile.toPath()).toString()))
@@ -88,9 +88,9 @@ class ExportService {
     }
 
     private fun getAllIds(node: FileTreeNode): HashSet<String> {
-        val order = stateService.state.order
+        val state = stateService.getTreeState()
         val queue: Queue<String> = LinkedList<String>().apply {
-            if(node.type != NodeType.SOFT_LINK){
+            if (node.type != NodeType.SOFT_LINK) {
                 add(node.id!!)
             }
         }
@@ -98,14 +98,16 @@ class ExportService {
         while (queue.isNotEmpty()) {
             val id = queue.poll()
             ids.add(id)
-            order[id]?.also { list ->
-                queue.addAll(list)
+            state.getOrderByParentId(id).also { list ->
+                if (list != null) {
+                    queue.addAll(list)
+                }
             }
         }
         return ids
     }
 
-    private fun saveStateToJsonFile(treeState: TreeState): File {
+    fun saveStateToJsonFile(treeState: TreeState): File {
         val file = File(stateFilePath).apply {
             if (exists()) {
                 createNewFile()
@@ -122,13 +124,13 @@ class ExportService {
         map: HashMap<String, String>,
         sourceId: String?
     ): TreeState {
-        val softLinkKeys = oldState.nodes.filterValues { it.type == NodeType.SOFT_LINK }.keys
+        val softLinkKeys = oldState.getNodes().filterValues { it.type == NodeType.SOFT_LINK }.keys
 
         if (sourceId != ROOT_ID) {
-            newState.order[ROOT_ID] = listOf(map[sourceId])
+            newState.getOrder()[ROOT_ID] = listOf(map[sourceId])
         }
 
-        for ((id, list) in oldState.order) {
+        for ((id, list) in oldState.getOrder()) {
             val newId = if (id == ROOT_ID && sourceId == ROOT_ID)
                 ROOT_ID
             else map[id]
@@ -137,7 +139,7 @@ class ExportService {
                 continue
             }
 
-            newState.order.putIfAbsent(
+            newState.getOrder().putIfAbsent(
                 newId,
                 list.asSequence()
                     .filterNotNull()
@@ -164,7 +166,7 @@ class FileVisitor(
         if (!filter.invoke(path)) {
             return FileVisitResult.CONTINUE
         }
-        val info = stateService.state.nodes[path.nameWithoutExtension]
+        val info = stateService.getTreeState().getNodes()[path.nameWithoutExtension]
         if (info?.type == NodeType.SOFT_LINK) {
             return FileVisitResult.CONTINUE
         }

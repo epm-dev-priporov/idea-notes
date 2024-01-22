@@ -11,6 +11,7 @@ import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.NoteCellRenderer
 import dev.priporov.ideanotes.util.TreeModelProvider
 import dev.priporov.ideanotes.handler.DragAndDropTransferHandler
+import dev.priporov.ideanotes.tree.importing.ImportService
 
 
 class NotesMainWindowFactory : ToolWindowFactory {
@@ -25,6 +26,7 @@ class NotesMainWindowFactory : ToolWindowFactory {
             addKeyListener(NoteKeyListener(this))
             treeModelProvider.setCommonModel(this)
         }
+        service<ImportService>().importFromJsonState(tree)
 
         val content = contentFactory.createContent(MainNoteToolWindow(tree), "", false)
         toolWindow.contentManager.addContent(content)

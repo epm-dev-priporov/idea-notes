@@ -38,6 +38,19 @@ class ImportService {
         }
     }
 
+    fun importFromJsonState(tree: NoteTree) {
+        val bytes = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME").readBytes()
+        var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
+        treeInitializer.initTreeModelFromState(state, tree)
+    }
+
+    private fun importZippedFromJsonState(tree: NoteTree) {
+        val bytes = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME").readBytes()
+        var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
+        state = regenerateIds(state)
+        treeInitializer.initTreeModelFromState(state, tree)
+    }
+
     private fun importFile(file: File, tree: NoteTree) {
         val extension = file.extension
         val name = file.nameWithoutExtension
@@ -50,30 +63,27 @@ class ImportService {
 
     private fun importFromZipFile(file: File, tree: NoteTree) {
         unzipFile(file)
-        val bytes = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME").readBytes()
-        var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
-        state = regenerateIds(state)
-        treeInitializer.initTreeModelFromState(state, tree)
+        importZippedFromJsonState(tree)
     }
 
     private fun regenerateIds(oldState: TreeState): TreeState {
         val mapOfIds = HashMap<String, String>()
         val newState = TreeState()
-        for ((oldId, nodeInfo) in oldState.nodes) {
+        for ((oldId, nodeInfo) in oldState.getNodes()) {
             val node = newNode(nodeInfo)
             newState.saveNode(node)
             mapOfIds[oldId] = node.id!!
         }
 
-        val childIds = oldState.order[ROOT_ID]
+        val childIds = oldState.getOrder()[ROOT_ID]
         childIds?.map { mapOfIds[it] }?.also { list ->
-            newState.order[ROOT_ID] = list
+            newState.getOrder()[ROOT_ID] = list
         }
 
-        for ((oldId, childrenIds) in oldState.order) {
+        for ((oldId, childrenIds) in oldState.getOrder()) {
             val newId = mapOfIds[oldId]
-            if(oldId != ROOT_ID) {
-                newState.order[newId] = childrenIds.map { mapOfIds[it] }
+            if (oldId != ROOT_ID) {
+                newState.getOrder()[newId] = childrenIds.map { mapOfIds[it] }
             }
         }
         return newState

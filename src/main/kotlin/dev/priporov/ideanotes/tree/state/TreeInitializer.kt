@@ -27,7 +27,7 @@ class TreeInitializer {
             virtualFileContainer.addNode(parent)
             virtualFileContainer.init(parent.getFile())
 
-            state.order[parentId]?.also { list ->
+            state.getOrder()[parentId]?.also { list ->
                 queue.addAll(list)
                 for (id in list) {
                     if (stateService.contains(id!!, parentId)) {
@@ -58,7 +58,7 @@ class TreeInitializer {
 
         while (queue.isNotEmpty()) {
             val id = queue.poll()
-            val elements = state.order[id]
+            val elements = state.getOrder()[id]
             if (elements.isNullOrEmpty()) {
                 continue
             }
@@ -84,7 +84,7 @@ class TreeInitializer {
     }
 
     private fun createAndGroupNodesById(state: TreeState): MutableMap<String?, FileTreeNode> {
-        return state.nodes.values
+        return state.getNodes().values
             .asSequence()
             .map { FileTreeNode(it) }
             .associateByTo(HashMap()) { it.id }

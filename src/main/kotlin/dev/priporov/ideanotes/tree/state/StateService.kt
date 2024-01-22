@@ -6,6 +6,7 @@ import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.common.VirtualFileContainer
+import dev.priporov.ideanotes.tree.importing.ImportService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.TreeModelProvider
 
@@ -13,11 +14,12 @@ import dev.priporov.ideanotes.util.TreeModelProvider
     name = "StateService",
     storages = [Storage("ideanotes.xml")]
 )
-class StateService : PersistentStateComponent<TreeState> {
+class StateService : PersistentStateComponent<ReaderState> {
     private val treeModelProvider = service<TreeModelProvider>()
     private val virtualFileContainer = service<VirtualFileContainer>()
     private val treeInitializer = service<TreeInitializer>()
     private var state = TreeState()
+    private var readerState = ReaderState()
 
     fun updateOrder(parent: FileTreeNode) = state.saveOrder(parent)
 
@@ -31,23 +33,21 @@ class StateService : PersistentStateComponent<TreeState> {
         state.removeNodeInfo(node)
     }
 
-    override fun getState(): TreeState {
+    fun getNodesByParentId(id:String) = state.getOrderByParentId(id)
+
+    fun getTreeState(): TreeState {
         return state
     }
 
-    override fun loadState(loadedState: TreeState) {
-        state = loadedState
-        val defaultTreeModel = treeModelProvider.getModel()
-        if (defaultTreeModel == null) {
-            treeModelProvider.setCallBack {
-                treeInitializer.initTreeModelFromState(state, treeModelProvider.getModel())
-            }
-        } else {
-            treeInitializer.initTreeModelFromState(state, defaultTreeModel)
-        }
+    override fun getState(): ReaderState {
+        return readerState
+    }
+
+    override fun loadState(loadedState: ReaderState) {
+        readerState = loadedState
     }
 
     fun contains(id: String, parentId: String): Boolean {
-        return state.order[parentId]?.contains(id) ?: false
+        return state.getOrder()[parentId]?.contains(id) ?: false
     }
 }
