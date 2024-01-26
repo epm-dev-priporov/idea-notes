@@ -103,6 +103,10 @@
             <action class="dev.priporov.ideanotes.action.common.CopyFromIdeProjectStructureAction"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
         </group>
+        <group id="dev.priporov.ideanotes.action.tree.SaveCurrentFileToNotesAction">
+            <action class="dev.priporov.ideanotes.action.tree.SaveCurrentFileToNotesAction"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </group>
     </actions>
 
     <extensions defaultExtensionNs="com.intellij">
