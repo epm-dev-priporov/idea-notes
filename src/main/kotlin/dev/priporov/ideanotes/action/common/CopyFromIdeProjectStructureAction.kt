@@ -24,7 +24,7 @@ class CopyFromIdeProjectStructureAction : AnAction("Copy to Notes") {
             .toList()
 
         files.forEach { virtualFile ->
-            tree.insert(NodeCreationInfo(tree.root, virtualFile.nameWithoutExtension, virtualFile.extension!!)).apply {
+            tree.insert(virtualFile).apply {
                 val file = PsiManager.getInstance(event.project!!).findFile(virtualFile)!!
                 var content = if (file.fileType.name == "Image") {
                     virtualFile.contentsToByteArray()

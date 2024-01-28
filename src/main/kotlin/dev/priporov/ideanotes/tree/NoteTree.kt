@@ -40,6 +40,10 @@ class NoteTree : Tree() {
         initKeys()
     }
 
+    fun insert(virtualFile: VirtualFile): FileTreeNode {
+        return insert(NodeCreationInfo(root, virtualFile.nameWithoutExtension, virtualFile.extension!!))
+    }
+
     fun insert(info: NodeCreationInfo): FileTreeNode {
         return insert(info.targetNode, FileTreeNode(info))
     }
