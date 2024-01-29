@@ -56,6 +56,7 @@
             <li>1.4.0: Added capability to copy current file from right mouse click menu</li>
             <li>1.4.0: Missed notes structure updates fix</li>
             <li>1.4.0: Notes state keeping approach is changed to keep state in json instead of build-in IDE</li>
+            <li>1.4.0: Setting button opens the plugin menu</li>
             <li>1.3.3: Updated to 233.* version build</li>
             <li>1.3.2: Added settings panel to change default editor for csv files(native software or CSV Editor plugin)</li>
             <li>1.3.2: Added scrollbar to tree view</li>

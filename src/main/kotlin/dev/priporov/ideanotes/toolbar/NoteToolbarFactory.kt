@@ -2,6 +2,7 @@ package dev.priporov.ideanotes.toolbar
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
+import com.intellij.openapi.options.ShowSettingsUtil
 import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.AnActionButton
 import com.intellij.ui.AnActionButtonRunnable
@@ -52,7 +53,7 @@ object NoteToolbarFactory {
             NoteToolbarActionButton({ exportService.exportNotesToFile(tree).invoke() }, "Export All", exportIcon)
         )
         decorator.addExtraAction(
-                NoteToolbarActionButton({}, "Settings", settingsIcon)
+                NoteToolbarActionButton({ ShowSettingsUtil.getInstance().showSettingsDialog(null, "Notes Tree");}, "Settings", settingsIcon)
         )
 
         return decorator.createPanel()
