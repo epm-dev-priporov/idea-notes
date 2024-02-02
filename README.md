@@ -1,4 +1,11 @@
+## 1.4.0 version lost notes
+I am afraid this is my fail, all of them can be found in ~/.ideanotes/ directory . I am really sorry for that. It happened because the previous version used embedded JB idea approach for keeping tree structure, but it has some issues(for example sometimes notes were not saved) so it was decided to implement other approach. Unfortunately I didn't make moving from old to new approach smoothly.
+
+
+I am working over the fix.
+
 # NotesTree
+
 If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty convenient way.
 The plugin adds ability to write tree structure global notes in such formats as `txt`, `md`, `json`, `xml`, `yaml`, `sql`, `csv`, `xlsx`, `sh` or `http`.
 The plugin brings you the way to keep `Dockerfile` or `docker_compose` templates , images(`png`, `jpg`), `pdf`, `doc`, `docx`, `java`, `python` or `kotlin` files and create symbolic links(MacOS, Linux).
