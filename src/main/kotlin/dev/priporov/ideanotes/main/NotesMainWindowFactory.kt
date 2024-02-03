@@ -5,13 +5,15 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
+import dev.priporov.ideanotes.handler.DragAndDropTransferHandler
 import dev.priporov.ideanotes.listener.NoteKeyListener
 import dev.priporov.ideanotes.listener.TreeMouseListener
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.NoteCellRenderer
-import dev.priporov.ideanotes.util.TreeModelProvider
-import dev.priporov.ideanotes.handler.DragAndDropTransferHandler
 import dev.priporov.ideanotes.tree.importing.ImportService
+import dev.priporov.ideanotes.tree.state.ReaderState
+import dev.priporov.ideanotes.tree.state.StateService
+import dev.priporov.ideanotes.util.TreeModelProvider
 
 
 class NotesMainWindowFactory : ToolWindowFactory {
@@ -19,17 +21,26 @@ class NotesMainWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val contentFactory = ContentFactory.getInstance()
-        val tree = project.getService(NoteTree::class.java).apply {
+        val tree: NoteTree = project.getService(NoteTree::class.java).apply {
             transferHandler = DragAndDropTransferHandler()
             setCellRenderer(NoteCellRenderer())
             addMouseListener(TreeMouseListener(this))
             addKeyListener(NoteKeyListener(this))
             treeModelProvider.setCommonModel(this)
         }
-        service<ImportService>().importFromJsonState(tree)
+
+        importTreeNodes(tree)
 
         val content = contentFactory.createContent(MainNoteToolWindow(tree), "", false)
         toolWindow.contentManager.addContent(content)
+    }
+
+    private fun importTreeNodes(tree: NoteTree) {
+        val state: ReaderState = service<StateService>().state;
+        val importService = service<ImportService>()
+
+        importService.importOldNotes(state)
+        importService.importFromJsonState(tree)
     }
 
 }

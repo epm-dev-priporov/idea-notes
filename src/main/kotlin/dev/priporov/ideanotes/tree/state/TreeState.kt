@@ -16,6 +16,14 @@ class TreeState {
     fun getOrder() = order
     fun getOrderByParentId(id: String) = order[id]
 
+    fun addOrder(map: Map<String?, List<String?>>){
+        order.putAll(map)
+    }
+
+    fun addNodes(map:Map<String, NodeStateInfo>){
+        nodes.putAll(map)
+    }
+
     fun saveOrder(parent: FileTreeNode) {
         order[parent.id] = parent.children()
             .asSequence()

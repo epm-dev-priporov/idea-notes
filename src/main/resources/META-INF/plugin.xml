@@ -53,6 +53,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.4.1: Lost notes fix</li>
             <li>1.4.0: Added capability to copy current file from right mouse click menu</li>
             <li>1.4.0: Missed notes structure updates fix</li>
             <li>1.4.0: Notes state keeping approach is changed to keep state in json instead of build-in IDE</li>

@@ -10,9 +10,11 @@ import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeStateInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
+import dev.priporov.ideanotes.tree.exporting.ExportService
 import dev.priporov.ideanotes.tree.exporting.STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.ROOT_ID
+import dev.priporov.ideanotes.tree.state.ReaderState
 import dev.priporov.ideanotes.tree.state.TreeInitializer
 import dev.priporov.ideanotes.tree.state.TreeState
 import dev.priporov.ideanotes.util.FileNodeUtils
@@ -38,13 +40,39 @@ class ImportService {
         }
     }
 
+    fun importOldNotes(oldState: ReaderState){
+        if ( oldState.isImported == true) {
+            return
+        }
+        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+        val bytes = file.readBytes()
+        var state = if (bytes.size != 0) {
+            objectMapper.readValue(bytes, TreeState::class.java)
+        } else {
+            TreeState()
+        }
+        oldState.order[ROOT_ID].also {
+            val elements = state.getOrderByParentId(ROOT_ID)
+            if (elements != null) {
+                it?.addAll(elements)
+            }
+        }
+        state.addNodes(oldState.nodes)
+        state.addOrder(oldState.order)
+        service<ExportService>().saveStateToJsonFile(state)
+        oldState.isImported = true
+    }
+
     fun importFromJsonState(tree: NoteTree) {
         val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
         if (!file.exists()) {
             file.createNewFile()
         } else {
             val bytes = file.readBytes()
-            if(bytes.size != 0){
+            if (bytes.size != 0) {
                 var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
                 treeInitializer.initTreeModelFromState(state, tree)
             }
