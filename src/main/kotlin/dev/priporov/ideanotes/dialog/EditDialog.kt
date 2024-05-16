@@ -2,7 +2,7 @@ package dev.priporov.ideanotes.dialog
 
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.EditorTextField
-import org.apache.commons.lang.StringUtils
+import org.apache.commons.lang3.StringUtils
 import java.awt.BorderLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -24,7 +24,6 @@ class EditDialog(
     init {
         init()
         this.title = title
-
         if (StringUtils.isNotBlank(stringForRename)) {
             edit.text = stringForRename!!
         }
