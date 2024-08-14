@@ -53,6 +53,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.4.4: Updated to 242.* version build</li>
             <li>1.4.3: New node creation issue fix</li>
             <li>1.4.2: Updated to 241.* version build</li>
             <li>1.4.1: Lost notes fix</li>
