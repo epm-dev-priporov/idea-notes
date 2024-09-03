@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.toolbar
 
+import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
 import com.intellij.openapi.options.ShowSettingsUtil
@@ -65,7 +66,7 @@ class NoteToolbarActionButton(
     private val function: () -> Unit,
     name: String,
     icon: Icon
-) : AnActionButton(name, null, icon) {
+) : AnAction(name, null, icon) {
     override fun actionPerformed(e: AnActionEvent) = function.invoke()
 
 }
