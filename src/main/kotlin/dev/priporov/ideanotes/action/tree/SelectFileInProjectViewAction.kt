@@ -17,6 +17,7 @@ class SelectFileInProjectViewAction(
         val tree: NoteTree? = e.project?.getService(NoteTree::class.java)
         if (node != null && tree != null) {
             TreeUtil.selectInTree(node, true, tree)
+            TreeUtil.selectNode(tree, node)
         }
     }
 }

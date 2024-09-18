@@ -6,6 +6,8 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.FileEditorManagerListener
+import com.intellij.openapi.fileEditor.FileEditorProvider
+import com.intellij.openapi.util.Pair
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.action.tree.SelectFileInProjectViewAction
 import dev.priporov.ideanotes.tree.common.VirtualFileContainer
@@ -17,6 +19,7 @@ class OpenedFileListener : FileEditorManagerListener {
             textEditor: FileEditor,
             virtualFileContainerService: VirtualFileContainer
         ) {
+
             ActionUtil.getShortcutSet("SelectInProjectView").shortcuts.also { shortcutSet ->
                 SelectFileInProjectViewAction(
                     textEditor,
@@ -26,23 +29,42 @@ class OpenedFileListener : FileEditorManagerListener {
         }
     }
 
-    override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
+//    override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
+//        val virtualFileContainerService = service<VirtualFileContainer>()
+//        val editors: Array<FileEditor> = source.getAllEditors(file)
+//        editors.forEach { editor: FileEditor ->
+//            virtualFileContainerService.initLateIfNeeded(file) {
+//                applyAction(editor, virtualFileContainerService)
+//            }
+//            if (virtualFileContainerService.isNote(file)) {
+//                applyAction(editor, virtualFileContainerService)
+//            }
+//            virtualFileContainerService.getNode(file)?.apply {
+//                this.editor = editor
+//            }
+//        }
+//        super.fileOpened(source, file)
+//    }
+
+    override fun fileOpenedSync(
+        source: FileEditorManager,
+        file: VirtualFile,
+        editors: Pair<Array<FileEditor>, Array<FileEditorProvider>>
+    ) {
         val virtualFileContainerService = service<VirtualFileContainer>()
-        val editors: Array<FileEditor> = source.getEditors(file)
-        editors.forEach { editor: FileEditor ->
-            if (editor != null) {
-                virtualFileContainerService.initLateIfNeeded(file) {
-                    applyAction(editor, virtualFileContainerService)
-                }
-                if (virtualFileContainerService.isNote(file)) {
-                    applyAction(editor, virtualFileContainerService)
-                }
-                virtualFileContainerService.getNode(file)?.apply {
-                    this.editor = editor
-                }
+//        val editors: Array<FileEditor> = source.getAllEditors(file)
+
+        editors.first?.forEach { editor: FileEditor ->
+            virtualFileContainerService.initLateIfNeeded(file) {
+                applyAction(editor, virtualFileContainerService)
+            }
+            if (virtualFileContainerService.isNote(file)) {
+                applyAction(editor, virtualFileContainerService)
+            }
+            virtualFileContainerService.getNode(file)?.apply {
+                this.editor = editor
             }
         }
-        super.fileOpened(source, file)
     }
 
 }
