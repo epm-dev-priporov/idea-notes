@@ -1,6 +1,8 @@
 package dev.priporov.ideanotes.tree.node
 
 
+import com.intellij.openapi.editor.Editor
+import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.dto.NodeCreationInfo
@@ -21,11 +23,11 @@ open class FileTreeNode(
     var type: NodeType?
 ) : DefaultMutableTreeNode() {
 
-    var textEditor: TextEditor? = null
+    var editor: FileEditor? = null
 
     constructor(node: FileTreeNode) : this(node.name, node.extension, node.id, type = node.type) {
         file = FileNodeUtils.initFile(id, node.extension)
-        textEditor = node.textEditor
+        editor = node.editor
     }
 
     constructor(node: NodeStateInfo) : this(node.name, node.extension, node.id, type = node.type) {
