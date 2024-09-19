@@ -85,7 +85,7 @@ class ExtensionFileHelper {
                 ),
             ),
         )
-        val EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
+        var EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
             ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
             ExtensionData(
                 2,
@@ -223,9 +223,9 @@ class ExtensionFileHelper {
             ),
         ).associateByTo(HashMap()) { it.type }
 
-        val SORTED_EXTENSIONS: List<ExtensionData>
+        lateinit var SORTED_EXTENSIONS: List<ExtensionData>
 
-        init {
+        fun init(){
             val fullApplicationName = ApplicationInfo.getInstance().fullApplicationName
             when {
                 isIntellijIdea(fullApplicationName) || isAndroidStudio(fullApplicationName) -> {
@@ -288,19 +288,18 @@ class ExtensionFileHelper {
             SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
         }
 
+        init {
+//            init()
+        }
+
         private fun isMacOrLinux(): Boolean {
             val osType = System.getProperty("os.name").lowercase(Locale.ENGLISH)
             return osType.contains("mac") or (osType == "linux")
         }
 
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
-
         private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
         private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
-
-        private fun initPluginDependedFiles() {
-            dependencyPlugins.forEach { applyExtension(it) }
-        }
 
         private fun applyExtension(pluginDependency: PluginDependency) {
             val pluginId: PluginId? = PluginId.findId(pluginDependency.id)
@@ -308,6 +307,10 @@ class ExtensionFileHelper {
                 val data = pluginDependency.extensionData
                 EXTENSIONS[data.type] = data
             }
+        }
+
+        fun initPluginDependedFiles() {
+            dependencyPlugins.forEach { applyExtension(it) }
         }
 
         fun containsExtension(extension: String?) = EXTENSIONS.values.find { it.extension == extension } != null

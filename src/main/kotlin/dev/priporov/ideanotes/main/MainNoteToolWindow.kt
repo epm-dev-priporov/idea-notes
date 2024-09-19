@@ -7,6 +7,7 @@ import com.intellij.ui.components.JBScrollBar
 import com.intellij.ui.components.JBScrollPane
 import dev.priporov.ideanotes.toolbar.NoteToolbarFactory
 import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import java.awt.BorderLayout
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants
@@ -14,6 +15,7 @@ import javax.swing.ScrollPaneConstants
 class MainNoteToolWindow(val tree: NoteTree) : JPanel() {
 
     init {
+        ExtensionFileHelper.init()
         val toolbarPanel = NoteToolbarFactory.getInstance(tree)
 
         TreeUIHelper.getInstance().installTreeSpeedSearch(tree)
