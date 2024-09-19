@@ -12,7 +12,7 @@
     sql scripts or docker_compose templates, it is really convenient and  useful during development.
 
     </p>
-    <p>The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github</a></p>
+    <p>I would really appreciate if you star the plugin. The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github.</a></p>
     <p>
         <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img1.3.1.png?raw=true">
     </p>
@@ -53,6 +53,9 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.4.5: Stopped to support 222.* version. (supported since 223.*)</li>
+            <li>1.4.5: Updated to 243.* version build</li>
+            <li>1.4.5: Initialization issue fix</li>
             <li>1.4.5: Removed deprecated sdk api</li>
             <li>1.4.4: Updated to 242.* version build</li>
             <li>1.4.3: New node creation issue fix</li>
