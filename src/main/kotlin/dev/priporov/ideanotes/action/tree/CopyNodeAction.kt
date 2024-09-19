@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.action.tree
 
 import com.intellij.ide.impl.DataManagerImpl
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -46,6 +47,8 @@ class CopyNodeAction(
 
         return file.text.encodeToByteArray()
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
 }
 

@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
@@ -19,5 +20,7 @@ class ExportNodeAction(
         val node = tree.getSelectedNode() ?: return
         exportService.exportNotesToFile(tree, node).invoke()
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
 }

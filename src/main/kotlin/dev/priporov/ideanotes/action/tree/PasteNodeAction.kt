@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.action.tree
 
 import com.intellij.ide.impl.DataManagerImpl
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
@@ -121,4 +122,7 @@ class PasteNodeAction(
     private fun isCopiedSystemFile(clipboard: Clipboard): Boolean {
         return clipboard.availableDataFlavors.contains(DataFlavor.javaFileListFlavor)
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
+
 }

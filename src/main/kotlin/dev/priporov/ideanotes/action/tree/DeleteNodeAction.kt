@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.tree.NoteTree
@@ -18,5 +19,7 @@ class DeleteNodeAction(
     override fun actionPerformed(e: AnActionEvent) {
         OkDialog("Delete node") { tree.delete(node) }.show()
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
 }

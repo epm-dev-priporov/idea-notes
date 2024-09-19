@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.dto.NodeCopyData
@@ -30,6 +31,7 @@ class CutNodeAction(
         tree.delete(node)
     }
 
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
 }
 

@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.DefaultActionGroup
@@ -22,14 +23,15 @@ class AddNodeActionGroup(tree: NoteTree, targetNode: FileTreeNode, actionName: S
         isPopup = true
         templatePresentation.text = actionName
         ExtensionFileHelper.SORTED_EXTENSIONS.forEach {
-            add(AddChildNodeAction(tree, targetNode, it))
-        }
+            add(AddChildNodeAction(tree, targetNode, it)) }
     }
 
     override fun update(event: AnActionEvent) {
         event.presentation.setIcon(ADD_NODE_ICON)
         super.update(event)
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
 }
 

@@ -1,5 +1,6 @@
 package dev.priporov.ideanotes.action.tree
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.tree.NoteTree
@@ -23,5 +24,7 @@ class ShowTreePopUpMenuAction(private val tree: NoteTree) : AnAction() {
             MousePopupMenuActionGroup(tree, true)
         )
     }
+
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.EDT
 
 }
