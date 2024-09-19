@@ -120,7 +120,7 @@
     </actions>
 
     <projectListeners>
-        <listener class="dev.priporov.ideanotes.extension.OpenedFileListener" topic="com.intellij.openapi.fileEditor.FileEditorManagerListener" activeInTestMode="false" />
+        <listener class="dev.priporov.ideanotes.extension.OpenedFileListener" topic="com.intellij.openapi.fileEditor.FileOpenedSyncListener" activeInTestMode="false" />
     </projectListeners>
 
     <extensions defaultExtensionNs="com.intellij">
