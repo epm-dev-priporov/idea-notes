@@ -11,6 +11,7 @@ import dev.priporov.ideanotes.dto.NodeStateInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.exporting.ExportService
+import dev.priporov.ideanotes.tree.exporting.IMPORT_STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.exporting.STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.ROOT_ID
@@ -44,7 +45,7 @@ class ImportService {
         if ( oldState.isImported == true) {
             return
         }
-        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
+        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$IMPORT_STATE_FILE_NAME")
         if (!file.exists()) {
             file.createNewFile()
         }

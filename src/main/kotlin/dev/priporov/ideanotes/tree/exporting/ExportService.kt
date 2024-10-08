@@ -29,13 +29,14 @@ import kotlin.io.path.nameWithoutExtension
 import kotlin.io.path.readBytes
 
 const val STATE_FILE_NAME = "state.json"
+const val IMPORT_STATE_FILE_NAME = "imported_state.json"
 private const val DEFAULT_FILE_NAME = "IdeaNotes.zip"
 
 class ExportService {
 
     private val stateService: StateService = service()
     private var objectMapper = ObjectMapper()
-    private var stateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME"
+    private var stateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$IMPORT_STATE_FILE_NAME"
 
     fun exportNotesToFile(tree: NoteTree, node: FileTreeNode = tree.root): () -> Unit = {
         createZipFile(tree)?.also { file ->

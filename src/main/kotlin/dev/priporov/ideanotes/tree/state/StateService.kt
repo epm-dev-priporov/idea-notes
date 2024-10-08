@@ -15,9 +15,7 @@ import dev.priporov.ideanotes.util.TreeModelProvider
     storages = [Storage("ideanotes.xml")]
 )
 class StateService : PersistentStateComponent<ReaderState> {
-    private val treeModelProvider = service<TreeModelProvider>()
     private val virtualFileContainer = service<VirtualFileContainer>()
-    private val treeInitializer = service<TreeInitializer>()
     private var state = TreeState()
     private var readerState = ReaderState()
 
