@@ -53,6 +53,9 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.5.1: Changed export file default name pattern to "IdeaNotes_YYYY-MM-dd.zip"</li>
+            <li>1.5.1: Fixed removing node with children issue</li>
+            <li>1.5.1: Fixed #42 issue</li>
             <li>1.5.0: Stopped to support 222.*,223.* versions due to deprecated API. (supported since 231.*)</li>
             <li>1.5.0: Updated to 243.* version build</li>
             <li>1.5.0: Initialization issue fix</li>

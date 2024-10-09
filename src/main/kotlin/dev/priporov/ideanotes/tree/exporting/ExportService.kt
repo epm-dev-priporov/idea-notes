@@ -20,6 +20,7 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
+import java.time.LocalDateTime
 import java.util.*
 import java.util.zip.ZipEntry
 import java.util.zip.ZipOutputStream
@@ -29,13 +30,15 @@ import kotlin.io.path.nameWithoutExtension
 import kotlin.io.path.readBytes
 
 const val STATE_FILE_NAME = "state.json"
-private const val DEFAULT_FILE_NAME = "IdeaNotes.zip"
+const val EXPORT_STATE_FILE_NAME = "exp_state.json"
+private const val DEFAULT_FILE_NAME = "IdeaNotes"
 
 class ExportService {
 
     private val stateService: StateService = service()
     private var objectMapper = ObjectMapper()
     private var stateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME"
+    private var exportingStateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$EXPORT_STATE_FILE_NAME"
 
     fun exportNotesToFile(tree: NoteTree, node: FileTreeNode = tree.root): () -> Unit = {
         createZipFile(tree)?.also { file ->
@@ -45,7 +48,7 @@ class ExportService {
 
     private fun createZipFile(tree: NoteTree) = getInstance()
         .createSaveFileDialog(FileSaverDescriptor("Export", ""), tree)
-        .save(DEFAULT_FILE_NAME)
+        .save("${DEFAULT_FILE_NAME}_${LocalDateTime.now().toLocalDate()}.zip")
         ?.file
 
     private fun exportToZip(target: File, node: FileTreeNode): File {
@@ -69,7 +72,7 @@ class ExportService {
         )
 
         fillOrder(newState, stateService.getTreeState(), map, node.id)
-        val stateFile = saveStateToJsonFile(newState)
+        val stateFile = saveStateToJsonFile(newState, exportingStateFilePath)
 
         zos.putNextEntry(ZipEntry(sourceFolderPath.relativize(stateFile.toPath()).toString()))
         Files.copy(stateFile.toPath(), zos)
@@ -78,6 +81,7 @@ class ExportService {
 
         WriteActionUtils.runWriteAction {
             filesToRemove.forEach { it?.delete(this) }
+            Files.delete(Path.of(exportingStateFilePath))
         }
 
         return zipPath.toFile()
@@ -107,8 +111,8 @@ class ExportService {
         return ids
     }
 
-    fun saveStateToJsonFile(treeState: TreeState): File {
-        val file = File(stateFilePath).apply {
+    fun saveStateToJsonFile(treeState: TreeState, path:String = stateFilePath): File {
+        val file = File(path).apply {
             if (exists()) {
                 createNewFile()
             }
@@ -127,7 +131,7 @@ class ExportService {
         val softLinkKeys = oldState.getNodes().filterValues { it.type == NodeType.SOFT_LINK }.keys
 
         if (sourceId != ROOT_ID) {
-            newState.getOrder()[ROOT_ID] = listOf(map[sourceId])
+            newState.getOrder()[ROOT_ID] = mutableListOf(map[sourceId])
         }
 
         for ((id, list) in oldState.getOrder()) {
@@ -145,7 +149,7 @@ class ExportService {
                     .filterNotNull()
                     .filterNot { softLinkKeys.contains(it) }
                     .mapNotNull { map[it] }
-                    .toList()
+                    .toMutableList()
             )
         }
         return newState
@@ -159,7 +163,7 @@ class FileVisitor(
     private val map: HashMap<String, String>,
     private val sourceFolderPath: Path,
     private val filesToRemove: MutableList<VirtualFile?>,
-    private val filter: (path: Path) -> Boolean = { path -> path.name != STATE_FILE_NAME }
+    private val filter: (path: Path) -> Boolean = { path -> path.name != STATE_FILE_NAME ||  path.name != EXPORT_STATE_FILE_NAME }
 ) : SimpleFileVisitor<Path>() {
 
     override fun visitFile(path: Path, attrs: BasicFileAttributes?): FileVisitResult {
@@ -172,7 +176,7 @@ class FileVisitor(
         }
         val copiedNodeWithNewId = newNodeFromFile(path, info!!.type)
 
-        newState.saveNode(copiedNodeWithNewId)
+        newState.saveNodeWithoutSavingState(copiedNodeWithNewId)
         map[path.nameWithoutExtension] = copiedNodeWithNewId.id!!
 
         val nioPath = copiedNodeWithNewId.getFile()!!.toNioPath()

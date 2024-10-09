@@ -6,7 +6,6 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformCoreDataKeys.SELECTED_ITEMS
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
-import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 

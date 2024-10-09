@@ -9,6 +9,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.node.FileTreeNode
+import org.apache.commons.io.FileUtils
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -22,7 +23,7 @@ object FileNodeUtils {
 
     val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
 
-    val baseDir = PropertiesComponent.getInstance().getValue(
+    val baseDir: File = PropertiesComponent.getInstance().getValue(
         PLUGIN_ID, "${System.getProperty("user.home")}${fileSeparator}.ideanotes"
     ).run { File(this) }
 
@@ -87,6 +88,18 @@ object FileNodeUtils {
         val file = PsiManager.getInstance(project).findFile(virtualFile)!!
 
         return file.text.encodeToByteArray()
+    }
+
+    fun copyFromTo(from:File , target:File){
+        FileUtils.copyDirectory(from, target)
+    }
+
+    fun removeDir(file: File){
+        FileUtils.deleteDirectory(file)
+    }
+
+    fun removeFile(file: File){
+        FileUtils.delete(file)
     }
 
 }
