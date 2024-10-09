@@ -5,7 +5,6 @@ import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.VirtualFileContainer
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.util.*
-import javax.swing.tree.DefaultTreeModel
 
 class TreeInitializer {
 
@@ -45,37 +44,34 @@ class TreeInitializer {
         model.reload()
     }
 
-    fun initTreeModelFromState(state: TreeState, model: DefaultTreeModel?) {
-        if (model == null) {
-            error("model can not be null")
-        }
+    fun initTreeFromImportedState(importedState: TreeState, tree: NoteTree) {
+
+        val stateService = service<StateService>()
+        val model = tree.getDefaultTreeModel()
         val root = model.root as FileTreeNode
 
-        val createdNodes: MutableMap<String?, FileTreeNode> = createAndGroupNodesById(state)
+        val createdNodes: MutableMap<String?, FileTreeNode> = createAndGroupNodesById(importedState)
 
         createdNodes[root.id] = root
-        val queue = LinkedList<String?>().apply { add(root.id) }
+        val queue: Queue<String> = LinkedList<String>().apply { add(root.id!!) }
 
         while (queue.isNotEmpty()) {
-            val id = queue.poll()
-            val elements = state.getOrder()[id]
-            if (elements.isNullOrEmpty()) {
-                continue
-            }
-            queue.addAll(elements)
+            val parentId = queue.poll()
+            val parent = createdNodes[parentId] ?: continue
+            virtualFileContainer.addNode(parent)
+            virtualFileContainer.init(parent.getFile())
 
-            val parent = createdNodes[id]
-            parent?.also { node -> virtualFileContainer.addNode(node)
-                virtualFileContainer.init(node.getFile())
-            }
-            for (childId in elements) {
-                val newNode = createdNodes[childId]
-                if (newNode != null) {
-                    parent?.insert(newNode, parent.childCount)
-                    newNode.also { node ->
-                        virtualFileContainer.addNode(node)
-                        virtualFileContainer.init(node.getFile())
+            importedState.getOrder()[parentId]?.also { list ->
+                queue.addAll(list)
+                for (id in list) {
+                    if (stateService.contains(id!!, parentId)) {
+                        continue
                     }
+                    val newNode = createdNodes[id] ?: continue
+                    tree.insert(parent, newNode)
+
+                    virtualFileContainer.addNode(newNode)
+                    virtualFileContainer.init(newNode.getFile())
                 }
             }
         }

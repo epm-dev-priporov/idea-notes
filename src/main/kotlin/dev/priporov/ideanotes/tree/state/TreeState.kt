@@ -2,14 +2,13 @@ package dev.priporov.ideanotes.tree.state
 
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.dto.NodeStateInfo
-import dev.priporov.ideanotes.tree.common.NodeType
 import dev.priporov.ideanotes.tree.exporting.ExportService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import java.util.concurrent.ConcurrentHashMap
 
 class TreeState {
 
-    private var order = ConcurrentHashMap<String?, List<String?>>()
+    private var order = ConcurrentHashMap<String?, MutableList<String?>>()
     private var nodes = ConcurrentHashMap<String, NodeStateInfo>()
 
     fun getNodes() = nodes
@@ -17,7 +16,7 @@ class TreeState {
     fun getOrderByParentId(id: String) = order[id]
 
     fun addOrder(map: Map<String?, List<String?>>){
-        order.putAll(map)
+        order.forEach { key, list -> map[key]?.also { list.addAll(it) } }
     }
 
     fun addNodes(map:Map<String, NodeStateInfo>){
@@ -25,18 +24,32 @@ class TreeState {
     }
 
     fun saveOrder(parent: FileTreeNode) {
-        order[parent.id] = parent.children()
+        saveOrderWithoutSavingState(parent)
+        service<ExportService>().saveStateToJsonFile(this)
+    }
+
+    fun saveOrderWithoutSavingState(parent: FileTreeNode) {
+        val children = parent.children()
             .asSequence()
             .mapNotNull { it as FileTreeNode }
             .map { it.id }
             .distinct()
-            .toList()
-        service<ExportService>().saveStateToJsonFile(this)
+            .toMutableList()
+
+        if(children.isEmpty()){
+            order.remove(parent.id)
+        } else {
+            order[parent.id] = children
+        }
     }
 
     fun saveNode(node: FileTreeNode) {
-        nodes[node.id!!] = NodeStateInfo(node)
+        saveNodeWithoutSavingState(node)
         service<ExportService>().saveStateToJsonFile(this)
+    }
+
+    fun saveNodeWithoutSavingState(node: FileTreeNode) {
+        nodes[node.id!!] = NodeStateInfo(node)
     }
 
     fun removeNodeInfo(node: FileTreeNode) {

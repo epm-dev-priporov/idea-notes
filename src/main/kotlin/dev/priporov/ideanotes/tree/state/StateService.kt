@@ -4,9 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.service
-import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
 import dev.priporov.ideanotes.tree.common.VirtualFileContainer
-import dev.priporov.ideanotes.tree.importing.ImportService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.util.TreeModelProvider
 
@@ -15,9 +13,15 @@ import dev.priporov.ideanotes.util.TreeModelProvider
     storages = [Storage("ideanotes.xml")]
 )
 class StateService : PersistentStateComponent<ReaderState> {
+    private val treeModelProvider = service<TreeModelProvider>()
     private val virtualFileContainer = service<VirtualFileContainer>()
+    private val treeInitializer = service<TreeInitializer>()
     private var state = TreeState()
     private var readerState = ReaderState()
+
+    fun setState(newState: TreeState) {
+        state = newState
+    }
 
     fun updateOrder(parent: FileTreeNode) = state.saveOrder(parent)
 

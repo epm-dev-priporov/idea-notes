@@ -10,17 +10,16 @@ import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeStateInfo
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ExtensionFileHelper
-import dev.priporov.ideanotes.tree.exporting.ExportService
-import dev.priporov.ideanotes.tree.exporting.IMPORT_STATE_FILE_NAME
+import dev.priporov.ideanotes.tree.exporting.EXPORT_STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.exporting.STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.ROOT_ID
-import dev.priporov.ideanotes.tree.state.ReaderState
 import dev.priporov.ideanotes.tree.state.TreeInitializer
 import dev.priporov.ideanotes.tree.state.TreeState
 import dev.priporov.ideanotes.util.FileNodeUtils
 import dev.priporov.ideanotes.util.WriteActionUtils
 import java.io.File
+import java.nio.file.Files
 
 private const val ZIP = "zip"
 
@@ -41,32 +40,6 @@ class ImportService {
         }
     }
 
-    fun importOldNotes(oldState: ReaderState){
-        if ( oldState.isImported == true) {
-            return
-        }
-        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$IMPORT_STATE_FILE_NAME")
-        if (!file.exists()) {
-            file.createNewFile()
-        }
-        val bytes = file.readBytes()
-        var state = if (bytes.size != 0) {
-            objectMapper.readValue(bytes, TreeState::class.java)
-        } else {
-            TreeState()
-        }
-        oldState.order[ROOT_ID].also {
-            val elements = state.getOrderByParentId(ROOT_ID)
-            if (elements != null) {
-                it?.addAll(elements)
-            }
-        }
-        state.addNodes(oldState.nodes)
-        state.addOrder(oldState.order)
-        service<ExportService>().saveStateToJsonFile(state)
-        oldState.isImported = true
-    }
-
     fun importFromJsonState(tree: NoteTree) {
         val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
         if (!file.exists()) {
@@ -81,10 +54,35 @@ class ImportService {
     }
 
     private fun importZippedFromJsonState(tree: NoteTree) {
-        val bytes = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME").readBytes()
-        var state: TreeState = objectMapper.readValue(bytes, TreeState::class.java)
-        state = regenerateIds(state)
-        treeInitializer.initTreeModelFromState(state, tree)
+        val baseZipDir = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$ZIP"
+        val importedState = importJsonAndRemoveExpFile(baseZipDir)?.run {
+            regenerateIds(this, baseZipDir)
+        }
+
+        val dirForImport = File(baseZipDir)
+        FileNodeUtils.removeDir(dirForImport)
+
+        if (importedState != null) {
+            treeInitializer.initTreeFromImportedState(importedState, tree)
+        }
+    }
+
+    private fun importJsonAndRemoveExpFile(baseZipDir: String): TreeState? {
+        val stateJson = File("$baseZipDir${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
+        val expStateFileJson = File("$baseZipDir${FileNodeUtils.fileSeparator}$EXPORT_STATE_FILE_NAME")
+        if (stateJson.exists() && !expStateFileJson.exists()) {
+            stateJson.renameTo(expStateFileJson)
+        }
+
+        val treeState = objectMapper.readValue(expStateFileJson.readBytes(), TreeState::class.java)
+        if(stateJson.exists()){
+            Files.delete(stateJson.toPath())
+        }
+        if(expStateFileJson.exists()){
+            Files.delete(expStateFileJson.toPath())
+        }
+
+        return treeState
     }
 
     private fun importFile(file: File, tree: NoteTree) {
@@ -102,26 +100,31 @@ class ImportService {
         importZippedFromJsonState(tree)
     }
 
-    private fun regenerateIds(oldState: TreeState): TreeState {
+    private fun regenerateIds(state: TreeState, baseZipDir: String): TreeState {
         val mapOfIds = HashMap<String, String>()
         val newState = TreeState()
-        for ((oldId, nodeInfo) in oldState.getNodes()) {
-            val node = newNode(nodeInfo)
-            newState.saveNode(node)
+        for ((oldId, nodeInfo) in state.getNodes()) {
+            val node: FileTreeNode = newNode(nodeInfo)
+            newState.saveNodeWithoutSavingState(node)
+
             mapOfIds[oldId] = node.id!!
+            val bytes = File("$baseZipDir${FileNodeUtils.fileSeparator}${nodeInfo.id}.${nodeInfo.extension}").readBytes()
+            node.setData(bytes)
         }
 
-        val childIds = oldState.getOrder()[ROOT_ID]
-        childIds?.map { mapOfIds[it] }?.also { list ->
-            newState.getOrder()[ROOT_ID] = list
-        }
+        val childIds: MutableList<String?>? = state.getOrder()[ROOT_ID]
+        childIds
+            ?.map { mapOfIds[it] }
+            ?.toMutableList()
+            ?.also { newChildIds -> newState.getOrder()[ROOT_ID] = newChildIds }
 
-        for ((oldId, childrenIds) in oldState.getOrder()) {
+        for ((oldId, childrenIds) in state.getOrder()) {
             val newId = mapOfIds[oldId]
             if (oldId != ROOT_ID) {
-                newState.getOrder()[newId] = childrenIds.map { mapOfIds[it] }
+                newState.getOrder()[newId] = childrenIds.map { mapOfIds[it] }.toMutableList()
             }
         }
+
         return newState
     }
 
@@ -135,9 +138,14 @@ class ImportService {
     }
 
     private fun unzipFile(file: File) {
+        val unzipDir = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$ZIP")
+        if (!unzipDir.exists()) {
+            unzipDir.mkdir()
+        }
+
         ZipUtil.unzip(
             null,
-            FileNodeUtils.baseDir,
+            unzipDir,
             file,
             null,
             null,

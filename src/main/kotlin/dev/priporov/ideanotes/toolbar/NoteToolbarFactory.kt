@@ -8,13 +8,13 @@ import com.intellij.openapi.util.IconLoader
 import com.intellij.ui.AnActionButton
 import com.intellij.ui.AnActionButtonRunnable
 import com.intellij.ui.ToolbarDecorator
+import dev.priporov.ideanotes.dialog.OkDialog
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.ToolbarPopupMenuActionGroup
 import dev.priporov.ideanotes.tree.common.TreePopUpMenuManager
 import dev.priporov.ideanotes.tree.exporting.ExportService
 import dev.priporov.ideanotes.tree.importing.ImportService
 import dev.priporov.ideanotes.tree.node.FileTreeNode
-import dev.priporov.ideanotes.dialog.OkDialog
 import javax.swing.Icon
 import javax.swing.JPanel
 
@@ -38,7 +38,7 @@ object NoteToolbarFactory {
 
         decorator.setRemoveAction(NoteToolbarAction {
             OkDialog("Delete node") {
-                tree.getSelectedNodes(FileTreeNode::class.java, null).forEach { tree.delete(it) }
+                tree.getSelectedNodes(FileTreeNode::class.java, null).filterNotNull().forEach { tree.delete(it) }
             }.show()
         })
         decorator.addExtraAction(

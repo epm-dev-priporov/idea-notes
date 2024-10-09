@@ -92,15 +92,43 @@ class NoteTree : Tree() {
         expandAllNodes(expandedNodes)
     }
 
+    // TODO wrong remove of the nested notes
     fun delete(node: FileTreeNode) {
         val parent = node.parent
+
+        var children = getChildren(node)
+
+        var queue = ArrayDeque<FileTreeNode>()
+        val toRemove = ArrayList<FileTreeNode>()
+
+        queue.addAll(children)
+        toRemove.addAll(children)
+
+        while (queue.isNotEmpty()) {
+            val treeNode = queue.pop();
+            children = getChildren(treeNode)
+            queue.addAll(children)
+            toRemove.addAll(children)
+        }
+        toRemove.forEach { childNode ->
+            stateService.removeNodeInfo(childNode)
+            stateService.getTreeState().getOrder().remove(childNode.id)
+        }
+
         WriteActionUtils.runWriteAction { node.delete() }
         stateService.removeNodeInfo(node)
+        stateService.getTreeState().getOrder().remove(node.id)
+
         stateService.updateOrder(parent as FileTreeNode)
         val expandedNodes = getExpandedNodes(parent)
         getDefaultTreeModel().reload(parent)
         expandAllNodes(expandedNodes)
     }
+
+    private fun getChildren(node: FileTreeNode) = node.children()
+        .asSequence()
+        .map { it as FileTreeNode }
+        .toMutableList()
 
     fun openInEditor(node: FileTreeNode?) {
         val file = node?.getFile() ?: return
