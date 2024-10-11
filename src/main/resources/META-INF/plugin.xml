@@ -53,6 +53,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.5.2: Fixed #44 issue</li>
             <li>1.5.1: Changed export file default name pattern to "IdeaNotes_YYYY-MM-dd.zip"</li>
             <li>1.5.1: Fixed removing node with children issue</li>
             <li>1.5.1: Fixed #42 issue</li>

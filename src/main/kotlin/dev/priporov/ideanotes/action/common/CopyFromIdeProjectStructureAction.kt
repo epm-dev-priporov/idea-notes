@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.action.common
 
 import com.intellij.ide.projectView.impl.nodes.PsiFileNode
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.PlatformCoreDataKeys.SELECTED_ITEMS
@@ -53,4 +54,7 @@ class CopyFromIdeProjectStructureAction : AnAction("Copy to Notes") {
         ?: false
 
     private fun hasSupportedExtension(file: VirtualFile?) = ExtensionFileHelper.containsExtension(file?.extension)
+
+    override fun getActionUpdateThread() = ActionUpdateThread.BGT
+
 }
