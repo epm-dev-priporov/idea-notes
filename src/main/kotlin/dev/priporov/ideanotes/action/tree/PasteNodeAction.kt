@@ -20,6 +20,7 @@ import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.DataFlavor
 import java.io.File
+import java.util.Arrays
 
 private val PASTE_ICON = IconUtils.toIcon("menu/paste.png")
 
@@ -35,11 +36,12 @@ class PasteNodeAction(
             if (isCopiedSystemFile(clipboard)) {
                 if (clipboard.isDataFlavorAvailable(DataFlavor.javaFileListFlavor)) {
                     val files = clipboard.getData(DataFlavor.javaFileListFlavor)
-                    if (null != files && files is ArrayList<*>) {
-                        val copiedFiles = files as ArrayList<File?>
+                    if (null != files && files is ArrayList<*> || files.javaClass.canonicalName == "java.util.Arrays.ArrayList") {
+                        val copiedFiles = files as List<File?>
                         if (copiedFiles.isEmpty()) {
                             return
                         }
+
                         val file = copiedFiles[0]!!
                         val type = NodeType.fromExtension(file.extension)
                         if (type == NodeType.UNKNOWN) {

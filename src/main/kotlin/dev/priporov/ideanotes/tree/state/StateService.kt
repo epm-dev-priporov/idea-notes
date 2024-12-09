@@ -35,7 +35,7 @@ class StateService : PersistentStateComponent<ReaderState> {
         state.removeNodeInfo(node)
     }
 
-    fun getNodesByParentId(id:String) = state.getOrderByParentId(id)
+    fun getNodesByParentId(id: String) = state.getOrderByParentId(id)
 
     fun getTreeState(): TreeState {
         return state
