@@ -20,7 +20,6 @@ import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.DataFlavor
 import java.io.File
-import java.util.Arrays
 
 private val PASTE_ICON = IconUtils.toIcon("menu/paste.png")
 
@@ -55,9 +54,9 @@ class PasteNodeAction(
                             val psiFile = PsiManager.getInstance(project).findFile(virtualFile) ?: return
                             if (psiFile.fileType.name == "Image" || psiFile.fileType.name == "MyNativeFile") {
                                 virtualFile.contentsToByteArray()
-                            } else if (psiFile.fileType.name != "Native" ) {
+                            } else if (psiFile.fileType.name != "Native") {
                                 val text = psiFile.text.encodeToByteArray()
-                                if(text == null || text.isEmpty()){
+                                if (text == null || text.isEmpty()) {
                                     virtualFile.contentsToByteArray()
                                 } else text
                             } else {
