@@ -205,7 +205,8 @@ class ExtensionFileHelper {
                 "excel/excel.png",
                 ignore = true
             ),
-            ExtensionData(0,
+            ExtensionData(
+                0,
                 NodeType.LOG,
                 "log",
                 "Log node",
@@ -225,7 +226,7 @@ class ExtensionFileHelper {
 
         lateinit var SORTED_EXTENSIONS: List<ExtensionData>
 
-        fun init(){
+        fun init() {
             val fullApplicationName = ApplicationInfo.getInstance().fullApplicationName
             when {
                 isIntellijIdea(fullApplicationName) || isAndroidStudio(fullApplicationName) -> {
