@@ -205,7 +205,8 @@ class ExtensionFileHelper {
                 "excel/excel.png",
                 ignore = true
             ),
-            ExtensionData(0,
+            ExtensionData(
+                0,
                 NodeType.LOG,
                 "log",
                 "Log node",
@@ -225,7 +226,7 @@ class ExtensionFileHelper {
 
         lateinit var SORTED_EXTENSIONS: List<ExtensionData>
 
-        fun init(){
+        fun init() {
             val fullApplicationName = ApplicationInfo.getInstance().fullApplicationName
             when {
                 isIntellijIdea(fullApplicationName) || isAndroidStudio(fullApplicationName) -> {
@@ -269,6 +270,57 @@ class ExtensionFileHelper {
                         EXTENSIONS[it.type] = it
                     }
                 }
+
+                isGoLion(fullApplicationName) -> {
+                    ExtensionData(
+                        12,
+                        NodeType.GO,
+                        "go",
+                        "Golang node",
+                        "code/go.png",
+                        newLeafIcon = IconUtils.toIcon("code/go.png")
+                    ).also {
+                        EXTENSIONS[it.type] = it
+                    }
+                }
+
+                isCLion(fullApplicationName) -> {
+                    sequenceOf(
+                        ExtensionData(
+                            12,
+                            NodeType.C,
+                            "c",
+                            "C node",
+                            "code/c.png",
+                            newLeafIcon = IconUtils.toIcon("code/c.png")
+                        ).also {
+                            EXTENSIONS[it.type] = it
+                        },
+                        ExtensionData(
+                            12,
+                            NodeType.PYTHON,
+                            "cpp",
+                            "Cpp node",
+                            "code/cpp.png",
+                            newLeafIcon = IconUtils.toIcon("code/cpp.png")
+                        ).also {
+                            EXTENSIONS[it.type] = it
+                        }
+                    )
+                }
+
+                isRuby(fullApplicationName) -> {
+                    ExtensionData(
+                        12,
+                        NodeType.RUBY,
+                        "rb",
+                        "Ruby node",
+                        "code/ruby.png",
+                        newLeafIcon = IconUtils.toIcon("code/ruby.png")
+                    ).also {
+                        EXTENSIONS[it.type] = it
+                    }
+                }
             }
 
             initPluginDependedFiles()
@@ -288,15 +340,14 @@ class ExtensionFileHelper {
             SORTED_EXTENSIONS = EXTENSIONS.values.asSequence().sortedBy { it.index }.filter { !it.ignore }.toList()
         }
 
-        init {
-//            init()
-        }
-
         private fun isMacOrLinux(): Boolean {
             val osType = System.getProperty("os.name").lowercase(Locale.ENGLISH)
             return osType.contains("mac") or (osType == "linux")
         }
 
+        private fun isRuby(fullApplicationName: String) = fullApplicationName.startsWith("RubyMine")
+        private fun isCLion(fullApplicationName: String) = fullApplicationName.startsWith("CLion")
+        private fun isGoLion(fullApplicationName: String) = fullApplicationName.startsWith("GoLand")
         private fun isPyCharm(fullApplicationName: String) = fullApplicationName.startsWith("PyCharm")
         private fun isIntellijIdea(fullApplicationName: String) = fullApplicationName.startsWith("IntelliJ IDEA")
         private fun isAndroidStudio(fullApplicationName: String) = fullApplicationName.startsWith("Android")
@@ -357,6 +408,10 @@ enum class NodeType(val extension: String?) {
     SQL("sql"),
     PACKAGE(null),
     PYTHON("py"),
+    CPP("cpp"),
+    C("c"),
+    GO("go"),
+    RUBY("rb"),
     JAVA("java"),
     KOTLIN("kr"),
     MARK_DOWN("md"),
