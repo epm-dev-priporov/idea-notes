@@ -32,6 +32,10 @@ import javax.swing.tree.DefaultTreeModel
 class NoteTree : Tree() {
     var root: FileTreeNode = service<RootFileTreeNode>()
 
+    object State {
+        var init = false
+    }
+
     private var stateService = service<StateService>()
     private var filesToAddAfterInit = ArrayList<VirtualFile>()
 
@@ -43,11 +47,30 @@ class NoteTree : Tree() {
         initKeys()
     }
 
-    fun addAfterInitialization(file: VirtualFile) {
-        filesToAddAfterInit.add(file)
+    fun addAfterInitialization(virtualFile: VirtualFile) {
+        if (!State.init) {
+            filesToAddAfterInit.add(virtualFile)
+        } else {
+            val project = ProjectManager.getInstance().openProjects.firstOrNull()
+            if (project == null) {
+                return
+            }
+            insert(virtualFile).apply {
+                val file = PsiManager.getInstance(project).findFile(virtualFile)!!
+                var content = if (file.fileType.name == "Image") {
+                    virtualFile.contentsToByteArray()
+                } else {
+                    file.text.encodeToByteArray()
+                }
+
+                setData(content)
+            }
+        }
     }
 
     fun insertFilesFromQueue() {
+        State.init = true
+
         val project = ProjectManager.getInstance().openProjects.firstOrNull()
         if (project == null) {
             return
