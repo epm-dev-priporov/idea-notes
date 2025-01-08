@@ -6,8 +6,8 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 import dev.priporov.ideanotes.main.TabbedPanel
-import dev.priporov.ideanotes.tree.ProjectNoteTree
-import dev.priporov.ideanotes.tree.factory.NoteTreeFactory
+import dev.priporov.ideanotes.tree.factory.AppNoteTreeFactory
+import dev.priporov.ideanotes.tree.factory.ProjectNoteTreeFactory
 import dev.priporov.ideanotes.tree.factory.ToolbarFactory
 import dev.priporov.ideanotes.tree.panel.TreePanel
 
@@ -15,17 +15,16 @@ import dev.priporov.ideanotes.tree.panel.TreePanel
 class NotesMainWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val contentFactory = ContentFactory.getInstance()
-
-        val appTree = service<NoteTreeFactory>().getAppInstance(project)
+        val appTree = service<AppNoteTreeFactory>().getInstance(project)
         val appToolbar = service<ToolbarFactory>().getInstance(appTree)
 
-        val projectNoteTree = project.getService(ProjectNoteTree::class.java)
+        val projectNoteTree = service<ProjectNoteTreeFactory>().getInstance(project)
         val projectToolbar = service<ToolbarFactory>().getInstance(projectNoteTree)
 
-        val content = contentFactory.createContent(
+        val content = ContentFactory.getInstance().createContent(
             TabbedPanel(
-                TreePanel(appTree, appToolbar), TreePanel(projectNoteTree, projectToolbar)),
+                TreePanel(appTree, appToolbar), TreePanel(projectNoteTree, projectToolbar)
+            ),
             "",
             false
         )

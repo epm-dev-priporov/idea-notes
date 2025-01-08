@@ -5,10 +5,11 @@ import com.intellij.openapi.project.Project
 import dev.priporov.ideanotes.tree.AppNoteTree
 
 @Service
-class NoteTreeFactory {
+class AppNoteTreeFactory():BaseNoteTreeFactory<AppNoteTree>() {
 
-    fun getAppInstance(project: Project): AppNoteTree {
+    fun getInstance(project: Project): AppNoteTree {
         val tree = project.getService(AppNoteTree::class.java)
+        init(tree)
 
         return tree
     }

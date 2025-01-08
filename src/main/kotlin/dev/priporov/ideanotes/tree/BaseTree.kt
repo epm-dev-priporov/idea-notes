@@ -33,6 +33,12 @@ abstract class BaseTree<T : TreeModel> : Tree() {
 
     fun getTreeModel() = model as T
 
+    fun getSelectedNode(): FileTreeNode? = selectionPath?.lastPathComponent as? FileTreeNode
+
+    fun openInEditor(node: FileTreeNode) {
+        println("openInEditor: $node")
+    }
+
     private fun getRoot() = getTreeModel().root as FileTreeNode
 
     private fun getExpandedNodes(node: FileTreeNode): ArrayList<FileTreeNode> {
