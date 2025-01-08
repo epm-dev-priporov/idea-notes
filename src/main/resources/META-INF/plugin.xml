@@ -1,21 +1,133 @@
-<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>dev.priporov.idea-notes</id>
-    <name>Idea-notes</name>
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <id>dev.priporov.idea.notes</id>
+    <name>NotesTree</name>
+
+    <vendor email="devpriporov@gmail.com" url="https://github.com/epm-dev-priporov/idea-notes">Dmitrii Priporov</vendor>
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    <p> If you tired of hundred tabs in Notepad++, this plugin brings consistency and availability to your notes in pretty
+    convenient way. The plugin adds ability to write tree structure global notes in such formats as txt, md, json, xml, yaml, sql, csv, xlsx, sh or http.
+    The plugin brings you the way to keep Dockerfile or docker_compose templates, images(png, jpg), pdf, doc, docx, java, python or kotlin files and create symbolic links(MacOS, Linux).
+    It also supports <a href="https://plantuml.com/en/">plum</a> and <a href="https://mermaid-js.github.io/mermaid/#/">mermaid</a> diagrams.
+    <p> Intellij idea also provides you to possibility to directly from the plugin run some of these notes like http files,
+    sql scripts or docker_compose templates, it is really convenient and  useful during development.
+
+    </p>
+    <p>I would really appreciate if you star the plugin. The plugin page <a href="https://github.com/epm-dev-priporov/idea-notes"> github.</a></p>
+    <p>
+        <img src="https://github.com/epm-dev-priporov/idea-notes/blob/master/src/main/resources/img1.3.1.png?raw=true">
+    </p>
+
+    <p><b>plum</b> files require <a href="https://plugins.jetbrains.com/plugin/7017-plantuml-integration">plum integration plugin</a>.</p>
+    <p><b>http</b> files require <a href="https://plugins.jetbrains.com/plugin/13121-http-client plugin">HTTP client plugin</a>.</p>
+    <p><b> Dockerfile</b>, <b>docker_compose.yaml</b> require <a href="https://www.jetbrains.com/help/idea/docker.html">Docker plugin</a>.</p>
+    <p><b>png, jpg</b> images, <b>pdf, csv, doc ,docx, xlsx</> files can be inserted from clipboard.</p>
+    <p><b>conf</b> files require <a href=https://plugins.jetbrains.com/plugin/15461-nginx-configuration>Nginx Configuration plugin</a></p>
+
+    <p>Supported formats</p>
+    <ul>
+            <li>txt</li>
+            <li>md</li>
+            <li>json</li>
+            <li>xml</li>
+            <li>yaml</li>
+            <li>sql</li>
+            <li>sh</li>
+            <li>csv</li>
+            <li>http</li>
+            <li>pdf</li>
+            <li>jpg</li>
+            <li>jpeg</li>
+            <li>png</li>
+            <li>plump</li>
+            <li>kt</li>
+            <li>java</li>
+            <li>groovy</li>
+            <li>c</li>
+            <li>cpp</li>
+            <li>go</li>
+            <li>rb</li>
+            <li>py</li>
+            <li>svg</li>
+            <li>conf</li>
+            <li>doc, docx</li>
+            <li>xlsx</li>
+            <li>log</li>
+        </ul>
+    </p>
   ]]></description>
+    <change-notes>
+        <![CDATA[
+        <ul>
+            <li>1.5.4: kt icon issue fix</li>
+            <li>1.5.4: #47 issue fix</li>
+            <li>1.5.4: Support for groovy files</li>
+            <li>1.5.3: Support for c,cpp,rb,go files</li>
+            <li>1.5.3: Fixed #46 issue</li>
+            <li>1.5.2: Fixed #44 issue</li>
+            <li>1.5.1: Changed export file default name pattern to "IdeaNotes_YYYY-MM-dd.zip"</li>
+            <li>1.5.1: Fixed removing node with children issue</li>
+            <li>1.5.1: Fixed #42 issue</li>
+            <li>1.5.0: Stopped to support 222.*,223.* versions due to deprecated API. (supported since 231.*)</li>
+            <li>1.5.0: Updated to 243.* version build</li>
+            <li>1.5.0: Initialization issue fix</li>
+            <li>1.5.0: Removed deprecated sdk api</li>
+            <li>1.4.4: Updated to 242.* version build</li>
+            <li>1.4.3: New node creation issue fix</li>
+            <li>1.4.2: Updated to 241.* version build</li>
+            <li>1.4.1: Lost notes fix</li>
+            <li>1.4.0: Added capability to copy current file from right mouse click menu</li>
+            <li>1.4.0: Missed notes structure updates fix</li>
+            <li>1.4.0: Notes state keeping approach is changed to keep state in json instead of build-in IDE</li>
+            <li>1.4.0: Setting button opens the plugin menu</li>
+            <li>1.3.3: Updated to 233.* version build</li>
+            <li>1.3.2: Added settings panel to change default editor for csv files(native software or CSV Editor plugin)</li>
+            <li>1.3.2: Added scrollbar to tree view</li>
+            <li>1.3.2: Xslx copy issue fix</li>
+            <li>1.3.1: Copy native files issue fix</li>
+            <li>1.3.1: Added jpeg</li>
+            <li>1.3.0: Stop to support IDEA 212.*,213.*,221.* versions due to deprecated API</li>
+            <li>1.3.0: Copy/paste image issue fix</li>
+            <li>1.3.0: Added 'Copy to Notes' option in Project View Structure menu</li>
+            <li>1.3.0: Copy/paste bugfix</li>
+            <li>1.3.0: Csv files opened by native OS application</li>
+            <li>1.3.0: Updated icons, logo</li>
+            <li>1.3.0: Support for .log</li>
+            <li>1.3.0: Moved to jdk 17</li>
+            <li>1.2.12: Support for xlsx</li>
+            <li>1.2.11: Support for IntellijIdea 2023.2</li>
+            <li>1.2.10: Fixed NPE bug during importing notes</li>
+            <li>1.2.9: Support for .conf nginx configuration files</li>
+            <li>1.2.9: yml extension bugfix</li>
+            <li>1.2.9: Support for doc, docx documents</li>
+            <li>1.2.8: Support for svg</li>
+            <li>1.2.8: Added "Collapse All","Expand All" buttons</li>
+            <li>1.2.8: Added "Other | Select File in Project View" hotkey</li>
+            <li>1.2.8: New logo</li>
+            <li>1.2.7: Implemented text search by files in Scope -> NotesTree</li>
+            <li>1.2.6: Support for csv, sh and symbolic links(MacOS, Linux)</li>
+            <li>1.2.5: Support for pdf files</li>
+            <li>1.2.4: Support for png, jpg images</li>
+            <li>1.2.4: Copy/paste files from system clipboard</li>
+            <li>1.2.3: New UI support</li>
+            <li>1.2.2: Added open action to drop-down menu</li>
+            <li>1.2.2: Added java, python and kotlin nodes</li>
+            <li>1.2.2: Added package node</li>
+            <li>1.2.2: Missed java, kotlin files for Android Studio fix</li>
+            <li>1.2.1: Drag and drop copy issue fix</li>
+            <li>1.2.1: Added ability to copy a file into project view via clipboard</li>
+            <li>1.2.1: General bugfixing</li>
+        </ul>
+        ]]>
+    </change-notes>
 
     <depends>com.intellij.modules.platform</depends>
 
+    <actions>
+    </actions>
+
+    <projectListeners>
+    </projectListeners>
+
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="Notes" secondary="true" icon="AllIcons.General.Modified" anchor="left"
-                    factoryClass="dev.priporov.ideanotes.main.NotesMainWindowFactory"/>
-
-        <applicationService serviceImplementation="dev.priporov.ideanotes.tree.NoteTree"/>
-        <applicationService serviceImplementation="dev.priporov.ideanotes.main.MainNoteToolWindow"/>
-
     </extensions>
 </idea-plugin>
