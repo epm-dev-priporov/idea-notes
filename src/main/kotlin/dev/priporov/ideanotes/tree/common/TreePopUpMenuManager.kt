@@ -35,7 +35,6 @@ class TreePopUpMenuManager {
     }
 }
 
-
 class ToolbarPopupMenuActionGroup(tree: NoteTree) : DefaultActionGroup() {
     init {
         val targetNode = tree.selectionPath?.lastPathComponent as? FileTreeNode

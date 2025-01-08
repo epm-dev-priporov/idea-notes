@@ -27,18 +27,18 @@ class ExtensionFileHelper {
                     1,
                     NodeType.MARK_DOWN,
                     "md",
-                    "Markdown node",
+                    "Markdown",
                     "md/markdown16.png",
                     newLeafIcon = IconLoader.getIcon("/icons/md/newMd.png", javaClass)
                 ),
             ),
             PluginDependency(
                 "PlantUML integration",
-                ExtensionData(6, NodeType.PUML, "puml", "Puml node", "puml/puml16.png"),
+                ExtensionData(6, NodeType.PUML, "puml", "Puml", "puml/puml16.png"),
             ),
             PluginDependency(
                 "com.jetbrains.restClient",
-                ExtensionData(7, NodeType.HTTP, "http", "Http node", "http/http16.png")
+                ExtensionData(7, NodeType.HTTP, "http", "Http", "http/http16.png")
             ),
             PluginDependency(
                 "Docker",
@@ -86,21 +86,21 @@ class ExtensionFileHelper {
             ),
         )
         var EXTENSIONS: MutableMap<NodeType, ExtensionData> = sequenceOf(
-            ExtensionData(0, NodeType.TXT, "txt", "Text node", "icons8-file-16.png", "icons-files-16.png"),
+            ExtensionData(0, NodeType.TXT, "txt", "Text", "icons8-file-16.png", "icons-files-16.png"),
             ExtensionData(
                 2,
                 NodeType.JSON,
                 "json",
-                "Json node",
+                "Json",
                 "json/json16.png",
                 newLeafIcon = AllIcons.FileTypes.Json
             ),
-            ExtensionData(3, NodeType.XML, "xml", "Xml node", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
+            ExtensionData(3, NodeType.XML, "xml", "Xml", "xml/xml16.png", newLeafIcon = AllIcons.FileTypes.Xml),
             ExtensionData(
                 4,
                 NodeType.YAML,
                 "yaml",
-                "Yaml node",
+                "Yaml",
                 "yaml/yaml16.png",
                 newLeafIcon = AllIcons.FileTypes.Yaml
             ),
@@ -108,7 +108,7 @@ class ExtensionFileHelper {
                 5,
                 NodeType.SQL,
                 "sql",
-                "Sql node",
+                "Sql",
                 "sql/sql16.png",
                 newLeafIcon = IconLoader.getIcon("/icons/sql/newSql.png", javaClass)
             ),
@@ -209,7 +209,7 @@ class ExtensionFileHelper {
                 0,
                 NodeType.LOG,
                 "log",
-                "Log node",
+                "Log",
                 "icons8-file-16.png",
                 "icons-files-16.png",
                 ignore = true
@@ -235,7 +235,7 @@ class ExtensionFileHelper {
                             10,
                             NodeType.JAVA,
                             "java",
-                            "Java node",
+                            "Java",
                             "code/java.png",
                             newLeafIcon = AllIcons.FileTypes.Java
                         ),
@@ -243,15 +243,23 @@ class ExtensionFileHelper {
                             11,
                             NodeType.KOTLIN,
                             "kt",
-                            "Kotlin node",
+                            "Kotlin",
                             "code/kotlin.png",
                             newLeafIcon = IconUtils.toIcon("code/newKotlin.png")
                         ),
                         ExtensionData(
                             12,
+                            NodeType.GROOVY,
+                            "groovy",
+                            "Groovy",
+                            "code/groovy.png",
+                            newLeafIcon = IconUtils.toIcon("code/newGroovy.png")
+                        ),
+                        ExtensionData(
+                            13,
                             NodeType.PYTHON,
                             "py",
-                            "Python node",
+                            "Python",
                             "code/python.png",
                             newLeafIcon = IconUtils.toIcon("code/newPython.png")
                         ),
@@ -263,7 +271,7 @@ class ExtensionFileHelper {
                         12,
                         NodeType.PYTHON,
                         "py",
-                        "Python node",
+                        "Python",
                         "code/python.png",
                         newLeafIcon = IconUtils.toIcon("code/newPython.png")
                     ).also {
@@ -276,7 +284,7 @@ class ExtensionFileHelper {
                         12,
                         NodeType.GO,
                         "go",
-                        "Golang node",
+                        "Golang",
                         "code/go.png",
                         newLeafIcon = IconUtils.toIcon("code/go.png")
                     ).also {
@@ -290,7 +298,7 @@ class ExtensionFileHelper {
                             12,
                             NodeType.C,
                             "c",
-                            "C node",
+                            "C",
                             "code/c.png",
                             newLeafIcon = IconUtils.toIcon("code/c.png")
                         ).also {
@@ -300,7 +308,7 @@ class ExtensionFileHelper {
                             12,
                             NodeType.PYTHON,
                             "cpp",
-                            "Cpp node",
+                            "Cpp",
                             "code/cpp.png",
                             newLeafIcon = IconUtils.toIcon("code/cpp.png")
                         ).also {
@@ -314,7 +322,7 @@ class ExtensionFileHelper {
                         12,
                         NodeType.RUBY,
                         "rb",
-                        "Ruby node",
+                        "Ruby",
                         "code/ruby.png",
                         newLeafIcon = IconUtils.toIcon("code/ruby.png")
                     ).also {
@@ -413,6 +421,7 @@ enum class NodeType(val extension: String?) {
     GO("go"),
     RUBY("rb"),
     JAVA("java"),
+    GROOVY("groovy"),
     KOTLIN("kr"),
     MARK_DOWN("md"),
     IMAGE_PNG("png"),
