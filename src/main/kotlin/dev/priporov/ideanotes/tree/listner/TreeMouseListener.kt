@@ -2,6 +2,8 @@ package dev.priporov.ideanotes.tree.listner
 
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.tree.BaseTree
+import dev.priporov.ideanotes.tree.menu.MousePopUpMenu
+import dev.priporov.ideanotes.tree.menu.TreePopUpMenuManager
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 import javax.swing.SwingUtilities
@@ -15,8 +17,11 @@ class TreeMouseListener(private val tree: BaseTree<*>) : MouseListener {
                 tree.openInEditor(node)
             }
         } else if (SwingUtilities.isRightMouseButton(e)) {
-//            val actionGroup = MousePopupMenuActionGroup(tree, isSelectedNodeClicked(e))
-//            TreePopUpMenuManager.createPopUpMenu(tree, e.locationOnScreen, actionGroup)
+            TreePopUpMenuManager.createPopUpMenu(
+                tree,
+                e.locationOnScreen,
+                MousePopUpMenu(tree, isSelectedNodeClicked(e))
+            )
         }
 
     }

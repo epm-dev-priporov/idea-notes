@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import dev.priporov.ideanotes.tree.model.ProjectNoteTreeModel
 import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.TestFileTreeNode
 
 @Service(Service.Level.PROJECT)
 class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
@@ -15,15 +16,15 @@ class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
 
         // TODO
         val root = getTreeModel().root
-        root.insert(FileTreeNode("test"), 0)
+        root.insert(TestFileTreeNode("test"), 0)
 
-        val firstChild = root.firstChild as FileTreeNode
-        firstChild.insert(FileTreeNode("test2"), 0)
-        firstChild.insert(FileTreeNode("test2"), 0)
+        val firstChild = root.firstChild as TestFileTreeNode
+        firstChild.insert(TestFileTreeNode("test2"), 0)
+        firstChild.insert(TestFileTreeNode("test2"), 0)
 
-        getTreeModel().root.insert(FileTreeNode("project test"), 0)
-        getTreeModel().root.insert(FileTreeNode("project test2"), 1)
-        getTreeModel().root.insert(FileTreeNode("project test3"), 1)
+        getTreeModel().root.insert(TestFileTreeNode("project test"), 0)
+        getTreeModel().root.insert(TestFileTreeNode("project test2"), 1)
+        getTreeModel().root.insert(TestFileTreeNode("project test3"), 1)
 
         expandAll()
     }
