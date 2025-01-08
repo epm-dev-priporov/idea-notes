@@ -6,11 +6,7 @@ import javax.swing.tree.DefaultTreeModel
 
 
 class NoteTree : Tree() {
-    private val defaultModel = model as DefaultTreeModel
-    private val root = FileTreeNode("test")
 
-    init {
-        defaultModel.setRoot(root)
-    }
+
 
 }
