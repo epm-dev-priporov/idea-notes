@@ -129,5 +129,10 @@
     </projectListeners>
 
     <extensions defaultExtensionNs="com.intellij">
+        <toolWindow
+            id="NotesTree" secondary="true" anchor="right" icon="/META-INF/pluginIcon.svg"
+            factoryClass="dev.priporov.ideanotes.NotesMainWindowFactory">
+        </toolWindow>
+
     </extensions>
 </idea-plugin>
