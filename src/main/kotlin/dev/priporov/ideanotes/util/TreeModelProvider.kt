@@ -7,10 +7,10 @@ import javax.swing.tree.DefaultTreeModel
 
 class TreeModelProvider {
 
+    var tree: NoteTree? = null
+
     private var commonModel: DefaultTreeModel? = null
     private var lock = ReentrantLock()
-    private var initModel: Consumer<NoteTree?>? = null
-    var tree: NoteTree? = null
 
     fun setCommonModel(tree: NoteTree) {
         lock.lock()
@@ -20,14 +20,8 @@ class TreeModelProvider {
         } else {
             tree.model = commonModel
         }
-        initModelOnce()
 
         lock.unlock()
-    }
-
-    private fun initModelOnce() {
-        initModel?.accept(tree)
-        initModel = null
     }
 
 }

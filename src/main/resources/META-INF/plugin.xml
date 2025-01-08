@@ -58,6 +58,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.5.5: notes duplications in multiple projects #48 fix</li>
             <li>1.5.4: kt icon issue fix</li>
             <li>1.5.4: #47 issue fix</li>
             <li>1.5.4: Support for groovy files</li>
