@@ -20,9 +20,6 @@ import javax.swing.JPanel
 
 object NoteToolbarFactory {
 
-    private val exportService = service<ExportService>()
-    private val importService = service<ImportService>()
-
     var exportIcon: Icon = IconLoader.getIcon("/icons/menu/export.png", javaClass)
 
     private var settingsIcon: Icon = IconLoader.getIcon("/icons/menu/settings.png", javaClass)
@@ -48,10 +45,10 @@ object NoteToolbarFactory {
             NoteToolbarActionButton({ tree.collapseAll() }, "Collapse All", collapseIcon)
         )
         decorator.addExtraAction(
-            NoteToolbarActionButton({ importService.import(tree).invoke() }, "Import", importIcon)
+            NoteToolbarActionButton({ service<ImportService>().import(tree).invoke() }, "Import", importIcon)
         )
         decorator.addExtraAction(
-            NoteToolbarActionButton({ exportService.exportNotesToFile(tree).invoke() }, "Export All", exportIcon)
+            NoteToolbarActionButton({ service<ExportService>().exportNotesToFile(tree).invoke() }, "Export All", exportIcon)
         )
         decorator.addExtraAction(
                 NoteToolbarActionButton({ ShowSettingsUtil.getInstance().showSettingsDialog(null, "Notes Tree");}, "Settings", settingsIcon)

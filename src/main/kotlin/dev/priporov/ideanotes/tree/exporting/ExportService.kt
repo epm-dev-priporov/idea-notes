@@ -35,7 +35,6 @@ private const val DEFAULT_FILE_NAME = "IdeaNotes"
 
 class ExportService {
 
-    private val stateService: StateService = service()
     private var objectMapper = ObjectMapper()
     private var stateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME"
     private var exportingStateFilePath = "${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$EXPORT_STATE_FILE_NAME"
@@ -61,7 +60,7 @@ class ExportService {
         Files.walkFileTree(
             sourceFolderPath,
             FileVisitor(
-                stateService,
+                service<StateService>(),
                 zos,
                 newState,
                 map,
@@ -71,7 +70,7 @@ class ExportService {
             )
         )
 
-        fillOrder(newState, stateService.getTreeState(), map, node.id)
+        fillOrder(newState, service<StateService>().getTreeState(), map, node.id)
         val stateFile = saveStateToJsonFile(newState, exportingStateFilePath)
 
         zos.putNextEntry(ZipEntry(sourceFolderPath.relativize(stateFile.toPath()).toString()))
@@ -92,7 +91,7 @@ class ExportService {
     }
 
     private fun getAllIds(node: FileTreeNode): HashSet<String> {
-        val state = stateService.getTreeState()
+        val state = service<StateService>().getTreeState()
         val queue: Queue<String> = LinkedList<String>().apply {
             if (node.type != NodeType.SOFT_LINK) {
                 add(node.id!!)
@@ -113,7 +112,7 @@ class ExportService {
 
     fun saveStateToJsonFile(treeState: TreeState, path:String = stateFilePath): File {
         val file = File(path).apply {
-            if (exists()) {
+            if (!exists()) {
                 createNewFile()
             }
         }

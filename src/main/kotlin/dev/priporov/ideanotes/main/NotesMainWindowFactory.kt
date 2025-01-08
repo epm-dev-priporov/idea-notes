@@ -11,11 +11,12 @@ import dev.priporov.ideanotes.listener.TreeMouseListener
 import dev.priporov.ideanotes.tree.NoteTree
 import dev.priporov.ideanotes.tree.common.NoteCellRenderer
 import dev.priporov.ideanotes.tree.importing.ImportService
+import dev.priporov.ideanotes.tree.state.StateService
+import dev.priporov.ideanotes.tree.state.TreeInitializer
 import dev.priporov.ideanotes.util.TreeModelProvider
 
 
 class NotesMainWindowFactory : ToolWindowFactory {
-    private val treeModelProvider = service<TreeModelProvider>()
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val contentFactory = ContentFactory.getInstance()
@@ -24,19 +25,21 @@ class NotesMainWindowFactory : ToolWindowFactory {
             setCellRenderer(NoteCellRenderer())
             addMouseListener(TreeMouseListener(this))
             addKeyListener(NoteKeyListener(this))
-            treeModelProvider.setCommonModel(this)
+            service<TreeModelProvider>().setCommonModel(this)
         }
 
         importTreeNodes(tree)
+        tree.insertFilesFromQueue()
 
         val content = contentFactory.createContent(MainNoteToolWindow(tree), "", false)
         toolWindow.contentManager.addContent(content)
     }
 
     private fun importTreeNodes(tree: NoteTree) {
-        val importService = service<ImportService>()
-
-        importService.importFromJsonState(tree)
+        service<TreeInitializer>().initTreeModelFromState(
+            service<StateService>().getTreeState(),
+            tree
+        )
     }
 
 }

@@ -13,16 +13,8 @@ class SaveCurrentFileToNotesAction : AnAction("Copy to Notes") {
         val tree: NoteTree = event.project?.getService(NoteTree::class.java) ?: return
         val virtualFile = CommonDataKeys.VIRTUAL_FILE.getData(event.dataContext) ?: return
 
-        tree.insert(virtualFile).apply {
-            val file = PsiManager.getInstance(event.project!!).findFile(virtualFile)!!
-            var content = if (file.fileType.name == "Image") {
-                virtualFile.contentsToByteArray()
-            } else {
-                file.text.encodeToByteArray()
-            }
+        tree.addAfterInitialization(virtualFile)
 
-            setData(content)
-        }
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT

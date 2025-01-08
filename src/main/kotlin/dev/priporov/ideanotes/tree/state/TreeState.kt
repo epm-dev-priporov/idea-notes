@@ -15,14 +15,6 @@ class TreeState {
     fun getOrder() = order
     fun getOrderByParentId(id: String) = order[id]
 
-    fun addOrder(map: Map<String?, List<String?>>){
-        order.forEach { key, list -> map[key]?.also { list.addAll(it) } }
-    }
-
-    fun addNodes(map:Map<String, NodeStateInfo>){
-        nodes.putAll(map)
-    }
-
     fun saveOrder(parent: FileTreeNode) {
         saveOrderWithoutSavingState(parent)
         service<ExportService>().saveStateToJsonFile(this)

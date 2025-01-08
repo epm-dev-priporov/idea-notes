@@ -1,26 +1,36 @@
 package dev.priporov.ideanotes.tree.state
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.tree.common.VirtualFileContainer
+import dev.priporov.ideanotes.tree.exporting.STATE_FILE_NAME
 import dev.priporov.ideanotes.tree.node.FileTreeNode
-import dev.priporov.ideanotes.util.TreeModelProvider
+import dev.priporov.ideanotes.util.FileNodeUtils
+import java.io.File
 
 @State(
     name = "StateService",
     storages = [Storage("ideanotes.xml")]
 )
 class StateService : PersistentStateComponent<ReaderState> {
-    private val treeModelProvider = service<TreeModelProvider>()
+    private val objectMapper = ObjectMapper()
     private val virtualFileContainer = service<VirtualFileContainer>()
-    private val treeInitializer = service<TreeInitializer>()
-    private var state = TreeState()
+    private var state = readFromJsonState()
     private var readerState = ReaderState()
 
-    fun setState(newState: TreeState) {
-        state = newState
+    private fun readFromJsonState(): TreeState {
+        val file = File("${FileNodeUtils.baseDir}${FileNodeUtils.fileSeparator}$STATE_FILE_NAME")
+        if (!file.exists()) {
+            return TreeState()
+        }
+        val bytes = file.readBytes()
+        if (bytes.size != 0) {
+            return objectMapper.readValue(bytes, TreeState::class.java)
+        }
+        return TreeState()
     }
 
     fun updateOrder(parent: FileTreeNode) = state.saveOrder(parent)
@@ -34,8 +44,6 @@ class StateService : PersistentStateComponent<ReaderState> {
         node.getFile()?.also { file -> virtualFileContainer.removeFile(file) }
         state.removeNodeInfo(node)
     }
-
-    fun getNodesByParentId(id: String) = state.getOrderByParentId(id)
 
     fun getTreeState(): TreeState {
         return state

@@ -10,7 +10,9 @@ import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
 import com.intellij.openapi.fileTypes.NativeFileType
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.ProjectManager
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.psi.PsiManager
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.action.tree.*
@@ -31,6 +33,7 @@ class NoteTree : Tree() {
     var root: FileTreeNode = service<RootFileTreeNode>()
 
     private var stateService = service<StateService>()
+    private var filesToAddAfterInit = ArrayList<VirtualFile>()
 
     init {
         getDefaultTreeModel().setRoot(root)
@@ -38,6 +41,30 @@ class NoteTree : Tree() {
         dragEnabled = true
         isRootVisible = false
         initKeys()
+    }
+
+    fun addAfterInitialization(file: VirtualFile) {
+        filesToAddAfterInit.add(file)
+    }
+
+    fun insertFilesFromQueue() {
+        val project = ProjectManager.getInstance().openProjects.firstOrNull()
+        if (project == null) {
+            return
+        }
+        filesToAddAfterInit.forEach { virtualFile ->
+            insert(virtualFile).apply {
+                val file = PsiManager.getInstance(project).findFile(virtualFile)!!
+                var content = if (file.fileType.name == "Image") {
+                    virtualFile.contentsToByteArray()
+                } else {
+                    file.text.encodeToByteArray()
+                }
+
+                setData(content)
+            }
+        }
+        filesToAddAfterInit.clear()
     }
 
     fun insert(virtualFile: VirtualFile): FileTreeNode {

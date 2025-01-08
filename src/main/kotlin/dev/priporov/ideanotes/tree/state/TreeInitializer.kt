@@ -11,7 +11,6 @@ class TreeInitializer {
     private val virtualFileContainer = service<VirtualFileContainer>()
 
     fun initTreeModelFromState(state: TreeState, tree: NoteTree) {
-        val stateService = service<StateService>()
         val model = tree.getDefaultTreeModel()
         val root = model.root as FileTreeNode
 
@@ -29,9 +28,6 @@ class TreeInitializer {
             state.getOrder()[parentId]?.also { list ->
                 queue.addAll(list)
                 for (id in list) {
-                    if (stateService.contains(id!!, parentId)) {
-                        continue
-                    }
                     val newNode = createdNodes[id] ?: continue
                     tree.insert(parent, newNode)
 
