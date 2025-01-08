@@ -41,6 +41,11 @@
             <li>plump</li>
             <li>kt</li>
             <li>java</li>
+            <li>groovy</li>
+            <li>c</li>
+            <li>cpp</li>
+            <li>go</li>
+            <li>rb</li>
             <li>py</li>
             <li>svg</li>
             <li>conf</li>
@@ -53,6 +58,8 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.5.4: #47 issue fix</li>
+            <li>1.5.4: Support for groovy files</li>
             <li>1.5.3: Support for c,cpp,rb,go files</li>
             <li>1.5.3: Fixed #46 issue</li>
             <li>1.5.2: Fixed #44 issue</li>
