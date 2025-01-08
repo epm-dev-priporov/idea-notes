@@ -14,6 +14,13 @@ class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
         isRootVisible = false
 
         // TODO
+        val root = getTreeModel().root
+        root.insert(FileTreeNode("test"), 0)
+
+        val firstChild = root.firstChild as FileTreeNode
+        firstChild.insert(FileTreeNode("test2"), 0)
+        firstChild.insert(FileTreeNode("test2"), 0)
+
         getTreeModel().root.insert(FileTreeNode("project test"), 0)
         getTreeModel().root.insert(FileTreeNode("project test2"), 1)
         getTreeModel().root.insert(FileTreeNode("project test3"), 1)

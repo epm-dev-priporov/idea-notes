@@ -15,9 +15,14 @@ class AppNoteTree : BaseTree<AppNoteTreeModel>() {
         isRootVisible = false
 
         // TODO
-        getTreeModel().root.insert(FileTreeNode("test"), 0)
-        getTreeModel().root.insert(FileTreeNode("test2"), 1)
-        getTreeModel().root.insert(FileTreeNode("test3"), 1)
+        val root = getTreeModel().root
+        root.insert(FileTreeNode("test"), 0)
+
+        val firstChild = root.firstChild as FileTreeNode
+        firstChild.insert(FileTreeNode("test2"), 0)
+        firstChild.insert(FileTreeNode("test2"), 0)
+        root.insert(FileTreeNode("test2"), 1)
+        root.insert(FileTreeNode("test3"), 1)
 
         expandAll()
     }

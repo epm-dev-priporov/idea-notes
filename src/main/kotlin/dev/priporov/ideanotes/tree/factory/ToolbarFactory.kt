@@ -24,7 +24,7 @@ class ToolbarFactory {
         decorator.addExtraAction(
             object : AnAction("Collapse All", "", Icons.ToolbarFactory.COLLAPSE_ICON) {
                 override fun actionPerformed(e: AnActionEvent) {
-                    tree.expandAll()
+                    tree.collapseAll()
                 }
             },
         )
