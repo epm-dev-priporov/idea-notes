@@ -58,6 +58,7 @@
     <change-notes>
         <![CDATA[
         <ul>
+            <li>1.5.4: kt icon issue fix</li>
             <li>1.5.4: #47 issue fix</li>
             <li>1.5.4: Support for groovy files</li>
             <li>1.5.3: Support for c,cpp,rb,go files</li>

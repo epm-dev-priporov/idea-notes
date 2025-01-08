@@ -1,9 +1,7 @@
 package dev.priporov.ideanotes.tree.node
 
 
-import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.fileEditor.FileEditor
-import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.dto.NodeCreationInfo
 import dev.priporov.ideanotes.dto.NodeSoftLinkCreationInfo

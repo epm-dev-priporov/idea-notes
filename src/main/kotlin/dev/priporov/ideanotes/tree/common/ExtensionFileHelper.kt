@@ -422,7 +422,7 @@ enum class NodeType(val extension: String?) {
     RUBY("rb"),
     JAVA("java"),
     GROOVY("groovy"),
-    KOTLIN("kr"),
+    KOTLIN("kt"),
     MARK_DOWN("md"),
     IMAGE_PNG("png"),
     IMAGE_JPG("jpg"),
