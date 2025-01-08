@@ -4,11 +4,11 @@ import com.intellij.ui.ScrollPaneFactory
 import com.intellij.ui.SideBorder
 import com.intellij.ui.TreeUIHelper
 import com.intellij.ui.components.JBScrollPane
-import dev.priporov.ideanotes.tree.NoteTree
+import dev.priporov.ideanotes.tree.BaseTree
 import java.awt.BorderLayout
 import javax.swing.JPanel
 
-class TreePanel(private val tree: NoteTree, private val toolbarPanel: JPanel) : JPanel() {
+class TreePanel(private val tree: BaseTree<*>, private val toolbarPanel: JPanel) : JPanel() {
     init {
         TreeUIHelper.getInstance().installTreeSpeedSearch(tree)
         val jbScrollPane = JBScrollPane().apply {

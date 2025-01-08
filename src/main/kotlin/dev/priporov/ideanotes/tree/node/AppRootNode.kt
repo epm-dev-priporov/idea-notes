@@ -5,6 +5,4 @@ import com.intellij.openapi.components.Service
 const val name = "root"
 
 @Service
-class RootNode : FileTreeNode(name) {
-
-}
+class AppRootNode : FileTreeNode(name)
