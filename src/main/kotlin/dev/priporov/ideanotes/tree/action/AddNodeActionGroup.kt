@@ -7,15 +7,16 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
+import dev.priporov.ideanotes.tree.node.FileTreeNode
 import dev.priporov.ideanotes.tree.node.init.NodeDefinition
 import dev.priporov.ideanotes.tree.node.init.NodeDefinitionService
 
-class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActionGroup() {
+class AddNodeActionGroup(tree: BaseTree<*>, targetNode: FileTreeNode, actionName: String) : DefaultActionGroup() {
     init {
         templatePresentation.text = actionName
         isPopup = true
         service<NodeDefinitionService>().nodeDefinitions.values.forEach { definition ->
-            add(NewNodeAction(tree, definition))
+            add(AddChildNodeAction(tree, definition))
         }
     }
 
@@ -27,7 +28,7 @@ class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActio
     }
 }
 
-class NewNodeAction(
+class AddChildNodeAction(
     private val tree: BaseTree<*>,
     definition: NodeDefinition,
 ) : AnAction(definition.definition, "", definition.getRequiredIcon()) {
@@ -37,3 +38,4 @@ class NewNodeAction(
     }
 
 }
+
