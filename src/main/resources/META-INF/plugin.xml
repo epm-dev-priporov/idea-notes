@@ -133,6 +133,9 @@
             id="NotesTree" secondary="true" anchor="right" icon="/META-INF/pluginIcon.svg"
             factoryClass="dev.priporov.ideanotes.NotesMainWindowFactory">
         </toolWindow>
-
     </extensions>
+    
+    <applicationListeners>
+        <listener class="dev.priporov.ideanotes.tree.node.init.NodeLoader" topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
 </idea-plugin>

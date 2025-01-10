@@ -1,0 +1,11 @@
+[
+  {
+    "index": 1,
+    "type": "MARK_DOWN",
+    "extension": "md",
+    "definition": "Markdown",
+    "icon": "/icons/md/markdown16.png",
+    "new_ui_icon": "/icons/md/newMd.png",
+    "plugin": "org.intellij.plugins.markdown"
+  }
+]
