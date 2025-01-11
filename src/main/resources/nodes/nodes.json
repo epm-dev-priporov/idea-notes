@@ -7,5 +7,59 @@
     "icon": "/icons/md/markdown16.png",
     "new_ui_icon": "/icons/md/newMd.png",
     "plugin": "org.intellij.plugins.markdown"
+  },
+  {
+    "index": 6,
+    "type": "PUML",
+    "extension": "puml",
+    "definition": "Puml",
+    "icon": "/icons/puml/puml16.png",
+    "new_ui_icon": "/icons/puml/puml16.png",
+    "plugin": "PlantUML integration"
+  },
+  {
+    "index": 7,
+    "type": "HTTP",
+    "extension": "http",
+    "definition": "Http",
+    "icon": "/icons/http/http16.png",
+    "new_ui_icon": "/icons/http/http16.png",
+    "plugin": "com.jetbrains.restClient"
+  },
+  {
+    "index": 8,
+    "type": "DOCKERFILE",
+    "extension": "",
+    "definition": "Dockerfile",
+    "icon": "/icons/docker/docker.png",
+    "new_ui_icon": "/icons/docker/newDocker.png",
+    "plugin": "Docker"
+  },
+  {
+    "index": 9,
+    "type": "DOCKER_COMPOSE",
+    "extension": "",
+    "definition": "Docker compose",
+    "icon": "/icons/docker/dockercompose.png",
+    "new_ui_icon": "/icons/docker/dockercompose.png",
+    "plugin": ""
+  },
+  {
+    "index": 15,
+    "type": "CSV",
+    "extension": "csv",
+    "definition": "Csv table",
+    "icon": "/icons/csv/csv.png",
+    "new_ui_icon": "/icons/csv/csvNew.png",
+    "plugin": "net.seesharpsoft.intellij.plugins.csv"
+  },
+  {
+    "index": 16,
+    "type": "CONF",
+    "extension": "conf",
+    "definition": "nginx config",
+    "icon": "/icons/nginx/nginx.png",
+    "new_ui_icon": "/icons/nginx/nginx.png",
+    "plugin": "dev.meanmail.plugin.nginx-intellij-plugin"
   }
 ]

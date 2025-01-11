@@ -9,26 +9,25 @@ import com.intellij.ui.awt.RelativePoint
 import dev.priporov.ideanotes.tree.BaseTree
 import java.awt.Point
 
-class TreePopUpMenuManager {
-    companion object {
-        fun createPopUpMenu(tree: BaseTree<*>, point: Point, actionGroup: DefaultActionGroup) {
+object TreePopUpMenuManager {
 
-            val factory = JBPopupFactory.getInstance()
+    fun createPopUpMenu(tree: BaseTree<*>, point: Point, actionGroup: DefaultActionGroup) {
 
-            val popupStep: ListPopupStep<Any> = factory.createActionsStep(
-                actionGroup,
-                DataManager.getInstance().getDataContext(tree),
-                ActionPlaces.POPUP,
-                false,
-                true,
-                "",
-                tree,
-                true,
-                0,
-                true
-            )
+        val factory = JBPopupFactory.getInstance()
 
-            factory.createListPopup(popupStep).show(RelativePoint(point))
-        }
+        val popupStep: ListPopupStep<Any> = factory.createActionsStep(
+            actionGroup,
+            DataManager.getInstance().getDataContext(tree),
+            ActionPlaces.POPUP,
+            false,
+            true,
+            "",
+            tree,
+            true,
+            0,
+            true
+        )
+
+        factory.createListPopup(popupStep).show(RelativePoint(point))
     }
 }

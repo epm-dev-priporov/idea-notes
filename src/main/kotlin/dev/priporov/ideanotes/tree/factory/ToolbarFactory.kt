@@ -8,7 +8,6 @@ import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
 import javax.swing.JPanel
 
-@Service
 class ToolbarFactory {
 
     fun getInstance(tree: BaseTree<*>): JPanel {

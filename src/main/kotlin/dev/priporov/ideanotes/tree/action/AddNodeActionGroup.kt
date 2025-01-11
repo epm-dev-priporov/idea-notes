@@ -15,7 +15,7 @@ class AddNodeActionGroup(tree: BaseTree<*>, targetNode: FileTreeNode, actionName
     init {
         templatePresentation.text = actionName
         isPopup = true
-        service<NodeDefinitionService>().nodeDefinitions.values.forEach { definition ->
+        service<NodeDefinitionService>().orderedNodeDefinitions.forEach { definition ->
             add(AddChildNodeAction(tree, definition))
         }
     }
