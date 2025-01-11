@@ -1,11 +1,15 @@
 [
   {
+    "index": 0,
+    "type": "TXT",
+    "extension": "txt",
+    "definition": "Text"
+  },
+  {
     "index": 1,
     "type": "MARK_DOWN",
     "extension": "md",
     "definition": "Markdown",
-    "icon": "/icons/md/markdown16.png",
-    "new_ui_icon": "/icons/md/newMd.png",
     "plugin": "org.intellij.plugins.markdown"
   },
   {
@@ -13,8 +17,6 @@
     "type": "PUML",
     "extension": "puml",
     "definition": "Puml",
-    "icon": "/icons/puml/puml16.png",
-    "new_ui_icon": "/icons/puml/puml16.png",
     "plugin": "PlantUML integration"
   },
   {
@@ -22,8 +24,6 @@
     "type": "HTTP",
     "extension": "http",
     "definition": "Http",
-    "icon": "/icons/http/http16.png",
-    "new_ui_icon": "/icons/http/http16.png",
     "plugin": "com.jetbrains.restClient"
   },
   {
@@ -31,8 +31,6 @@
     "type": "DOCKERFILE",
     "extension": "",
     "definition": "Dockerfile",
-    "icon": "/icons/docker/docker.png",
-    "new_ui_icon": "/icons/docker/newDocker.png",
     "plugin": "Docker"
   },
   {
@@ -40,26 +38,233 @@
     "type": "DOCKER_COMPOSE",
     "extension": "",
     "definition": "Docker compose",
-    "icon": "/icons/docker/dockercompose.png",
-    "new_ui_icon": "/icons/docker/dockercompose.png",
-    "plugin": ""
+    "plugin": "Docker"
   },
   {
     "index": 15,
     "type": "CSV",
     "extension": "csv",
     "definition": "Csv table",
-    "icon": "/icons/csv/csv.png",
-    "new_ui_icon": "/icons/csv/csvNew.png",
-    "plugin": "net.seesharpsoft.intellij.plugins.csv"
+    "plugin": "net.seesharpsoft.intellij.plugins.csv",
+    "ignore": true
   },
   {
     "index": 16,
-    "type": "CONF",
+    "type": "NGINX_CONF",
     "extension": "conf",
     "definition": "nginx config",
-    "icon": "/icons/nginx/nginx.png",
-    "new_ui_icon": "/icons/nginx/nginx.png",
     "plugin": "dev.meanmail.plugin.nginx-intellij-plugin"
+  },
+  {
+    "index": 2,
+    "type": "JSON",
+    "extension": "json",
+    "definition": "Json"
+  },
+  {
+    "index": 3,
+    "type": "XML",
+    "extension": "xml",
+    "definition": "Xml"
+  },
+  {
+    "index": 4,
+    "type": "YAML",
+    "extension": "yaml",
+    "definition": "Yaml"
+  },
+  {
+    "index": 5,
+    "type": "SQL",
+    "extension": "sql",
+    "definition": "Sql"
+  },
+  {
+    "index": 13,
+    "type": "PACKAGE",
+    "extension": "packg",
+    "definition": "Package"
+  },
+  {
+    "index": 0,
+    "type": "IMAGE_PNG",
+    "extension": "png",
+    "definition": "PNG image",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "IMAGE_JPG",
+    "extension": "jpg",
+    "definition": "JPG image",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "IMAGE_JPEG",
+    "extension": "jpeg",
+    "definition": "JPEG image",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "SVG_JPG",
+    "extension": "svg",
+    "definition": "SVG",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "PDF",
+    "extension": "pdf",
+    "definition": "pdf document",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "YML",
+    "extension": "yml",
+    "definition": "yml document",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "DOC",
+    "extension": "doc",
+    "definition": "doc document",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "DOCX",
+    "extension": "docx",
+    "definition": "docx document",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "EXCEL",
+    "extension": "xlsx",
+    "definition": "Excel table",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "LOG",
+    "extension": "log",
+    "definition": "Log",
+    "ignore": true
+  },
+  {
+    "index": 0,
+    "type": "SH",
+    "extension": "sh",
+    "definition": "Sh script"
+  },
+  {
+    "index": 10,
+    "type": "JAVA",
+    "extension": "java",
+    "definition": "Java",
+    "ide": [
+      "IntelliJ IDEA",
+      "Android Studio"
+    ]
+  },
+  {
+    "index": 11,
+    "type": "KOTLIN",
+    "extension": "kt",
+    "definition": "Kotlin",
+    "ide": [
+      "IntelliJ IDEA",
+      "Android Studio"
+    ]
+  },
+  {
+    "index": 12,
+    "type": "GROOVY",
+    "extension": "groovy",
+    "definition": "Groovy",
+    "ide": [
+      "IntelliJ IDEA",
+      "Android Studio"
+    ]
+  },
+  {
+    "index": 13,
+    "type": "PYTHON",
+    "extension": "py",
+    "definition": "Python",
+    "ide": [
+      "PyCharm",
+      "IntelliJ IDEA",
+      "Android Studio",
+      "RubyMine",
+      "CLion",
+      "GoLand"
+    ]
+  },
+  {
+    "index": 14,
+    "type": "GO",
+    "extension": "go",
+    "definition": "Golang",
+    "ide": [
+      "GoLand"
+    ]
+  },
+  {
+    "index": 15,
+    "type": "C",
+    "extension": "c",
+    "definition": "C",
+    "ide": [
+      "CLion"
+    ]
+  },
+  {
+    "index": 16,
+    "type": "CPP",
+    "extension": "cpp",
+    "definition": "Cpp",
+    "ide": [
+      "CLion"
+    ]
+  },
+  {
+    "index": 17,
+    "type": "RUBY",
+    "extension": "rb",
+    "definition": "Ruby",
+    "ide": [
+      "RubyMine"
+    ]
+  },
+  {
+    "index": 18,
+    "type": "SOFT_LINK",
+    "extension": "",
+    "definition": "Symbolic link",
+    "os": [
+      "linux",
+      "mac"
+    ]
+  },
+  {
+    "index": 0,
+    "type": "",
+    "extension": "",
+    "definition": "",
+    "ide": [
+    ]
+  },
+  {
+    "index": 0,
+    "type": "",
+    "extension": "",
+    "definition": "",
+    "ide": [
+    ]
   }
 ]
