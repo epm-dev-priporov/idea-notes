@@ -1,13 +1,14 @@
-package dev.priporov.ideanotes.tree.node.init
+package dev.priporov.ideanotes.tree.node.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intellij.openapi.util.registry.Registry
+import dev.priporov.ideanotes.tree.node.init.NodeType
 import javax.swing.Icon
 
 
 @JsonIgnoreProperties
-class NodeDefinition(
+class NodeDefinitionDto(
     @JsonProperty("index") var index: Int,
     @JsonProperty("type") var type: NodeType,
     @JsonProperty("extension") var extension: String,

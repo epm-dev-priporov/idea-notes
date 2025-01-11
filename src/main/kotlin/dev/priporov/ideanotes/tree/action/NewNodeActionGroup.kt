@@ -7,7 +7,10 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
-import dev.priporov.ideanotes.tree.node.init.NodeDefinition
+import dev.priporov.ideanotes.tree.dialog.TextFieldDialog
+import dev.priporov.ideanotes.tree.factory.CreateNodeDtoFactory
+import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
+import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
 import dev.priporov.ideanotes.tree.node.init.NodeDefinitionService
 
 class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActionGroup() {
@@ -29,11 +32,15 @@ class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActio
 
 class NewNodeAction(
     private val tree: BaseTree<*>,
-    definition: NodeDefinition,
+    private val definition: NodeDefinitionDto,
 ) : AnAction(definition.definition, "", definition.getRequiredIcon()) {
 
     override fun actionPerformed(e: AnActionEvent) {
-
+        TextFieldDialog("New note"){ name ->
+            tree.createNewInRoot(
+                service<CreateNodeDtoFactory>().toCreateNodeDto(name, definition)
+            )
+        }
     }
 
 }

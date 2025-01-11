@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
-import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.NoteNode
 import java.awt.Toolkit
 import java.awt.datatransfer.Clipboard
 import java.awt.datatransfer.ClipboardOwner
@@ -18,7 +18,7 @@ class CutNodeAction(
 ) : AnAction(value, "", Icons.PopUpMenu.CUT_ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
-        val node = tree.lastSelectedPathComponent as? FileTreeNode ?: return
+        val node = tree.lastSelectedPathComponent as? NoteNode ?: return
 
         val clipboard: Clipboard = Toolkit.getDefaultToolkit().systemClipboard
         val clipboardOwner = ClipboardOwner { _, _ -> }

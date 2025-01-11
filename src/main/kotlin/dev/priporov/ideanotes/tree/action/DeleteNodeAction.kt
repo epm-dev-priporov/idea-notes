@@ -5,11 +5,11 @@ import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
-import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.NoteNode
 
 class DeleteNodeAction(
     private val tree: BaseTree<*>,
-    private val node: FileTreeNode,
+    private val node: NoteNode,
     value: String
 ) : AnAction(value, "", Icons.PopUpMenu.DELETE_ICON) {
 

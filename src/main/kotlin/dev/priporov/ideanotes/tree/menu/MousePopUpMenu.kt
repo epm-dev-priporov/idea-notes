@@ -3,11 +3,11 @@ package dev.priporov.ideanotes.tree.menu
 import com.intellij.openapi.actionSystem.DefaultActionGroup
 import dev.priporov.ideanotes.tree.BaseTree
 import dev.priporov.ideanotes.tree.action.*
-import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.NoteNode
 
 class MousePopUpMenu(tree: BaseTree<*>, selectedNodeClicked: Boolean) : DefaultActionGroup() {
     init {
-        val targetNode = tree.selectionPath?.lastPathComponent as? FileTreeNode
+        val targetNode = tree.selectionPath?.lastPathComponent as? NoteNode
 
         if (targetNode == null || !selectedNodeClicked) {
             add(NewNodeActionGroup(tree, "New node"))

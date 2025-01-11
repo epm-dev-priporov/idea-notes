@@ -1,16 +1,31 @@
 package dev.priporov.ideanotes.tree
 
+import com.intellij.openapi.components.service
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
-import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.FileNodeService
+import dev.priporov.ideanotes.tree.node.NoteNode
+import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
+import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper
 import java.util.*
 import javax.swing.tree.TreeModel
 
 abstract class BaseTree<T : TreeModel> : Tree() {
 
+    fun createNewInRoot(createNodeDto: CreateNodeDto){
+        val root = getRoot()
+
+        val node = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
+        createNodeDto.id
+        root.insert(node, root.childCount)
+
+        val createApplicationFile = service<FileNodeService>().createApplicationFile(node.id!!, node.type!!.extension!!)
+        node
+    }
+
     fun expandAll() {
-        val list = LinkedList<FileTreeNode>()
-        val root = model.root as FileTreeNode
+        val list = LinkedList<NoteNode>()
+        val root = model.root as NoteNode
 
         list.add(root)
 
@@ -19,7 +34,7 @@ abstract class BaseTree<T : TreeModel> : Tree() {
             if (isCollapsed(TreeUtil.getPath(root, treeNode))) {
                 expandPath(TreeUtil.getPath(root, treeNode))
             }
-            list.addAll(treeNode.children().asSequence().mapNotNull { it as FileTreeNode })
+            list.addAll(treeNode.children().asSequence().mapNotNull { it as NoteNode })
         }
     }
 
@@ -33,17 +48,17 @@ abstract class BaseTree<T : TreeModel> : Tree() {
 
     fun getTreeModel() = model as T
 
-    fun getSelectedNode(): FileTreeNode? = selectionPath?.lastPathComponent as? FileTreeNode
+    fun getSelectedNode(): NoteNode? = selectionPath?.lastPathComponent as? NoteNode
 
-    fun openInEditor(node: FileTreeNode) {
+    fun openInEditor(node: NoteNode) {
         println("openInEditor: $node")
     }
 
-    private fun getRoot() = getTreeModel().root as FileTreeNode
+    private fun getRoot() = getTreeModel().root as NoteNode
 
-    private fun getExpandedNodes(node: FileTreeNode): ArrayList<FileTreeNode> {
-        val list = LinkedList<FileTreeNode>()
-        val expandedNodes = ArrayList<FileTreeNode>()
+    private fun getExpandedNodes(node: NoteNode): ArrayList<NoteNode> {
+        val list = LinkedList<NoteNode>()
+        val expandedNodes = ArrayList<NoteNode>()
         val root = getRoot()
 
         list.add(node)
@@ -52,7 +67,7 @@ abstract class BaseTree<T : TreeModel> : Tree() {
             if (isExpanded(TreeUtil.getPath(root, treeNode))) {
                 expandedNodes.add(treeNode)
             }
-            list.addAll(treeNode.children().asSequence().mapNotNull { it as FileTreeNode })
+            list.addAll(treeNode.children().asSequence().mapNotNull { it as NoteNode })
         }
         return expandedNodes
     }

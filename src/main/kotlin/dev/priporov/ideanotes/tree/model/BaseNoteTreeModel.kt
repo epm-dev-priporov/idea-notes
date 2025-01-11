@@ -1,11 +1,11 @@
 package dev.priporov.ideanotes.tree.model
 
-import dev.priporov.ideanotes.tree.node.FileTreeNode
+import dev.priporov.ideanotes.tree.node.NoteNode
 import javax.swing.tree.DefaultTreeModel
 
-open class BaseNoteTreeModel(private val rootNode: FileTreeNode) : DefaultTreeModel(rootNode) {
+open class BaseNoteTreeModel(private val rootNode: NoteNode) : DefaultTreeModel(rootNode) {
 
-    override fun getRoot(): FileTreeNode {
+    override fun getRoot(): NoteNode {
         return rootNode
     }
 
