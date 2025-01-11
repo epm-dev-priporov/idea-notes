@@ -15,11 +15,11 @@ import dev.priporov.ideanotes.tree.panel.TreePanel
 class NotesMainWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
-        val appTree = AppNoteTreeFactory().getInstance(project)
+        val appTree = service<AppNoteTreeFactory>().getInstance(project)
         val toolbarFactory = ToolbarFactory()
         val appToolbar = toolbarFactory.getInstance(appTree)
 
-        val projectNoteTree = ProjectNoteTreeFactory().getInstance(project)
+        val projectNoteTree = service<ProjectNoteTreeFactory>().getInstance(project)
         val projectToolbar = toolbarFactory.getInstance(projectNoteTree)
 
         val content = ContentFactory.getInstance().createContent(

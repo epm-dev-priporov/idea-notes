@@ -1,17 +1,15 @@
 package dev.priporov.ideanotes.tree
 
+import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import dev.priporov.ideanotes.tree.model.ProjectNoteTreeModel
 import dev.priporov.ideanotes.tree.node.TestFileTreeNode
 
 
+@Service(Service.Level.PROJECT)
 class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
 
     init {
-        setModel(project.getService(ProjectNoteTreeModel::class.java))
-        model = project.getService(ProjectNoteTreeModel::class.java)
-        isRootVisible = false
-
         // TODO
         val root = getTreeModel().root
         root.insert(TestFileTreeNode("test"), 0)
