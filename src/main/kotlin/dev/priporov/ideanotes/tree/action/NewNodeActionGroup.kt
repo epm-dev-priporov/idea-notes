@@ -14,7 +14,7 @@ class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActio
     init {
         templatePresentation.text = actionName
         isPopup = true
-        service<NodeDefinitionService>().orderedNodeDefinitions.forEach { definition ->
+        service<NodeDefinitionService>().getSupportedDefinitionsForCreation().forEach { definition ->
             add(NewNodeAction(tree, definition))
         }
     }

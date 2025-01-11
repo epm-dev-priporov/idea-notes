@@ -7,8 +7,9 @@ import java.util.*
 @Service
 class NodeDefinitionService {
 
-    lateinit var mapOfNodeDefinitions: Map<NodeType, NodeDefinition>
-    lateinit var orderedNodeDefinitions: List<NodeDefinition>
+    private lateinit var mapOfNodeDefinitions: Map<NodeType, NodeDefinition>
+    private lateinit var orderedNodeDefinitions: List<NodeDefinition>
+    private lateinit var supportedDefinitionsForCreation: List<NodeDefinition>
 
     private val ideName = ApplicationInfo.getInstance().fullApplicationName
     private val osName = System.getProperty("os.name").lowercase(Locale.ENGLISH)
@@ -22,10 +23,17 @@ class NodeDefinitionService {
             .filter(this::filterByIde)
             .sortedBy { it.index }
             .toList()
+
+        this.supportedDefinitionsForCreation = orderedNodeDefinitions.asSequence()
+            .filter { !it.ignore }
+            .toList()
+
     }
 
+    fun getSupportedDefinitionsForCreation() = supportedDefinitionsForCreation
+
     private fun filterByIde(definition: NodeDefinition): Boolean {
-        val ides = definition.listOfSUpportedIde
+        val ides = definition.listOfSupportedIde
         if (!ides.isNullOrEmpty()) {
             return ides.any { name -> ideName.contains(name) }
         }
@@ -40,4 +48,5 @@ class NodeDefinitionService {
         }
         return true
     }
+
 }

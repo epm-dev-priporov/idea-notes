@@ -50,7 +50,7 @@
   },
   {
     "index": 16,
-    "type": "NGINX_CONF",
+    "type": "CONF",
     "extension": "conf",
     "definition": "nginx config",
     "plugin": "dev.meanmail.plugin.nginx-intellij-plugin"
@@ -250,6 +250,5 @@
       "linux",
       "mac"
     ]
-  }
   }
 ]
