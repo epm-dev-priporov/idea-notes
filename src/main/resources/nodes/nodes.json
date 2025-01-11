@@ -250,21 +250,6 @@
       "linux",
       "mac"
     ]
-  },
-  {
-    "index": 0,
-    "type": "",
-    "extension": "",
-    "definition": "",
-    "ide": [
-    ]
-  },
-  {
-    "index": 0,
-    "type": "",
-    "extension": "",
-    "definition": "",
-    "ide": [
-    ]
+  }
   }
 ]
