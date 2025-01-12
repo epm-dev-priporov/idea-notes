@@ -9,9 +9,8 @@ import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
 import dev.priporov.ideanotes.tree.dialog.TextFieldDialog
 import dev.priporov.ideanotes.tree.factory.CreateNodeDtoFactory
-import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
-import dev.priporov.ideanotes.tree.node.init.NodeDefinitionService
+import dev.priporov.ideanotes.tree.node.NodeDefinitionService
 
 class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActionGroup() {
     init {
@@ -40,7 +39,7 @@ class NewNodeAction(
             tree.createNewInRoot(
                 service<CreateNodeDtoFactory>().toCreateNodeDto(name, definition)
             )
-        }
+        }.show()
     }
 
 }

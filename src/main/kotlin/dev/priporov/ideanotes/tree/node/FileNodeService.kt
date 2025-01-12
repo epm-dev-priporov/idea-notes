@@ -17,7 +17,7 @@ class FileNodeService {
         extension: String,
         content: ByteArray? = null
     ): VirtualFile {
-        val applicationState = service<StateService>().state
+        val applicationState = service<StateService>().aaplicationState
         val appBaseDir = applicationState.appBaseDir
         val file = File("$appBaseDir$fileSeparator$id.$extension").apply {
             createNewFile()
@@ -26,6 +26,13 @@ class FileNodeService {
             }
         }
         return createVirtualFile(file)
+    }
+
+    fun createBaseDirIfNotExists(appBaseDir:String) {
+        val baseDIr = File(appBaseDir)
+        if (!baseDIr.exists()) {
+            baseDIr.mkdirs()
+        }
     }
 
     private fun createVirtualFile(file: File): VirtualFile {

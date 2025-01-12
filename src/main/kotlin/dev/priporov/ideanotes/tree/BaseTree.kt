@@ -1,6 +1,7 @@
 package dev.priporov.ideanotes.tree
 
 import com.intellij.openapi.components.service
+import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.tree.node.FileNodeService
@@ -8,19 +9,20 @@ import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper
 import java.util.*
-import javax.swing.tree.TreeModel
+import javax.swing.tree.DefaultTreeModel
 
-abstract class BaseTree<T : TreeModel> : Tree() {
+abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
-    fun createNewInRoot(createNodeDto: CreateNodeDto){
+    fun createNewInRoot(createNodeDto: CreateNodeDto) {
         val root = getRoot()
 
         val node = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
         createNodeDto.id
         root.insert(node, root.childCount)
 
-        val createApplicationFile = service<FileNodeService>().createApplicationFile(node.id!!, node.type!!.extension!!)
-        node
+        val virtualFile: VirtualFile = service<FileNodeService>().createApplicationFile(node.id!!, node.type!!.extension!!)
+
+        getTreeModel().reload(root)
     }
 
     fun expandAll() {

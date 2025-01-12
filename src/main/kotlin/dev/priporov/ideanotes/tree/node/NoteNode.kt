@@ -1,7 +1,7 @@
 package dev.priporov.ideanotes.tree.node
 
 
-import dev.priporov.ideanotes.tree.node.init.NodeType
+import dev.priporov.ideanotes.tree.node.dto.NodeType
 import javax.swing.tree.DefaultMutableTreeNode
 
 open class NoteNode(name: String? = null) : DefaultMutableTreeNode(name) {

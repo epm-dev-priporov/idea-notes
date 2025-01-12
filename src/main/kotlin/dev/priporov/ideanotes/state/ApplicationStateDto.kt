@@ -1,6 +1,6 @@
 package dev.priporov.ideanotes.state
 
-import java.io.File
+import dev.priporov.ideanotes.tree.node.fileSeparator
 
 
 class ApplicationStateDto {

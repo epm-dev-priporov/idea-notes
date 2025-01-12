@@ -9,7 +9,7 @@ import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
-import dev.priporov.ideanotes.tree.node.init.NodeDefinitionService
+import dev.priporov.ideanotes.tree.node.NodeDefinitionService
 
 class AddNodeActionGroup(tree: BaseTree<*>, targetNode: NoteNode, actionName: String) : DefaultActionGroup() {
     init {

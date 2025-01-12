@@ -1,4 +1,4 @@
-package dev.priporov.ideanotes.tree.listner
+package dev.priporov.ideanotes.tree.listener
 
 import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.tree.BaseTree

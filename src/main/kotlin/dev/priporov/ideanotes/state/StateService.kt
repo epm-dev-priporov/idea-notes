@@ -12,12 +12,12 @@ import com.intellij.openapi.components.Storage
 @Service
 class StateService : PersistentStateComponent<ApplicationStateDto> {
 
-    var state: ApplicationStateDto = ApplicationStateDto()
+    var aaplicationState: ApplicationStateDto = ApplicationStateDto()
 
-    override fun getState() = state
+    override fun getState() = aaplicationState
 
     override fun loadState(loadedState: ApplicationStateDto) {
-        state = loadedState
+        aaplicationState = loadedState
     }
 
 }

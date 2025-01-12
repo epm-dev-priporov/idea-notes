@@ -1,8 +1,9 @@
-package dev.priporov.ideanotes.tree.node.init
+package dev.priporov.ideanotes.tree.node
 
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.components.Service
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
+import dev.priporov.ideanotes.tree.node.dto.NodeType
 import java.util.*
 
 @Service

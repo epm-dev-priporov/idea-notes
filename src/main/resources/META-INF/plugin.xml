@@ -136,6 +136,6 @@
     </extensions>
     
     <applicationListeners>
-        <listener class="dev.priporov.ideanotes.tree.node.init.NodeLoader" topic="com.intellij.ide.AppLifecycleListener"/>
+        <listener class="dev.priporov.ideanotes.init.AppInitializer" topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>
 </idea-plugin>

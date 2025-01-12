@@ -1,4 +1,4 @@
-package dev.priporov.ideanotes.tree.node.init
+package dev.priporov.ideanotes.tree.node.dto
 
 import dev.priporov.ideanotes.icon.Icons
 import javax.swing.Icon

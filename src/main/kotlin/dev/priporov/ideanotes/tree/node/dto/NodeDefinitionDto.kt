@@ -3,7 +3,6 @@ package dev.priporov.ideanotes.tree.node.dto
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intellij.openapi.util.registry.Registry
-import dev.priporov.ideanotes.tree.node.init.NodeType
 import javax.swing.Icon
 
 
