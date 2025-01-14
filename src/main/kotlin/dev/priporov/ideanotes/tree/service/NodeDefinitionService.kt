@@ -1,4 +1,4 @@
-package dev.priporov.ideanotes.tree.node
+package dev.priporov.ideanotes.tree.service
 
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.components.Service

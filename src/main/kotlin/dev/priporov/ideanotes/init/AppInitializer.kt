@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.ide.AppLifecycleListener
 import com.intellij.openapi.components.service
-import dev.priporov.ideanotes.state.ApplicationStateService
-import dev.priporov.ideanotes.state.ApplicationTreeStateService
-import dev.priporov.ideanotes.tree.node.FileNodeService
-import dev.priporov.ideanotes.tree.node.NodeDefinitionService
+import dev.priporov.ideanotes.tree.service.ApplicationStateService
+import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
+import dev.priporov.ideanotes.tree.service.FileNodeService
+import dev.priporov.ideanotes.tree.service.NodeDefinitionService
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
 
 
@@ -16,11 +16,13 @@ class AppInitializer : AppLifecycleListener {
 
     override fun appStarted() {
         loadNodeDefinitions()
+        loadTreeStateFromFile()
         initBaseDirIfNotExists()
     }
 
     private fun loadTreeStateFromFile() {
-        service<ApplicationTreeStateService>()
+        service<FileNodeService>()
+        service<ApplicationTreeStateService>().treeState
     }
 
     /** Init base directory of the plugin

@@ -10,7 +10,7 @@ import dev.priporov.ideanotes.tree.BaseTree
 import dev.priporov.ideanotes.tree.dialog.TextFieldDialog
 import dev.priporov.ideanotes.tree.factory.CreateNodeDtoFactory
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
-import dev.priporov.ideanotes.tree.node.NodeDefinitionService
+import dev.priporov.ideanotes.tree.service.NodeDefinitionService
 
 class NewNodeActionGroup(tree: BaseTree<*>, actionName: String, ) : DefaultActionGroup() {
     init {

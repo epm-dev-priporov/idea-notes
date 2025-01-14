@@ -1,31 +1,31 @@
-package dev.priporov.ideanotes.state
+package dev.priporov.ideanotes.tree.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
+import dev.priporov.ideanotes.state.BaseTreeState
+import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
-import dev.priporov.ideanotes.tree.node.fileSeparator
 import java.io.File
 
-
-private const val stateFileName = "state.json"
+const val stateFileName = "state.json"
 
 @Service
-class ApplicationTreeStateService:BaseTreeState() {
+class ApplicationTreeStateService : BaseTreeState() {
     private val stateFilePath = getStateFilePath()
     private val mapper = ObjectMapper()
 
     var treeState: TreeStateDto = init()
 
-    private fun init(): TreeStateDto {
+    fun init(): TreeStateDto {
         val stateFile = File(stateFilePath)
         if (!stateFile.exists()) {
             stateFile.createNewFile()
             return TreeStateDto()
         }
-        if(stateFile.length() > 0) {
+        if (stateFile.length() > 0) {
             return mapper.readValue<TreeStateDto>(stateFile)
         }
         return TreeStateDto()

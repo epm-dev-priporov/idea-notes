@@ -1,10 +1,8 @@
 package dev.priporov.ideanotes.tree
 
 import com.intellij.openapi.components.service
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
-import dev.priporov.ideanotes.tree.node.FileNodeService
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper

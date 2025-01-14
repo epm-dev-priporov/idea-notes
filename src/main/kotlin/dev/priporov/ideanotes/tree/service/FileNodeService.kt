@@ -1,10 +1,9 @@
-package dev.priporov.ideanotes.tree.node
+package dev.priporov.ideanotes.tree.service
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
-import dev.priporov.ideanotes.state.ApplicationStateService
 import java.io.File
 
 val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator

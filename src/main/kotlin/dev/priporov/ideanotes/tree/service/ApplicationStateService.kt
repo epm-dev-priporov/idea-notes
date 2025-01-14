@@ -1,9 +1,10 @@
-package dev.priporov.ideanotes.state
+package dev.priporov.ideanotes.tree.service
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import dev.priporov.ideanotes.state.ApplicationStateDto
 
 @State(
     name = "StateService",

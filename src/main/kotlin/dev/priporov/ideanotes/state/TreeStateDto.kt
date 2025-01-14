@@ -13,7 +13,7 @@ class TreeStateDto {
         hierarchy.computeIfAbsent(parentNode.id!!, { ArrayList() }).add(stateNodeDto.id)
     }
 
-    private var hierarchy = ConcurrentHashMap<String, MutableList<String>>()
-    private var nodesGroupedById = ConcurrentHashMap<String, StateNodeDto>()
+    var hierarchy = ConcurrentHashMap<String, MutableList<String>>()
+    var nodesGroupedById = ConcurrentHashMap<String, StateNodeDto>()
 
 }
