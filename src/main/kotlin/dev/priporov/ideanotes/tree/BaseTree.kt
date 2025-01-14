@@ -13,16 +13,29 @@ import javax.swing.tree.DefaultTreeModel
 
 abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
-    fun createNewInRoot(createNodeDto: CreateNodeDto) {
+    private val nodesGroupedById = HashMap<String, NoteNode>()
+
+    open fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
         val root = getRoot()
 
-        val node = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
-        createNodeDto.id
-        root.insert(node, root.childCount)
+        val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
 
-        val virtualFile: VirtualFile = service<FileNodeService>().createApplicationFile(node.id!!, node.type!!.extension!!)
+        root.insert(
+            node,
+            root.childCount
+        )
+
+        val virtualFile: VirtualFile = service<FileNodeService>().createApplicationFile(
+            node.id!!,
+            node.type!!.extension!!
+        )
+        node.file = virtualFile
 
         getTreeModel().reload(root)
+
+        nodesGroupedById[node.id!!] = node
+
+        return node
     }
 
     fun expandAll() {

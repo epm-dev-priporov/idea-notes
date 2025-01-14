@@ -10,14 +10,16 @@ import com.intellij.openapi.components.Storage
     storages = [Storage("ideanotes_v2.xml")]
 )
 @Service
-class StateService : PersistentStateComponent<ApplicationStateDto> {
+class ApplicationStateService : PersistentStateComponent<ApplicationStateDto> {
 
-    var aaplicationState: ApplicationStateDto = ApplicationStateDto()
+    var applicationState: ApplicationStateDto = ApplicationStateDto()
 
-    override fun getState() = aaplicationState
+    override fun getState() = applicationState
 
     override fun loadState(loadedState: ApplicationStateDto) {
-        aaplicationState = loadedState
+        applicationState = loadedState
     }
+
+    fun getApplicationBaseDIr() = applicationState.appBaseDir
 
 }

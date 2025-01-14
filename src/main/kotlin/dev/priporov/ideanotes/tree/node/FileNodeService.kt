@@ -4,7 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
-import dev.priporov.ideanotes.state.StateService
+import dev.priporov.ideanotes.state.ApplicationStateService
 import java.io.File
 
 val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
@@ -17,7 +17,7 @@ class FileNodeService {
         extension: String,
         content: ByteArray? = null
     ): VirtualFile {
-        val applicationState = service<StateService>().aaplicationState
+        val applicationState = service<ApplicationStateService>().applicationState
         val appBaseDir = applicationState.appBaseDir
         val file = File("$appBaseDir$fileSeparator$id.$extension").apply {
             createNewFile()

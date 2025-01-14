@@ -5,6 +5,6 @@ import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.tree.node.AppRootNode
 
 @Service
-class AppNoteTreeModel(private val rootNode: AppRootNode = service<AppRootNode>()) : BaseNoteTreeModel(rootNode) {
+class AppNoteTreeModel(protected val rootNode: AppRootNode = service<AppRootNode>()) : BaseNoteTreeModel(rootNode) {
 
 }
