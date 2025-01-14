@@ -3,6 +3,7 @@ package dev.priporov.ideanotes.tree.node.dto
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.intellij.openapi.util.registry.Registry
+import dev.priporov.ideanotes.icon.Icons
 import javax.swing.Icon
 
 
@@ -20,9 +21,6 @@ class NodeDefinitionDto(
     private var icon: Icon? = type.icon
     private var newUiIcon: Icon? = type.newUiIcon
 
-    fun getRequiredIcon() = if (isNewUi()) newUiIcon else icon
+    fun getRequiredIcon() = if (Icons.isNewUi()) newUiIcon else icon
 
-    companion object {
-        fun isNewUi() = Registry.`is`("ide.experimental.ui")
-    }
 }

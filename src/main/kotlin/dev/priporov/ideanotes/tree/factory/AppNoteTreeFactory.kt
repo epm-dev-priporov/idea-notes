@@ -5,6 +5,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import dev.priporov.ideanotes.tree.AppNoteTree
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
+import dev.priporov.ideanotes.tree.model.NoteTreeCellRenderer
 import dev.priporov.ideanotes.tree.node.TestNoteNode
 
 
@@ -15,6 +16,7 @@ class AppNoteTreeFactory() : BaseNoteTreeFactory<AppNoteTree>() {
         val tree = project.getService(AppNoteTree::class.java).apply {
             setModel(service<AppNoteTreeModel>())
             model = service<AppNoteTreeModel>()
+            cellRenderer = service<NoteTreeCellRenderer>()
             isRootVisible = false
         }
 

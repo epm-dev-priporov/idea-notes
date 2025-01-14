@@ -130,7 +130,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow
-            id="NotesTree" secondary="true" anchor="right" icon="/META-INF/pluginIcon.svg"
+            id="NotesTree" secondary="true" anchor="right" icon="/icons/pluginIcon.png"
             factoryClass="dev.priporov.ideanotes.NotesMainWindowFactory">
         </toolWindow>
     </extensions>

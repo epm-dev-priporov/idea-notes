@@ -6,7 +6,7 @@ import dev.priporov.ideanotes.tree.node.dto.NodeType
 import javax.swing.tree.DefaultMutableTreeNode
 
 open class NoteNode(var name: String? = null) : DefaultMutableTreeNode(name) {
-    var type: NodeType? = null
-    var id: String? = null
+    open var id: String? = null
+    var type: NodeType = NodeType.UNKNOWN
     var file: VirtualFile? = null
 }

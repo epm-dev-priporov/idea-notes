@@ -25,12 +25,6 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
             root.childCount
         )
 
-        val virtualFile: VirtualFile = service<FileNodeService>().createApplicationFile(
-            node.id!!,
-            node.type!!.extension!!
-        )
-        node.file = virtualFile
-
         getTreeModel().reload(root)
 
         nodesGroupedById[node.id!!] = node

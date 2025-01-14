@@ -2,6 +2,7 @@ package dev.priporov.ideanotes.icon
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.util.IconLoader
+import com.intellij.openapi.util.registry.Registry
 
 object Icons {
     object Extension {
@@ -82,5 +83,5 @@ object Icons {
     }
 
     fun from(path: String) = IconLoader.getIcon(path, javaClass)
-
+    fun isNewUi() = Registry.`is`("ide.experimental.ui")
 }

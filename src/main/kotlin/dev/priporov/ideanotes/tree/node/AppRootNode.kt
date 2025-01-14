@@ -5,4 +5,6 @@ import com.intellij.openapi.components.Service
 const val name = "root"
 
 @Service
-class AppRootNode : NoteNode()
+class AppRootNode(override var id: String? = name) : NoteNode(name) {
+
+}

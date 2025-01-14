@@ -25,8 +25,10 @@ class ApplicationTreeStateService:BaseTreeState() {
             stateFile.createNewFile()
             return TreeStateDto()
         }
-
-        return mapper.readValue<TreeStateDto>(stateFile)
+        if(stateFile.length() > 0) {
+            return mapper.readValue<TreeStateDto>(stateFile)
+        }
+        return TreeStateDto()
     }
 
     fun insertInto(node: NoteNode, parentNode: NoteNode) {

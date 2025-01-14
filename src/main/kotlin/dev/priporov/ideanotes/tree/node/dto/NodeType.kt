@@ -48,5 +48,6 @@ enum class NodeType(
         fun fromExtension(value: String) = map.getOrDefault(value, UNKNOWN)
     }
 
+    fun getRequiredIcon() = if (Icons.isNewUi()) newUiIcon else icon
 }
 
