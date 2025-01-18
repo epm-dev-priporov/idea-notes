@@ -15,12 +15,16 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
     open fun insertInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
 
+        val expandedNodes = getExpandedNodes(targetNode)
+
         targetNode.insert(
             node,
             targetNode.childCount
         )
 
         getTreeModel().reload(targetNode)
+        
+        expandNodes(expandedNodes)
 
         nodesGroupedById[node.id!!] = node
 
@@ -76,6 +80,10 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
             list.addAll(treeNode.children().asSequence().mapNotNull { it as NoteNode })
         }
         return expandedNodes
+    }
+
+    private fun expandNodes(expandedNodes: ArrayList<NoteNode>) {
+        expandedNodes.forEach { expandPath(TreeUtil.getPath(getRoot(), it)) }
     }
 
 }
