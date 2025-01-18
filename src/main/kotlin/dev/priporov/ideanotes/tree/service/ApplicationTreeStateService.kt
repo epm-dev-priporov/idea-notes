@@ -10,7 +10,7 @@ import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
 import java.io.File
 
-const val stateFileName = "state.json"
+const val stateFileName = ".state.json"
 
 @Service
 class ApplicationTreeStateService : BaseTreeState() {
@@ -39,7 +39,7 @@ class ApplicationTreeStateService : BaseTreeState() {
 
     private fun getStateFilePath(): String {
         val applicationBaseDir = service<ApplicationStateService>().getApplicationBaseDIr()
-        return ".$applicationBaseDir$fileSeparator$stateFileName.json"
+        return "$applicationBaseDir$fileSeparator$stateFileName"
     }
 
     private fun readTreeState(): TreeStateDto {

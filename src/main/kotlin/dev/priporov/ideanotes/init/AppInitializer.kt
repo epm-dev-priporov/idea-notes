@@ -3,7 +3,10 @@ package dev.priporov.ideanotes.init
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.ide.AppLifecycleListener
+import com.intellij.openapi.actionSystem.CustomShortcutSet
+import com.intellij.openapi.actionSystem.ex.ActionUtil
 import com.intellij.openapi.components.service
+import dev.priporov.ideanotes.tree.action.SelectFileInProjectViewAction
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
 import dev.priporov.ideanotes.tree.service.ApplicationStateService
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
@@ -18,6 +21,13 @@ class AppInitializer : AppLifecycleListener {
         loadNodeDefinitions()
         loadTreeStateFromFile()
         initBaseDirIfNotExists()
+    }
+
+    fun method(){
+//        ActionUtil.getShortcutSet("SelectInProjectView").shortcuts.also { shortcutSet ->
+//            SelectFileInProjectViewAction()
+//                .registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), textEditor.component)
+//        }
     }
 
     /** load plugin global state from file

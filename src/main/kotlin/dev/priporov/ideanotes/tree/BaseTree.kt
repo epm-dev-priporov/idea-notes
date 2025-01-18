@@ -10,25 +10,24 @@ import java.util.*
 import javax.swing.tree.DefaultTreeModel
 
 abstract class BaseTree<T : DefaultTreeModel> : Tree() {
-
     private val nodesGroupedById = HashMap<String, NoteNode>()
 
-    open fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
-        val root = getRoot()
-
+    open fun insertInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
 
-        root.insert(
+        targetNode.insert(
             node,
-            root.childCount
+            targetNode.childCount
         )
 
-        getTreeModel().reload(root)
+        getTreeModel().reload(targetNode)
 
         nodesGroupedById[node.id!!] = node
 
         return node
     }
+
+    abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
 
     fun expandAll() {
         val list = LinkedList<NoteNode>()
@@ -61,7 +60,7 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         println("openInEditor: $node")
     }
 
-    private fun getRoot() = getTreeModel().root as NoteNode
+    protected fun getRoot() = getTreeModel().root as NoteNode
 
     private fun getExpandedNodes(node: NoteNode): ArrayList<NoteNode> {
         val list = LinkedList<NoteNode>()

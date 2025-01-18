@@ -7,6 +7,8 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
+import dev.priporov.ideanotes.tree.dialog.TextFieldDialog
+import dev.priporov.ideanotes.tree.factory.CreateNodeDtoFactory
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
 import dev.priporov.ideanotes.tree.service.NodeDefinitionService
@@ -16,7 +18,7 @@ class AddNodeActionGroup(tree: BaseTree<*>, targetNode: NoteNode, actionName: St
         templatePresentation.text = actionName
         isPopup = true
         service<NodeDefinitionService>().getSupportedDefinitionsForCreation().forEach { definition ->
-            add(AddChildNodeAction(tree, definition))
+            add(AddChildNodeAction(tree, definition, targetNode))
         }
     }
 
@@ -30,11 +32,17 @@ class AddNodeActionGroup(tree: BaseTree<*>, targetNode: NoteNode, actionName: St
 
 class AddChildNodeAction(
     private val tree: BaseTree<*>,
-    definition: NodeDefinitionDto,
+    private val definition: NodeDefinitionDto,
+    private val targetNode: NoteNode,
 ) : AnAction(definition.definition, "", definition.getRequiredIcon()) {
 
     override fun actionPerformed(e: AnActionEvent) {
-
+        TextFieldDialog("New note") { name ->
+            tree.insertInto(
+                service<CreateNodeDtoFactory>().toCreateNodeDto(name, definition),
+                targetNode
+            )
+        }.show()
     }
 
 }
