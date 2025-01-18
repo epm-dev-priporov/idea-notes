@@ -14,7 +14,7 @@ class AppNoteTree : BaseTree<AppNoteTreeModel>() {
 
     override fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
         val node = super.createNewInRoot(createNodeDto)
-
+        // save expanded
         val virtualFile: VirtualFile = service<FileNodeService>().createApplicationFile(
             node.id!!,
             node.type!!.extension!!
@@ -25,7 +25,7 @@ class AppNoteTree : BaseTree<AppNoteTreeModel>() {
             node,
             getTreeModel().root
         )
-
+        // expand opened
         return node
     }
 

@@ -17,22 +17,15 @@ class ApplicationTreeStateService : BaseTreeState() {
     private val stateFilePath = getStateFilePath()
     private val mapper = ObjectMapper()
 
-    var treeState: TreeStateDto = init()
+    lateinit var treeState: TreeStateDto
 
-    fun init(): TreeStateDto {
-        val stateFile = File(stateFilePath)
-        if (!stateFile.exists()) {
-            stateFile.createNewFile()
-            return TreeStateDto()
-        }
-        if (stateFile.length() > 0) {
-            return mapper.readValue<TreeStateDto>(stateFile)
-        }
-        return TreeStateDto()
+    fun init() {
+        treeState = readTreeState()
     }
 
     fun insertInto(node: NoteNode, parentNode: NoteNode) {
-        val stateNodeDto = StateNodeDto(node.id!!).apply {
+        val stateNodeDto = StateNodeDto().apply {
+            id = node.id
             type = node.type
             name = node.name
         }
@@ -46,7 +39,18 @@ class ApplicationTreeStateService : BaseTreeState() {
 
     private fun getStateFilePath(): String {
         val applicationBaseDir = service<ApplicationStateService>().getApplicationBaseDIr()
-        return "$applicationBaseDir$fileSeparator$stateFileName"
+        return ".$applicationBaseDir$fileSeparator$stateFileName.json"
     }
 
+    private fun readTreeState(): TreeStateDto {
+        val stateFile = File(stateFilePath)
+        if (!stateFile.exists()) {
+            stateFile.createNewFile()
+            return TreeStateDto()
+        }
+        if (stateFile.length() > 0) {
+            return mapper.readValue<TreeStateDto>(stateFile)
+        }
+        return TreeStateDto()
+    }
 }
