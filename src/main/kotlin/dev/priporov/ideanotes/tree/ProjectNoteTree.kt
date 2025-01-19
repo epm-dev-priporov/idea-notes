@@ -16,4 +16,8 @@ class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
         return node
     }
 
+    override fun delete(id: String) {
+        TODO("Not yet implemented")
+    }
+
 }

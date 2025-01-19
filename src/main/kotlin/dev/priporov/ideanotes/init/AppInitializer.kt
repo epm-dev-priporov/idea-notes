@@ -7,6 +7,7 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.state.TreeStateDto
+import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
@@ -69,8 +70,8 @@ class AppInitializer : AppLifecycleListener {
     private fun initAppTreeModelFromState(treeState: TreeStateDto, root: NoteNode) {
         val fileNodeService = service<FileNodeService>()
         val nodesGroupedById = treeState.nodesGroupedById.values.asSequence().map { stateNode ->
-            NoteNode(stateNode.name).apply {
-                id = stateNode.id
+
+            service<NoteNodeFactory>().getNode(stateNode.name!!, stateNode.id!!).apply {
                 type = stateNode.type!!
                 file = fileNodeService.initVirtualFile(stateNode.id, stateNode.type!!.extension!!)
             }

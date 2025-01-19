@@ -22,9 +22,8 @@ class ToolbarFactory {
 
         decorator.setRemoveAction {
             OkDialog("Delete node") {
-                tree.getSelectedNodes(NoteNode::class.java, null).filterNotNull().forEach {
-                    TODO("Not yet implemented")
-//                    tree.delete(it)
+                tree.getSelectedNodes(NoteNode::class.java, null).filterNotNull().forEach { node ->
+                    tree.delete(node.id!!)
                 }
             }.show()
         }

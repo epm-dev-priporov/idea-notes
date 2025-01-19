@@ -23,6 +23,13 @@ class ApplicationTreeStateService : BaseTreeState() {
         treeState = readTreeState()
     }
 
+    fun delete(id: String, parentId: String?){
+        treeState.hierarchy[parentId]?.remove(id)
+        treeState.hierarchy.remove(id)
+        treeState.nodesGroupedById.remove(id)
+        saveStateFile(treeState)
+    }
+
     fun insertInto(node: NoteNode, parentNode: NoteNode) {
         val stateNodeDto = StateNodeDto().apply {
             id = node.id

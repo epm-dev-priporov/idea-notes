@@ -8,9 +8,30 @@ import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
+import dev.priporov.ideanotes.tree.service.NoteNodeService
+import dev.priporov.ideanotes.util.WriteActionUtil
 
 @Service(Service.Level.PROJECT)
 class AppNoteTree : BaseTree<AppNoteTreeModel>() {
+
+    override fun delete(id: String) {
+        // recursive remove by children should be done TODO
+        val node = service<NoteNodeService>().getNodeById(id)
+        if (node == null) {
+            return
+        }
+        val parent = node.parent as NoteNode
+        service<ApplicationTreeStateService>().delete(
+            node.id!!, parent.id
+        )
+
+        node.removeFromParent()
+        WriteActionUtil.runWriteAction {
+            node.file?.delete(true)
+        }
+
+        getTreeModel().reload(parent)
+    }
 
     override fun createInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node = super.createInto(createNodeDto, targetNode)
