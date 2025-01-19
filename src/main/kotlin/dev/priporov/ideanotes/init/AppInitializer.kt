@@ -3,11 +3,10 @@ package dev.priporov.ideanotes.init
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.ide.AppLifecycleListener
-import com.intellij.openapi.actionSystem.CustomShortcutSet
-import com.intellij.openapi.actionSystem.ex.ActionUtil
+import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.service
+import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.state.TreeStateDto
-import dev.priporov.ideanotes.tree.action.SelectFileInProjectViewAction
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
@@ -16,14 +15,11 @@ import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
 import dev.priporov.ideanotes.tree.service.NodeDefinitionService
 import java.util.*
-import kotlin.collections.HashMap
-
 
 class AppInitializer : AppLifecycleListener {
     private val mapper = ObjectMapper()
 
     override fun appFrameCreated(commandLineArgs: MutableList<String>) {
-        println("appFrameCreated")
         loadNodeDefinitions()
         loadTreeStateFromFile()
         initBaseDirIfNotExists()
@@ -64,6 +60,7 @@ class AppInitializer : AppLifecycleListener {
         val inputStream = AppInitializer::class.java.getResourceAsStream("/nodes/nodes.json")
         val nodeDefinitions = mapper.readValue(inputStream, object : TypeReference<List<NodeDefinitionDto>>() {})
             .asSequence()
+            .filter(this::filterByPlugin)
             .associateByTo(HashMap()) { it.type }
 
         service<NodeDefinitionService>().init(nodeDefinitions)
@@ -107,5 +104,15 @@ class AppInitializer : AppLifecycleListener {
 
     }
 
+    private fun filterByPlugin(definition: NodeDefinitionDto): Boolean {
+        if (definition.plugin == null) {
+            return true
+        }
+        val pluginId = PluginId.findId(definition.plugin)
+        if (pluginId != null && PluginManager.getInstance().findEnabledPlugin(pluginId) != null) {
+            return true
+        }
+        return false
+    }
 
 }
