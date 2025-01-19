@@ -11,6 +11,14 @@ val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSep
 @Service
 class FileNodeService {
 
+    fun initVirtualFile(id: String?, extension: String?): VirtualFile {
+        val applicationState = service<ApplicationStateService>().applicationState
+        val appBaseDir = applicationState.appBaseDir
+
+        val path = "$appBaseDir$fileSeparator$id${if (extension == null) "" else ".$extension"}"
+        return createVirtualFile(File(path))
+    }
+
     fun createApplicationFile(
         id: String,
         extension: String,
@@ -27,7 +35,7 @@ class FileNodeService {
         return createVirtualFile(file)
     }
 
-    fun createBaseDirIfNotExists(appBaseDir:String) {
+    fun createBaseDirIfNotExists(appBaseDir: String) {
         val baseDIr = File(appBaseDir)
         if (!baseDIr.exists()) {
             baseDIr.mkdirs()

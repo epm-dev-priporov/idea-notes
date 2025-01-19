@@ -133,8 +133,11 @@
             id="NotesTree" secondary="true" anchor="right" icon="/icons/pluginIcon.png"
             factoryClass="dev.priporov.ideanotes.NotesMainWindowFactory">
         </toolWindow>
+
+        <postStartupActivity implementation="dev.priporov.ideanotes.init.ProjectInitializer"/>
+
     </extensions>
-    
+
     <applicationListeners>
         <listener class="dev.priporov.ideanotes.init.AppInitializer" topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>

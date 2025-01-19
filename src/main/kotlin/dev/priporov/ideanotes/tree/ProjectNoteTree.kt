@@ -11,7 +11,7 @@ import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 class ProjectNoteTree(project: Project) : BaseTree<ProjectNoteTreeModel>() {
 
     override fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
-        val node = super.insertInto(createNodeDto, getRoot())
+        val node = super.createInto(createNodeDto, getRoot())
 
         return node
     }

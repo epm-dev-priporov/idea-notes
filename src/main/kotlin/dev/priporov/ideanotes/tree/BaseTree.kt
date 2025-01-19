@@ -3,6 +3,7 @@ package dev.priporov.ideanotes.tree
 import com.intellij.openapi.components.service
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
+import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper
@@ -12,7 +13,9 @@ import javax.swing.tree.DefaultTreeModel
 abstract class BaseTree<T : DefaultTreeModel> : Tree() {
     private val nodesGroupedById = HashMap<String, NoteNode>()
 
-    open fun insertInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
+    abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
+
+    open fun createInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toFileTreeNode(createNodeDto)
 
         val expandedNodes = getExpandedNodes(targetNode)
@@ -23,15 +26,13 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         )
 
         getTreeModel().reload(targetNode)
-        
+
         expandNodes(expandedNodes)
 
         nodesGroupedById[node.id!!] = node
 
         return node
     }
-
-    abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
 
     fun expandAll() {
         val list = LinkedList<NoteNode>()
@@ -56,8 +57,6 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         }
     }
 
-    fun getTreeModel() = model as T
-
     fun getSelectedNode(): NoteNode? = selectionPath?.lastPathComponent as? NoteNode
 
     fun openInEditor(node: NoteNode) {
@@ -65,6 +64,8 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
     }
 
     protected fun getRoot() = getTreeModel().root as NoteNode
+
+    private fun getTreeModel() = model as T
 
     private fun getExpandedNodes(node: NoteNode): ArrayList<NoteNode> {
         val list = LinkedList<NoteNode>()

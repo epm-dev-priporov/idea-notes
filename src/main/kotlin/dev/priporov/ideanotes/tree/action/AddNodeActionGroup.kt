@@ -38,7 +38,7 @@ class AddChildNodeAction(
 
     override fun actionPerformed(e: AnActionEvent) {
         TextFieldDialog("New note") { name ->
-            tree.insertInto(
+            tree.createInto(
                 service<CreateNodeDtoFactory>().toCreateNodeDto(name, definition),
                 targetNode
             )
