@@ -4,7 +4,6 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.tree.node.NoteNode
-import dev.priporov.ideanotes.tree.service.FileNodeService
 import java.util.*
 
 @Service
@@ -17,16 +16,9 @@ class NoteNodeFactory {
     }
 
     fun copy(node: NoteNode): NoteNode {
-        val fileNodeService = service<FileNodeService>()
-        return getNode(node.name!!).apply {
+        return getNode(node.name!!, node.id!!).apply {
             this.type = node.type
-
-//            this.file = fileNodeService.createApplicationFile(
-//                this.id!!,
-//                this.type.extension!!,
-//                null
-//            )
-
+            this.file = node.file
         }
 
     }
