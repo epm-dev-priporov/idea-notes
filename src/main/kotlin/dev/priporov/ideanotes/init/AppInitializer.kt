@@ -11,6 +11,7 @@ import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
+import dev.priporov.ideanotes.tree.node.dto.NodeType
 import dev.priporov.ideanotes.tree.service.ApplicationStateService
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
@@ -31,7 +32,7 @@ class AppInitializer : AppLifecycleListener {
     }
 
 
-    fun method(){
+    fun method() {
 //        ActionUtil.getShortcutSet("SelectInProjectView").shortcuts.also { shortcutSet ->
 //            SelectFileInProjectViewAction()
 //                .registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), textEditor.component)
@@ -40,7 +41,7 @@ class AppInitializer : AppLifecycleListener {
 
     /** load plugin global state from file
 
-    */
+     */
     private fun loadTreeStateFromFile() {
         service<ApplicationTreeStateService>().init()
     }
@@ -73,7 +74,9 @@ class AppInitializer : AppLifecycleListener {
 
             service<NoteNodeFactory>().getNode(stateNode.name!!, stateNode.id!!).apply {
                 type = stateNode.type!!
-                file = fileNodeService.initVirtualFile(stateNode.id!!, stateNode.type!!.extension!!)
+                if (stateNode.type != NodeType.PACKAGE) {
+                    file = fileNodeService.initVirtualFile(stateNode.id!!, stateNode.type!!.extension!!)
+                }
             }
         }.associateBy { it.id }
 
