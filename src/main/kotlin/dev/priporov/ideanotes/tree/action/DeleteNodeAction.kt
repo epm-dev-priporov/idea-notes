@@ -14,7 +14,7 @@ class DeleteNodeAction(
 ) : AnAction(value, "", Icons.PopUpMenu.DELETE_ICON) {
 
     override fun actionPerformed(e: AnActionEvent) {
-
+        tree.delete(node.id!!)
     }
 
     override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
