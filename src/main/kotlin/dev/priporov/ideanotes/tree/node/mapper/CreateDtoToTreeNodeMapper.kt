@@ -10,7 +10,7 @@ import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 class CreateDtoToTreeNodeMapper {
 
     fun toNoteNode(createNodeDto: CreateNodeDto): NoteNode {
-        return service<NoteNodeFactory>().getNode(createNodeDto.name!!, createNodeDto.id!!).apply {
+        return service<NoteNodeFactory>().getNode(createNodeDto.name!!).apply {
             type = createNodeDto.type
         }
     }

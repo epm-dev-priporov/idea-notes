@@ -16,7 +16,6 @@ class AppNoteTreeFactory() : BaseNoteTreeFactory<AppNoteTree>() {
             setModel(service<AppNoteTreeModel>())
             model = service<AppNoteTreeModel>()
             cellRenderer = service<NoteTreeCellRenderer>()
-            isRootVisible = false
         }
 
         init(tree)

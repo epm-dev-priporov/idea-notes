@@ -15,15 +15,7 @@ class CreateNodeDtoFactory {
     ) = CreateNodeDto().apply {
         this.name = name
         this.type = definition.type
-        this.id = generateNodeId(name)
         this.content = content
-    }
-
-    private fun generateNodeId(name: String?): String? {
-        if (name == null) {
-            return null
-        }
-        return "${name}_${UUID.randomUUID().toString().substring(0, 6)}"
     }
 
 }
