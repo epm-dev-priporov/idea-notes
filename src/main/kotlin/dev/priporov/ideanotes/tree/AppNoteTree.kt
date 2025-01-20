@@ -15,13 +15,18 @@ import dev.priporov.ideanotes.util.WriteActionUtil
 class AppNoteTree : BaseTree<AppNoteTreeModel>() {
 
     override fun delete(id: String) {
-        // recursive remove by children should be done TODO
         val node = service<NoteNodeService>().getNodeById(id)
         if (node == null) {
             return
         }
+        val applicationTreeStateService = service<ApplicationTreeStateService>()
+        applicationTreeStateService.getChildrenRecursively(node.id!!).reversed().forEach { childId ->
+            delete(childId)
+        }
+
         val parent = node.parent as NoteNode
-        service<ApplicationTreeStateService>().delete(
+
+        applicationTreeStateService.delete(
             node.id!!, parent.id
         )
 
