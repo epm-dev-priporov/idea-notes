@@ -8,14 +8,14 @@ import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
-import dev.priporov.ideanotes.tree.service.NoteNodeService
+import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.util.WriteActionUtil
 
 @Service(Service.Level.PROJECT)
 class AppNoteTree : BaseTree<AppNoteTreeModel>() {
 
     override fun delete(id: String) {
-        val node = service<NoteNodeService>().getNodeById(id)
+        val node = service<NoteNodeContainer>().getNodeById(id)
         if (node == null) {
             return
         }

@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import dev.priporov.ideanotes.tree.container.VirtualFileContainer
 import java.io.File
 
 val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
@@ -11,12 +12,14 @@ val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSep
 @Service
 class FileNodeService {
 
-    fun initVirtualFile(id: String?, extension: String?): VirtualFile {
+    fun initVirtualFile(id: String, extension: String?): VirtualFile {
         val applicationState = service<ApplicationStateService>().applicationState
         val appBaseDir = applicationState.appBaseDir
 
         val path = "$appBaseDir$fileSeparator$id${if (extension == null) "" else ".$extension"}"
-        return createVirtualFile(File(path))
+        return createVirtualFile(File(path)).apply {
+            service<VirtualFileContainer>().put(id, this)
+        }
     }
 
     fun createApplicationFile(
@@ -32,7 +35,9 @@ class FileNodeService {
                 writeBytes(content)
             }
         }
-        return createVirtualFile(file)
+        return createVirtualFile(file).apply {
+            service<VirtualFileContainer>().put(id, this)
+        }
     }
 
     fun createBaseDirIfNotExists(appBaseDir: String) {

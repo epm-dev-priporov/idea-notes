@@ -73,7 +73,7 @@ class AppInitializer : AppLifecycleListener {
 
             service<NoteNodeFactory>().getNode(stateNode.name!!, stateNode.id!!).apply {
                 type = stateNode.type!!
-                file = fileNodeService.initVirtualFile(stateNode.id, stateNode.type!!.extension!!)
+                file = fileNodeService.initVirtualFile(stateNode.id!!, stateNode.type!!.extension!!)
             }
         }.associateBy { it.id }
 

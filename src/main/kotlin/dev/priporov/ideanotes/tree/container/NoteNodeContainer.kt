@@ -1,10 +1,10 @@
-package dev.priporov.ideanotes.tree.service
+package dev.priporov.ideanotes.tree.container
 
 import com.intellij.openapi.components.Service
 import dev.priporov.ideanotes.tree.node.NoteNode
 
 @Service
-class NoteNodeService {
+class NoteNodeContainer {
 
     private val nodesGroupedById: MutableMap<String, NoteNode> = HashMap()
 

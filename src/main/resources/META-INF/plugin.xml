@@ -133,7 +133,8 @@
             id="NotesTree" secondary="true" anchor="right" icon="/icons/pluginIcon.png"
             factoryClass="dev.priporov.ideanotes.NotesMainWindowFactory">
         </toolWindow>
-
+        <editorTabTitleProvider implementation="dev.priporov.ideanotes.tree.extension.NoteEditorTabTitleProvider"/>
+        <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.tree.extension.NoteIgnoredFileWritingAccessExtension"/>
         <postStartupActivity implementation="dev.priporov.ideanotes.init.ProjectInitializer"/>
 
     </extensions>
