@@ -24,12 +24,13 @@ class FileNodeService {
 
     fun createApplicationFile(
         id: String,
-        extension: String,
+        extension: String?,
         content: ByteArray? = null
     ): VirtualFile {
         val applicationState = service<ApplicationStateService>().applicationState
         val appBaseDir = applicationState.appBaseDir
-        val file = File("$appBaseDir$fileSeparator$id.$extension").apply {
+        val extensionWithDot = if (extension.isNullOrBlank()) "" else ".$extension"
+        val file = File("$appBaseDir$fileSeparator$id$extensionWithDot").apply {
             createNewFile()
             if (content != null && content.isNotEmpty()) {
                 writeBytes(content)

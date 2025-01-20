@@ -136,10 +136,11 @@
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.tree.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.tree.extension.NoteIgnoredFileWritingAccessExtension"/>
         <postStartupActivity implementation="dev.priporov.ideanotes.init.ProjectInitializer"/>
-
+        <applicationConfigurable displayName="Notes Tree" instance="dev.priporov.ideanotes.settings.ApplicationSearchableConfigurable"/>
     </extensions>
 
     <applicationListeners>
         <listener class="dev.priporov.ideanotes.init.AppInitializer" topic="com.intellij.ide.AppLifecycleListener"/>
     </applicationListeners>
+
 </idea-plugin>
