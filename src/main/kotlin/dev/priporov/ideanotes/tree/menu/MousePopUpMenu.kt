@@ -14,8 +14,8 @@ class MousePopUpMenu(tree: BaseTree<*>, selectedNodeClicked: Boolean) : DefaultA
             add(PasteNodeAction(tree, "Past"))
         } else {
             add(NewNodeActionGroup(tree, "New node"))
-            add(OpenInEditorAction(tree, "Open"))
             add(AddNodeActionGroup(tree, targetNode, "Add child node"))
+            add(OpenInEditorAction(tree, "Open"))
             add(CutNodeAction(tree, "Cut"))
             add(CopyNodeAction(tree, "Copy"))
             add(PasteNodeAction(tree, "Past"))
