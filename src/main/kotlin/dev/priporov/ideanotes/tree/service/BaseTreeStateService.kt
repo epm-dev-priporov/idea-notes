@@ -24,6 +24,9 @@ abstract class BaseTreeStateService {
         saveStateFile(treeState)
     }
 
+    open fun rename(oldId: String, newId: String, name: String){
+    }
+
     protected abstract fun saveStateFile(treeState: TreeStateDto)
 
 }

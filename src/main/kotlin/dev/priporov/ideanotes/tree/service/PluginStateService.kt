@@ -4,20 +4,20 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import dev.priporov.ideanotes.state.ApplicationStateDto
+import dev.priporov.ideanotes.state.PluginStateDto
 
 @State(
     name = "StateService",
     storages = [Storage("ideanotes_v2.xml")]
 )
 @Service
-class ApplicationStateService : PersistentStateComponent<ApplicationStateDto> {
+class PluginStateService : PersistentStateComponent<PluginStateDto> {
 
-    var applicationState: ApplicationStateDto = ApplicationStateDto()
+    var applicationState: PluginStateDto = PluginStateDto()
 
     override fun getState() = applicationState
 
-    override fun loadState(loadedState: ApplicationStateDto) {
+    override fun loadState(loadedState: PluginStateDto) {
         applicationState = loadedState
     }
 

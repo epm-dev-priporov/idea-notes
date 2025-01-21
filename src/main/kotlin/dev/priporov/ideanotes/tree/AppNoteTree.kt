@@ -4,7 +4,6 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.tree.container.NoteNodeContainer
-import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
@@ -16,9 +15,16 @@ import dev.priporov.ideanotes.util.WriteActionUtil
 @Service(Service.Level.PROJECT)
 class AppNoteTree : BaseTree<AppNoteTreeModel>() {
 
-    override fun renameNode(value: String, node: NoteNode) {
-        super.renameNode(value, node)
-        service<NoteNodeFactory>().copy(node)
+    override fun renameNode(name: String, node: NoteNode) {
+        val oldId = node.id!!
+        super.renameNode(name, node)
+        val newId = node.id!!
+
+        service<ApplicationTreeStateService>().rename(oldId, newId, name)
+
+        val expandedNodes = getExpandedNodes(node)
+        getTreeModel().reload(node.parent)
+        expandNodes(expandedNodes)
     }
 
     override fun delete(id: String) {

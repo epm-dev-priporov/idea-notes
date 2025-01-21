@@ -21,6 +21,11 @@ class ApplicationTreeStateService : BaseTreeStateService() {
         treeState = readTreeState()
     }
 
+    override fun rename(oldId: String, newId: String, name: String) {
+        treeState.renameNode(oldId, newId, name)
+        saveStateFile(treeState)
+    }
+
     fun delete(id: String, parentId: String?) {
         treeState.hierarchy[parentId]?.remove(id)
         treeState.hierarchy.remove(id)
@@ -55,7 +60,7 @@ class ApplicationTreeStateService : BaseTreeStateService() {
     }
 
     private fun getStateFilePath(): String {
-        val applicationBaseDir = service<ApplicationStateService>().getApplicationBaseDIr()
+        val applicationBaseDir = service<PluginStateService>().getApplicationBaseDIr()
         return "$applicationBaseDir$fileSeparator$stateFileName"
     }
 

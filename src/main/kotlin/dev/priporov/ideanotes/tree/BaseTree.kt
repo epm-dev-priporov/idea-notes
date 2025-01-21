@@ -11,6 +11,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
+import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.dto.NodeType
@@ -23,13 +24,12 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
     abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
 
-    open fun renameNode(value: String, node: NoteNode){
-
+    open fun renameNode(name: String, node: NoteNode) {
+        service<NoteNodeFactory>().rename(name, node)
     }
 
     open fun createInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toNoteNode(createNodeDto)
-
         val expandedNodes = getExpandedNodes(targetNode)
 
         targetNode.insert(
@@ -38,9 +38,7 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         )
 
         getTreeModel().reload(targetNode)
-
         expandNodes(expandedNodes)
-
         nodesGroupedById[node.id!!] = node
 
         return node
@@ -95,10 +93,10 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 //        if (readerType == null || readerType.equals(NATIVE)) {
 //            NativeFileType.openAssociatedApplication(file)
 //        } else {
-            FileEditorManager.getInstance(project).openTextEditor(
-                OpenFileDescriptor(project, file, 0, 0, false),
-                true
-            )
+        FileEditorManager.getInstance(project).openTextEditor(
+            OpenFileDescriptor(project, file, 0, 0, false),
+            true
+        )
 //        }
     }
 
@@ -106,7 +104,7 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
     protected fun getTreeModel() = model as T
 
-    private fun getExpandedNodes(node: NoteNode): ArrayList<NoteNode> {
+    protected fun getExpandedNodes(node: NoteNode): ArrayList<NoteNode> {
         val list = LinkedList<NoteNode>()
         val expandedNodes = ArrayList<NoteNode>()
         val root = getRoot()
@@ -122,7 +120,7 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         return expandedNodes
     }
 
-    private fun expandNodes(expandedNodes: ArrayList<NoteNode>) {
+    protected fun expandNodes(expandedNodes: ArrayList<NoteNode>) {
         expandedNodes.forEach { expandPath(TreeUtil.getPath(getRoot(), it)) }
     }
 

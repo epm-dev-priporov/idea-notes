@@ -5,6 +5,8 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.tree.container.VirtualFileContainer
+import dev.priporov.ideanotes.tree.node.NoteNode
+import dev.priporov.ideanotes.util.WriteActionUtil
 import java.io.File
 
 val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSeparator
@@ -13,7 +15,7 @@ val fileSeparator: String = System.getProperty("file.separator") ?: File.pathSep
 class FileNodeService {
 
     fun initVirtualFile(id: String, extension: String?): VirtualFile {
-        val applicationState = service<ApplicationStateService>().applicationState
+        val applicationState = service<PluginStateService>().applicationState
         val appBaseDir = applicationState.appBaseDir
 
         val path = "$appBaseDir$fileSeparator$id${if (extension == null) "" else ".$extension"}"
@@ -27,10 +29,10 @@ class FileNodeService {
         extension: String?,
         content: ByteArray? = null
     ): VirtualFile {
-        val applicationState = service<ApplicationStateService>().applicationState
+        val applicationState = service<PluginStateService>().applicationState
         val appBaseDir = applicationState.appBaseDir
-        val extensionWithDot = if (extension.isNullOrBlank()) "" else ".$extension"
-        val file = File("$appBaseDir$fileSeparator$id$extensionWithDot").apply {
+
+        val file = File("$appBaseDir$fileSeparator${toFileName(id, extension)}").apply {
             createNewFile()
             if (content != null && content.isNotEmpty()) {
                 writeBytes(content)
@@ -48,6 +50,10 @@ class FileNodeService {
         }
     }
 
+    fun renameFile(file: VirtualFile, node: NoteNode) {
+        WriteActionUtil.runWriteAction { file.rename(this, toFileName(node.id!!, node.type.extension)) }
+    }
+
     private fun createVirtualFile(file: File): VirtualFile {
         val localFileSystem = LocalFileSystem.getInstance()
         val path = file.toPath()
@@ -55,6 +61,11 @@ class FileNodeService {
         return localFileSystem.refreshAndFindFileByNioFile(path)
             ?: localFileSystem.refreshAndFindFileByIoFile(file)
             ?: localFileSystem.refreshAndFindFileByPath(path.toString())!!
+    }
+
+    private fun toFileName(id: String, extension: String?): String {
+        val extensionWithDot = if (extension.isNullOrBlank()) "" else ".$extension"
+        return "$id$extensionWithDot"
     }
 
 }

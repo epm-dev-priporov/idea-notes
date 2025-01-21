@@ -12,7 +12,7 @@ import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.NodeDefinitionDto
 import dev.priporov.ideanotes.tree.node.dto.NodeType
-import dev.priporov.ideanotes.tree.service.ApplicationStateService
+import dev.priporov.ideanotes.tree.service.PluginStateService
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
 import dev.priporov.ideanotes.tree.service.NodeDefinitionService
@@ -42,7 +42,7 @@ class AppInitializer : AppLifecycleListener {
      */
     private fun initBaseDirIfNotExists() {
         service<FileNodeService>().createBaseDirIfNotExists(
-            service<ApplicationStateService>().getApplicationBaseDIr()
+            service<PluginStateService>().getApplicationBaseDIr()
         )
     }
 
