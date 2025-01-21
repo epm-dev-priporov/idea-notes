@@ -31,16 +31,7 @@ class AppInitializer : AppLifecycleListener {
         )
     }
 
-
-    fun method() {
-//        ActionUtil.getShortcutSet("SelectInProjectView").shortcuts.also { shortcutSet ->
-//            SelectFileInProjectViewAction()
-//                .registerCustomShortcutSet(CustomShortcutSet(*shortcutSet), textEditor.component)
-//        }
-    }
-
     /** load plugin global state from file
-
      */
     private fun loadTreeStateFromFile() {
         service<ApplicationTreeStateService>().init()
@@ -70,9 +61,10 @@ class AppInitializer : AppLifecycleListener {
 
     private fun initAppTreeModelFromState(treeState: TreeStateDto, root: NoteNode) {
         val fileNodeService = service<FileNodeService>()
-        val nodesGroupedById = treeState.nodesGroupedById.values.asSequence().map { stateNode ->
+        val noteNodeFactory = service<NoteNodeFactory>()
 
-            service<NoteNodeFactory>().getNode(stateNode.name!!, stateNode.id!!).apply {
+        val nodesGroupedById = treeState.nodesGroupedById.values.asSequence().map { stateNode ->
+            noteNodeFactory.getNode(stateNode.name!!, stateNode.id!!).apply {
                 type = stateNode.type!!
                 if (stateNode.type != NodeType.PACKAGE) {
                     file = fileNodeService.initVirtualFile(stateNode.id!!, stateNode.type!!.extension!!)
