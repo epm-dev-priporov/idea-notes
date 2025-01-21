@@ -11,6 +11,9 @@ class NoteNodeContainer {
     fun registerNode(node: NoteNode) {
         nodesGroupedById[node.id!!] = node
     }
+    fun removeNode(id: String) {
+        nodesGroupedById.remove(id)
+    }
 
     fun getNodeById(id: String): NoteNode? = nodesGroupedById[id]
 

@@ -23,6 +23,10 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
     abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
 
+    open fun renameNode(value: String, node: NoteNode){
+
+    }
+
     open fun createInto(createNodeDto: CreateNodeDto, targetNode: NoteNode): NoteNode {
         val node: NoteNode = service<CreateDtoToTreeNodeMapper>().toNoteNode(createNodeDto)
 

@@ -16,4 +16,5 @@ open class NoteNode(
     override fun insert(newChild: MutableTreeNode?, childIndex: Int) {
         super.insert(newChild, childIndex)
     }
+
 }

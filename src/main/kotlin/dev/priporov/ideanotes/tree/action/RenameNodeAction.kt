@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import dev.priporov.ideanotes.tree.BaseTree
+import dev.priporov.ideanotes.tree.dialog.TextFieldDialog
 
 
 class RenameNodeAction(
@@ -13,6 +14,9 @@ class RenameNodeAction(
 
     override fun actionPerformed(e: AnActionEvent) {
         val node = tree.getSelectedNode() ?: return
+        TextFieldDialog("Rename note", node.name) { value ->
+            tree.renameNode(value, node)
+        }.show()
 
     }
 
