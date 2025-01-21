@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "dev.priporov"
-version = "1.5.5"
+version = "1.5.6"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("231")
-        untilBuild.set("243.*")
+        untilBuild.set("251.*")
     }
 
     signPlugin {
