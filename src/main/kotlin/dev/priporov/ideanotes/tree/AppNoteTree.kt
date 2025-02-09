@@ -73,8 +73,4 @@ class AppNoteTree : BaseTree<AppNoteTreeModel>() {
         return node
     }
 
-    override fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
-        return createInto(createNodeDto, getRoot())
-    }
-
 }

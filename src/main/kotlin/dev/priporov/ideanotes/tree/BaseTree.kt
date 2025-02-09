@@ -22,7 +22,9 @@ import javax.swing.tree.DefaultTreeModel
 abstract class BaseTree<T : DefaultTreeModel> : Tree() {
     protected val nodesGroupedById = HashMap<String, NoteNode>()
 
-    abstract fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode
+    fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
+        return createInto(createNodeDto, getRoot())
+    }
 
     open fun renameNode(name: String, node: NoteNode) {
         service<NoteNodeFactory>().rename(name, node)

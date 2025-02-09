@@ -4,17 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.node.NoteNode
+import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
 import java.io.File
 
 abstract class BaseTreeStateService {
 
-    protected lateinit var treeState: TreeStateDto
-    protected val statePath = getStateFilePath()
-    protected val mapper = ObjectMapper()
+    protected open lateinit var treeState: TreeStateDto
 
-    fun init() {
-        treeState = readTreeState()
-    }
+    protected val mapper = ObjectMapper()
 
     open fun updateNodeOrder(node: NoteNode) {
         val children: MutableList<String> = node.children()
@@ -37,8 +34,18 @@ abstract class BaseTreeStateService {
 
     open fun rename(oldId: String, newId: String, name: String) {}
 
+    fun insertInto(node: NoteNode, parentNode: NoteNode) {
+        val stateNodeDto = StateNodeDto().apply {
+            id = node.id
+            type = node.type
+            name = node.name
+        }
+        treeState.insertInto(stateNodeDto, parentNode)
+        saveStateFile(treeState)
+    }
+
     protected fun readTreeState(): TreeStateDto {
-        val stateFile = File(statePath)
+        val stateFile = File(getStateFilePath())
         if (!stateFile.exists()) {
             stateFile.createNewFile()
             return TreeStateDto()
@@ -50,7 +57,7 @@ abstract class BaseTreeStateService {
     }
 
     protected fun saveStateFile(treeState: TreeStateDto) {
-        File(statePath).writeText(mapper.writeValueAsString(treeState))
+        File(getStateFilePath()).writeText(mapper.writeValueAsString(treeState))
     }
 
     protected abstract fun getStateFilePath(): String

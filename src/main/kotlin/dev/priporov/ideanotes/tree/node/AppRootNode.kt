@@ -2,9 +2,9 @@ package dev.priporov.ideanotes.tree.node
 
 import com.intellij.openapi.components.Service
 
-const val name = "root"
+const val rootName = "root"
 
 @Service
-class AppRootNode(override var id: String? = name) : NoteNode(name) {
+class AppRootNode(override var id: String? = rootName) : NoteNode(rootName) {
 
 }

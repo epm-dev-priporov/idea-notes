@@ -15,6 +15,10 @@ const val stateFileName = ".state.json"
 @Service
 class ApplicationTreeStateService : BaseTreeStateService() {
 
+    fun init() {
+        treeState = readTreeState()
+    }
+
     override fun rename(oldId: String, newId: String, name: String) {
         treeState.renameNode(oldId, newId, name)
         saveStateFile(treeState)
@@ -24,16 +28,6 @@ class ApplicationTreeStateService : BaseTreeStateService() {
         treeState.hierarchy[parentId]?.remove(id)
         treeState.hierarchy.remove(id)
         treeState.nodesGroupedById.remove(id)
-        saveStateFile(treeState)
-    }
-
-    fun insertInto(node: NoteNode, parentNode: NoteNode) {
-        val stateNodeDto = StateNodeDto().apply {
-            id = node.id
-            type = node.type
-            name = node.name
-        }
-        treeState.insertInto(stateNodeDto, parentNode)
         saveStateFile(treeState)
     }
 
