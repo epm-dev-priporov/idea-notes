@@ -26,7 +26,7 @@ class AppInitializer : AppLifecycleListener {
         loadTreeStateFromFile()
         initBaseDirIfNotExists()
         initAppTreeModelFromState(
-            service<ApplicationTreeStateService>().treeState,
+            service<ApplicationTreeStateService>().getStateTree(),
             service<AppNoteTreeModel>().root
         )
     }

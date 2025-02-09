@@ -14,12 +14,6 @@ const val stateFileName = ".state.json"
 
 @Service
 class ApplicationTreeStateService : BaseTreeStateService() {
-    private val stateFilePath = getStateFilePath()
-    private val mapper = ObjectMapper()
-
-    fun init() {
-        treeState = readTreeState()
-    }
 
     override fun rename(oldId: String, newId: String, name: String) {
         treeState.renameNode(oldId, newId, name)
@@ -55,24 +49,9 @@ class ApplicationTreeStateService : BaseTreeStateService() {
         return result
     }
 
-    override fun saveStateFile(treeState: TreeStateDto) {
-        File(stateFilePath).writeText(mapper.writeValueAsString(treeState))
-    }
-
-    private fun getStateFilePath(): String {
+    override fun getStateFilePath(): String {
         val applicationBaseDir = service<PluginStateService>().getApplicationBaseDIr()
         return "$applicationBaseDir$fileSeparator$stateFileName"
     }
 
-    private fun readTreeState(): TreeStateDto {
-        val stateFile = File(stateFilePath)
-        if (!stateFile.exists()) {
-            stateFile.createNewFile()
-            return TreeStateDto()
-        }
-        if (stateFile.length() > 0) {
-            return mapper.readValue<TreeStateDto>(stateFile)
-        }
-        return TreeStateDto()
-    }
 }

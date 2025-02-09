@@ -4,6 +4,8 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.guessProjectDir
 import dev.priporov.ideanotes.state.PluginStateDto
 
 @State(
@@ -22,5 +24,8 @@ class PluginStateService : PersistentStateComponent<PluginStateDto> {
     }
 
     fun getApplicationBaseDIr() = applicationState.appBaseDir
+    fun getProjectBaseDir(project: Project): String {
+        return "${project.guessProjectDir()?.path}$fileSeparator${applicationState.projectNoteDir}"
+    }
 
 }

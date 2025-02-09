@@ -135,7 +135,8 @@
         </toolWindow>
         <editorTabTitleProvider implementation="dev.priporov.ideanotes.tree.extension.NoteEditorTabTitleProvider"/>
         <nonProjectFileWritingAccessExtension implementation="dev.priporov.ideanotes.tree.extension.NoteIgnoredFileWritingAccessExtension"/>
-        <postStartupActivity implementation="dev.priporov.ideanotes.init.ProjectInitializer"/>
+        <backgroundPostStartupActivity implementation="dev.priporov.ideanotes.init.ProjectInitializer"/>
+
         <applicationConfigurable displayName="Notes Tree" instance="dev.priporov.ideanotes.settings.ApplicationSearchableConfigurable"/>
     </extensions>
 

@@ -164,7 +164,7 @@ class DragAndDropTransferHandler : TransferHandler() {
 
     private fun getTreeState(tree: BaseTree<*>) = when (tree) {
         is AppNoteTree -> service<ApplicationTreeStateService>()
-        is ProjectNoteTree -> service<ProjectTreeStateService>()
+        is ProjectNoteTree -> tree.project.getService(ProjectTreeStateService::class.java)
         else -> null
     }
 

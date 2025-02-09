@@ -2,6 +2,8 @@ package dev.priporov.ideanotes.tree.service
 
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import dev.priporov.ideanotes.tree.container.VirtualFileContainer
@@ -33,6 +35,26 @@ class FileNodeService {
         val appBaseDir = applicationState.appBaseDir
 
         val file = File("$appBaseDir$fileSeparator${toFileName(id, extension)}").apply {
+            createNewFile()
+            if (content != null && content.isNotEmpty()) {
+                writeBytes(content)
+            }
+        }
+        return createVirtualFile(file).apply {
+            service<VirtualFileContainer>().put(id, this)
+        }
+    }
+
+    fun createProjectFile(
+        id: String,
+        extension: String?,
+        project: Project,
+        content: ByteArray? = null
+    ): VirtualFile {
+        val applicationState = service<PluginStateService>().applicationState
+        val projectNoteDir = applicationState.projectNoteDir
+
+        val file = File("${project.guessProjectDir()?.path}$fileSeparator$projectNoteDir$fileSeparator${toFileName(id, extension)}").apply {
             createNewFile()
             if (content != null && content.isNotEmpty()) {
                 writeBytes(content)
