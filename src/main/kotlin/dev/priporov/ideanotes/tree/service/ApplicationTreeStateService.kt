@@ -10,7 +10,7 @@ import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
 import java.io.File
 import java.util.*
 
-const val stateFileName = ".state.json"
+const val stateFileName = "state.json"
 
 @Service
 class ApplicationTreeStateService : BaseTreeStateService() {

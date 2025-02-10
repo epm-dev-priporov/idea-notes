@@ -1,6 +1,5 @@
 package dev.priporov.ideanotes.tree.service
 
-import com.intellij.ide.util.treeView.TreeState
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project

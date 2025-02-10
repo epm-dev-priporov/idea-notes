@@ -26,6 +26,15 @@ class FileNodeService {
         }
     }
 
+    fun initProjectVirtualFile(id: String, extension: String?, project: Project): VirtualFile {
+        val baseDir = service<PluginStateService>().getProjectBaseDir(project)
+
+        val path = "$baseDir$fileSeparator$id${if (extension == null) "" else ".$extension"}"
+        return createVirtualFile(File(path)).apply {
+            service<VirtualFileContainer>().put(id, this)
+        }
+    }
+
     fun createApplicationFile(
         id: String,
         extension: String?,
