@@ -10,6 +10,11 @@ class ProjectTreeStateService(private val project: Project) : BaseTreeStateServi
 
     override var treeState: TreeStateDto = readTreeState()
 
+    override fun rename(oldId: String, newId: String, name: String) {
+        treeState.renameNode(oldId, newId, name)
+        saveStateFile(treeState)
+    }
+
     override fun getStateFilePath(): String {
         val projectBaseDir = service<PluginStateService>().getProjectBaseDir(project)
         return "$projectBaseDir$fileSeparator$stateFileName"
