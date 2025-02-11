@@ -19,30 +19,6 @@ class ApplicationTreeStateService : BaseTreeStateService() {
         treeState = readTreeState()
     }
 
-    override fun rename(oldId: String, newId: String, name: String) {
-        treeState.renameNode(oldId, newId, name)
-        saveStateFile(treeState)
-    }
-
-    fun delete(id: String, parentId: String?) {
-        treeState.hierarchy[parentId]?.remove(id)
-        treeState.hierarchy.remove(id)
-        treeState.nodesGroupedById.remove(id)
-        saveStateFile(treeState)
-    }
-
-    fun getChildrenRecursively(parentId: String): List<String> {
-        val result = ArrayList<String>()
-        val queue: Deque<String> = LinkedList(treeState.hierarchy[parentId] ?: emptyList())
-
-        while (queue.isNotEmpty()) {
-            val id = queue.pop()
-            result.add(id)
-            queue.addAll(treeState.hierarchy[id] ?: emptyList())
-        }
-        return result
-    }
-
     override fun getStateFilePath(): String {
         val applicationBaseDir = service<PluginStateService>().getApplicationBaseDIr()
         return "$applicationBaseDir$fileSeparator$stateFileName"

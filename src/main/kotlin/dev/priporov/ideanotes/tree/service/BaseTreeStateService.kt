@@ -6,6 +6,7 @@ import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
 import java.io.File
+import java.util.*
 
 abstract class BaseTreeStateService {
 
@@ -32,7 +33,29 @@ abstract class BaseTreeStateService {
 
     open fun getStateTree() = treeState
 
-    open fun rename(oldId: String, newId: String, name: String) {}
+    fun rename(oldId: String, newId: String, name: String) {
+        treeState.renameNode(oldId, newId, name)
+        saveStateFile(treeState)
+    }
+
+    fun delete(id: String, parentId: String?) {
+        treeState.hierarchy[parentId]?.remove(id)
+        treeState.hierarchy.remove(id)
+        treeState.nodesGroupedById.remove(id)
+        saveStateFile(treeState)
+    }
+
+    fun getChildrenRecursively(parentId: String): List<String> {
+        val result = ArrayList<String>()
+        val queue: Deque<String> = LinkedList(treeState.hierarchy[parentId] ?: emptyList())
+
+        while (queue.isNotEmpty()) {
+            val id = queue.pop()
+            result.add(id)
+            queue.addAll(treeState.hierarchy[id] ?: emptyList())
+        }
+        return result
+    }
 
     fun insertInto(node: NoteNode, parentNode: NoteNode) {
         val stateNodeDto = StateNodeDto().apply {

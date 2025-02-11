@@ -4,12 +4,15 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.tree.model.ProjectNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.dto.NodeType
+import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
 import dev.priporov.ideanotes.tree.service.ProjectTreeStateService
+import dev.priporov.ideanotes.util.WriteActionUtil
 
 @Service(Service.Level.PROJECT)
 class ProjectNoteTree(val project: Project) : BaseTree<ProjectNoteTreeModel>() {
@@ -48,7 +51,29 @@ class ProjectNoteTree(val project: Project) : BaseTree<ProjectNoteTreeModel>() {
     }
 
     override fun delete(id: String) {
-        TODO("Not yet implemented")
+        val node = service<NoteNodeContainer>().getNodeById(id)
+        if (node == null) {
+            return
+        }
+        val applicationTreeStateService = project.service<ProjectTreeStateService>()
+        applicationTreeStateService.getChildrenRecursively(node.id!!).reversed().forEach { childId ->
+            delete(childId)
+        }
+
+        val parent = node.parent as NoteNode
+
+        applicationTreeStateService.delete(
+            node.id!!, parent.id
+        )
+
+        node.removeFromParent()
+        WriteActionUtil.runWriteAction {
+            node.file?.delete(true)
+        }
+
+        service<NoteNodeContainer>().removeNode(node.id!!)
+
+        getTreeModel().reload(parent)
     }
 
 }
