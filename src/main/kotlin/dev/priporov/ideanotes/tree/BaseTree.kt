@@ -14,6 +14,7 @@ import com.intellij.util.ui.tree.TreeUtil
 import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
+import dev.priporov.ideanotes.tree.node.dto.NodeCopyData
 import dev.priporov.ideanotes.tree.node.dto.NodeType
 import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper
 import java.util.*

@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.writeBytes
 import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.tree.model.ProjectNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
@@ -39,6 +40,11 @@ class ProjectNoteTree(val project: Project) : BaseTree<ProjectNoteTreeModel>() {
                 extension,
                 project
             )
+
+            createNodeDto.content?.let { content ->
+                WriteActionUtil.runWriteAction{virtualFile.writeBytes(content)}
+            }
+
             node.file = virtualFile
         }
 

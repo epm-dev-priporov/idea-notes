@@ -3,6 +3,8 @@ package dev.priporov.ideanotes.tree
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.writeBytes
+import com.intellij.webSymbols.utils.applyIfNotNull
 import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
@@ -62,6 +64,10 @@ class AppNoteTree : BaseTree<AppNoteTreeModel>() {
                 node.id!!,
                 extension
             )
+            createNodeDto.content?.let { content ->
+                WriteActionUtil.runWriteAction { virtualFile.writeBytes(content) }
+            }
+
             node.file = virtualFile
         }
 

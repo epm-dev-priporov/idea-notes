@@ -85,18 +85,19 @@ class FileNodeService {
         WriteActionUtil.runWriteAction { file.rename(this, toFileName(node.id!!, node.type.extension)) }
     }
 
-    private fun createVirtualFile(file: File): VirtualFile {
-        val localFileSystem = LocalFileSystem.getInstance()
-        val path = file.toPath()
-
-        return localFileSystem.refreshAndFindFileByNioFile(path)
-            ?: localFileSystem.refreshAndFindFileByIoFile(file)
-            ?: localFileSystem.refreshAndFindFileByPath(path.toString())!!
-    }
 
     private fun toFileName(id: String, extension: String?): String {
         val extensionWithDot = if (extension.isNullOrBlank()) "" else ".$extension"
         return "$id$extensionWithDot"
     }
 
+}
+
+fun createVirtualFile(file: File): VirtualFile {
+    val localFileSystem = LocalFileSystem.getInstance()
+    val path = file.toPath()
+
+    return localFileSystem.refreshAndFindFileByNioFile(path)
+        ?: localFileSystem.refreshAndFindFileByIoFile(file)
+        ?: localFileSystem.refreshAndFindFileByPath(path.toString())!!
 }

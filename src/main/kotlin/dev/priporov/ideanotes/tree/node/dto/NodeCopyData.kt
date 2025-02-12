@@ -1,7 +1,8 @@
 package dev.priporov.ideanotes.tree.node.dto
 
-class CreateNodeDto {
+class NodeCopyData {
     var name: String? = null
-    var type: NodeType = NodeType.UNKNOWN
+    var id: String? = null
+    var type:NodeType? = null
     var content: ByteArray? = null
 }
