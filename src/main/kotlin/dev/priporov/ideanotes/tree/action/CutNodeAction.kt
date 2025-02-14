@@ -39,8 +39,10 @@ class CutNodeAction(
             return ByteArray(0)
         }
         val project = DataManagerImpl.getInstance().getDataContext(tree).getData(CommonDataKeys.PROJECT)!!
-        val file = PsiManager.getInstance(project).findFile(virtualFile)!!
-
+        val file = PsiManager.getInstance(project).findFile(virtualFile)
+        if (file == null) {
+            return ByteArray(0)
+        }
         return file.text.encodeToByteArray()
     }
 

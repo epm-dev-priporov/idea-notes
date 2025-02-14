@@ -95,7 +95,7 @@ class PasteNodeAction(
             }
             val targetNode = if (selectedNode != null && selectedNode.id != nodeDto.id) selectedNode else tree.model.root as NoteNode
             tree.createInto(dto, targetNode)
-            tree.delete(nodeDto.id!!)
+            nodeDto.tree?.delete(nodeDto.id!!)
         }
 
     }
