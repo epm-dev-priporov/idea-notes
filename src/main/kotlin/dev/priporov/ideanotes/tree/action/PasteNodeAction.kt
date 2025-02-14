@@ -88,16 +88,24 @@ class PasteNodeAction(
             }
             tree.createInto(createNodeDto, targetNode)
         } else if (nodeDto is NodeCutData) {
-            val dto = CreateNodeDto().apply {
-                this.name = nodeDto.name
-                this.type = nodeDto.type
-                this.content = nodeDto.content
-            }
-            val targetNode = if (selectedNode != null && selectedNode.id != nodeDto.id) selectedNode else tree.model.root as NoteNode
-            tree.createInto(dto, targetNode)
-            nodeDto.tree?.delete(nodeDto.id!!)
+            createNodeFromCutData(nodeDto, selectedNode)
         }
 
+    }
+
+    private fun createNodeFromCutData(nodeDto: NodeCutData, selectedNode: NoteNode?) {
+        val dto = CreateNodeDto().apply {
+            this.name = nodeDto.name
+            this.type = nodeDto.type
+            this.content = nodeDto.content
+        }
+        val targetNode = if (selectedNode != null && selectedNode.id != nodeDto.id) selectedNode else tree.model.root as NoteNode
+        val createdNode = tree.createInto(dto, targetNode)
+        nodeDto.tree?.delete(nodeDto.id!!)
+
+        nodeDto.children?.forEach {
+            createNodeFromCutData(it, createdNode)
+        }
     }
 
     private fun isCopyOrCut(clipboard: Clipboard): Boolean {
