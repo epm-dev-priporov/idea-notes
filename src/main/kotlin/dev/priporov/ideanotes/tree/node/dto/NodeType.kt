@@ -32,7 +32,7 @@ enum class NodeType(
     IMAGE_JPEG("jpeg", Icons.Extension.IMAGE, Icons.Extension.NEW_UI_IMAGE),
     SVG_JPG("svg", Icons.Extension.IMAGE, Icons.Extension.NEW_UI_IMAGE),
     PDF("pdf", Icons.Extension.PDF, Icons.Extension.NEW_UI_PDF),
-    SOFT_LINK("", Icons.Extension.SOFT_LINK, Icons.Extension.NEW_UI_SOFT_LINK),
+//    SOFT_LINK("", Icons.Extension.SOFT_LINK, Icons.Extension.NEW_UI_SOFT_LINK),
     SH("sh", Icons.Extension.SH, Icons.Extension.NEW_UI_SH),
     CSV("csv", Icons.Extension.CSV, Icons.Extension.NEW_UI_CSV),
     YML("yml", Icons.Extension.YAML, Icons.Extension.NEW_UI_YAML),

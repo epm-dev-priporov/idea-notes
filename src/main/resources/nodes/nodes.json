@@ -240,15 +240,5 @@
     "ide": [
       "RubyMine"
     ]
-  },
-  {
-    "index": 18,
-    "type": "SOFT_LINK",
-    "extension": "",
-    "definition": "Symbolic link",
-    "os": [
-      "linux",
-      "mac"
-    ]
   }
 ]
