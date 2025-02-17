@@ -37,7 +37,7 @@ class NoteNodeFactory {
         }
     }
 
-    private fun generateNodeId(name: String?): String? {
+    fun generateNodeId(name: String?): String? {
         if (name == null) {
             return null
         }

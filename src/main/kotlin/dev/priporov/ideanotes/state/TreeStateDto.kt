@@ -1,16 +1,14 @@
 package dev.priporov.ideanotes.state
 
-import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
 import java.util.concurrent.ConcurrentHashMap
 
-
 class TreeStateDto {
 
-    fun insertInto(stateNodeDto: StateNodeDto, parentNode: NoteNode) {
+    fun insertInto(stateNodeDto: StateNodeDto, id: String?) {
         nodesGroupedById[stateNodeDto.id!!] = stateNodeDto
 
-        hierarchy.computeIfAbsent(parentNode.id!!, { ArrayList() }).add(stateNodeDto.id!!)
+        hierarchy.computeIfAbsent(id!!, { ArrayList() }).add(stateNodeDto.id!!)
     }
 
     fun renameNode(oldId: String, newId: String, name: String) {

@@ -7,6 +7,7 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.extensions.PluginId
 import dev.priporov.ideanotes.state.TreeStateDto
+import dev.priporov.ideanotes.tree.AppNoteTree
 import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
@@ -42,7 +43,7 @@ class AppInitializer : AppLifecycleListener {
      */
     private fun initBaseDirIfNotExists() {
         service<FileNodeService>().createBaseDirIfNotExists(
-            service<PluginStateService>().getApplicationBaseDIr()
+            service<PluginStateService>().getApplicationBaseDir()
         )
     }
 
@@ -79,6 +80,7 @@ class AppInitializer : AppLifecycleListener {
 
         rootChildren.forEach { id ->
             val node = nodesGroupedById[id]
+
             root.insert(node, root.childCount)
         }
 

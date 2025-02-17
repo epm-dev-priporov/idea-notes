@@ -63,7 +63,7 @@ abstract class BaseTreeStateService {
             type = node.type
             name = node.name
         }
-        treeState.insertInto(stateNodeDto, parentNode)
+        treeState.insertInto(stateNodeDto, parentNode.id)
         saveStateFile(treeState)
     }
 

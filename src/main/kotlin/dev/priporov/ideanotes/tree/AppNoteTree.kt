@@ -5,6 +5,8 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.writeBytes
 import com.intellij.webSymbols.utils.applyIfNotNull
+import dev.priporov.ideanotes.state.PluginStateDto
+import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.container.NoteNodeContainer
 import dev.priporov.ideanotes.tree.model.AppNoteTreeModel
 import dev.priporov.ideanotes.tree.node.NoteNode
@@ -12,10 +14,15 @@ import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
 import dev.priporov.ideanotes.tree.node.dto.NodeType
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
 import dev.priporov.ideanotes.tree.service.FileNodeService
+import dev.priporov.ideanotes.tree.service.PluginStateService
 import dev.priporov.ideanotes.util.WriteActionUtil
 
 @Service(Service.Level.PROJECT)
 class AppNoteTree : BaseTree<AppNoteTreeModel>() {
+
+    override fun getStateDirectory(): String = service<PluginStateService>().getApplicationBaseDir()
+
+    override fun getTreeState(): TreeStateDto = service<ApplicationTreeStateService>().getStateTree()
 
     override fun renameNode(name: String, node: NoteNode) {
         val oldId = node.id!!

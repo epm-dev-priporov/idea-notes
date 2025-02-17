@@ -2,6 +2,7 @@ package dev.priporov.ideanotes.tree.factory
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.components.service
 import com.intellij.ui.ToolbarDecorator
 import dev.priporov.ideanotes.icon.Icons
 import dev.priporov.ideanotes.tree.BaseTree
@@ -9,6 +10,7 @@ import dev.priporov.ideanotes.tree.action.ToolbarPopupMenuActionGroup
 import dev.priporov.ideanotes.tree.dialog.OkDialog
 import dev.priporov.ideanotes.tree.menu.TreePopUpMenuManager
 import dev.priporov.ideanotes.tree.node.NoteNode
+import dev.priporov.ideanotes.tree.service.ExportService
 import javax.swing.JPanel
 
 class ToolbarFactory {
@@ -46,7 +48,7 @@ class ToolbarFactory {
             },
             object : AnAction("Export All", "", Icons.ToolbarFactory.EXPORT_ICON) {
                 override fun actionPerformed(e: AnActionEvent) {
-                    TODO("Not yet implemented")
+                    service<ExportService>().exportNotesToFile(tree)
                 }
             },
             object : AnAction("Settings", "", Icons.ToolbarFactory.SETTINGS_ICON) {

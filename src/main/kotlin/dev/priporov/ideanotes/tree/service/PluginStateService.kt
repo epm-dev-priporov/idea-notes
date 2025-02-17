@@ -23,7 +23,7 @@ class PluginStateService : PersistentStateComponent<PluginStateDto> {
         applicationState = loadedState
     }
 
-    fun getApplicationBaseDIr() = applicationState.appBaseDir
+    fun getApplicationBaseDir() = applicationState.appBaseDir
     fun getProjectBaseDir(project: Project): String {
         return "${project.guessProjectDir()?.path}$fileSeparator${applicationState.projectNoteDir}"
     }

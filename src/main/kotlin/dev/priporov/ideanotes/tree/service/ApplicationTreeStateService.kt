@@ -1,16 +1,10 @@
 package dev.priporov.ideanotes.tree.service
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
-import dev.priporov.ideanotes.state.TreeStateDto
-import dev.priporov.ideanotes.tree.node.NoteNode
-import dev.priporov.ideanotes.tree.node.dto.StateNodeDto
-import java.io.File
-import java.util.*
 
 const val stateFileName = "state.json"
+const val exportStateFileName = "exp_state.json"
 
 @Service
 class ApplicationTreeStateService : BaseTreeStateService() {
@@ -20,7 +14,7 @@ class ApplicationTreeStateService : BaseTreeStateService() {
     }
 
     override fun getStateFilePath(): String {
-        val applicationBaseDir = service<PluginStateService>().getApplicationBaseDIr()
+        val applicationBaseDir = service<PluginStateService>().getApplicationBaseDir()
         return "$applicationBaseDir$fileSeparator$stateFileName"
     }
 

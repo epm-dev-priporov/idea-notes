@@ -11,17 +11,36 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.tree.TreeUtil
+import dev.priporov.ideanotes.state.TreeStateDto
 import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.node.dto.CreateNodeDto
-import dev.priporov.ideanotes.tree.node.dto.NodeCopyData
 import dev.priporov.ideanotes.tree.node.dto.NodeType
 import dev.priporov.ideanotes.tree.node.mapper.CreateDtoToTreeNodeMapper
 import java.util.*
 import javax.swing.tree.DefaultTreeModel
 
 abstract class BaseTree<T : DefaultTreeModel> : Tree() {
-    protected val nodesGroupedById = HashMap<String, NoteNode>()
+
+    fun groupNodesById(): HashMap<String, NoteNode> {
+        val queue = LinkedList<NoteNode>()
+        queue.add(getRoot())
+
+        val nodesGroupedById = HashMap<String, NoteNode>()
+
+        while (queue.isNotEmpty()) {
+            val node = queue.pop()
+            nodesGroupedById.put(node.id!!, node)
+
+            node.children().asSequence().filterIsInstance<NoteNode>().forEach { queue.add(it) }
+        }
+
+        return nodesGroupedById
+    }
+
+    abstract fun getStateDirectory(): String
+
+    abstract fun getTreeState(): TreeStateDto
 
     fun createNewInRoot(createNodeDto: CreateNodeDto): NoteNode {
         return createInto(createNodeDto, getRoot())
@@ -42,7 +61,6 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
 
         getTreeModel().reload(targetNode)
         expandNodes(expandedNodes)
-        nodesGroupedById[node.id!!] = node
 
         return node
     }
@@ -71,6 +89,8 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
     }
 
     fun getSelectedNode(): NoteNode? = selectionPath?.lastPathComponent as? NoteNode
+
+    fun getRoot() = getTreeModel().root as NoteNode
 
     fun openInEditor(node: NoteNode?) {
         val file = node?.file ?: return
@@ -102,8 +122,6 @@ abstract class BaseTree<T : DefaultTreeModel> : Tree() {
         )
 //        }
     }
-
-    protected fun getRoot() = getTreeModel().root as NoteNode
 
     protected fun getTreeModel() = model as T
 

@@ -19,7 +19,7 @@ class ProjectInitializer : ProjectActivity {
         initBaseDirIfNotExists(project)
 
         val model = project.service<ProjectNoteTreeModel>()
-        initAppTreeModelFromState(
+        initProjectTreeModelFromState(
             project.service<ProjectTreeStateService>().getStateTree(),
             model.root,
             project
@@ -37,7 +37,7 @@ class ProjectInitializer : ProjectActivity {
         )
     }
 
-    private fun initAppTreeModelFromState(treeState: TreeStateDto, root: NoteNode, project: Project) {
+    private fun initProjectTreeModelFromState(treeState: TreeStateDto, root: NoteNode, project: Project) {
         val fileNodeService = service<FileNodeService>()
         val noteNodeFactory = service<NoteNodeFactory>()
 
