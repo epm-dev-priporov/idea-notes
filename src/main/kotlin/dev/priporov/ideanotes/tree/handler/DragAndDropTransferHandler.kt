@@ -5,6 +5,7 @@ import com.intellij.openapi.components.service
 import dev.priporov.ideanotes.tree.AppNoteTree
 import dev.priporov.ideanotes.tree.BaseTree
 import dev.priporov.ideanotes.tree.ProjectNoteTree
+import dev.priporov.ideanotes.tree.container.VirtualFileContainer
 import dev.priporov.ideanotes.tree.factory.NoteNodeFactory
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.service.ApplicationTreeStateService
@@ -104,11 +105,15 @@ class DragAndDropTransferHandler : TransferHandler() {
         if (action and MOVE == MOVE) {
             val tree = source as BaseTree<*>
             val model = tree.model as DefaultTreeModel
+            val noteNodeContainer = service<dev.priporov.ideanotes.tree.container.NoteNodeContainer>()
+            val virtualFileContainer = service<VirtualFileContainer>()
             // Remove nodes saved in nodesToRemove in createTransferable.
             for (i in nodesToRemove.indices) {
                 val node = nodesToRemove[i]
                 val parent = node.parent as NoteNode
                 model.removeNodeFromParent(node)
+                noteNodeContainer.removeNode(node.id!!)
+                virtualFileContainer.removeNode(node.id!!)
                 getTreeState(tree)?.updateNodeOrder(parent)
             }
         }
@@ -145,19 +150,24 @@ class DragAndDropTransferHandler : TransferHandler() {
             index = parent.childCount
         }
         // Add data to model.
+        val virtualFileContainer = service<VirtualFileContainer>()
         for (i in nodes!!.indices) {
-            val treeNode = nodes[i]
+            val treeNode = nodes[i] as NoteNode
             model.insertNodeInto(treeNode, parent, index)
-//            service<VirtualFileContainer>().addNode(treeNode as NoteNode) TODO
 
-//            treeNode.editor?.also { editor -> TODO
-//                OpenedFileListener.applyAction(editor, service<VirtualFileContainer>())
-//            }
+            if (treeNode.id != null && treeNode.file != null) {
+                virtualFileContainer.put(treeNode.id!!, treeNode.file!!)
+            }
+
+            treeNode.children().asSequence().filterIsInstance<NoteNode>().forEach { childNode ->
+                if (childNode.id != null && childNode.file != null) {
+                    virtualFileContainer.put(childNode.id!!, childNode.file!!)
+                }
+            }
 
             getTreeState(tree)?.updateNodeOrder(parent as NoteNode)
 
             index++
-            println(index)
         }
         return true
     }

@@ -12,5 +12,9 @@ class VirtualFileContainer {
         virtualFilesGroupedById[id] = virtualFile
     }
 
+    fun removeNode(id: String) {
+        virtualFilesGroupedById.remove(id)
+    }
+
     fun isNote(file: VirtualFile): Boolean = virtualFilesGroupedById.values.contains(file)
 }
