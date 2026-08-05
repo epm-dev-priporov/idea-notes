@@ -11,6 +11,7 @@ import dev.priporov.ideanotes.tree.dialog.OkDialog
 import dev.priporov.ideanotes.tree.menu.TreePopUpMenuManager
 import dev.priporov.ideanotes.tree.node.NoteNode
 import dev.priporov.ideanotes.tree.service.ExportService
+import dev.priporov.ideanotes.tree.service.ImportService
 import javax.swing.JPanel
 
 class ToolbarFactory {
@@ -43,7 +44,7 @@ class ToolbarFactory {
             },
             object : AnAction("Import", "", Icons.ToolbarFactory.IMPORT_ICON) {
                 override fun actionPerformed(e: AnActionEvent) {
-                    TODO("Not yet implemented")
+                    service<ImportService>().importNotesFromFile(tree)
                 }
             },
             object : AnAction("Export All", "", Icons.ToolbarFactory.EXPORT_ICON) {
